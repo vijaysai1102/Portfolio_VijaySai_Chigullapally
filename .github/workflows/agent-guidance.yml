@@ -1,0 +1,24 @@
+name: Agent guidance
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4, matching the reviewed Megatron baseline
+      - name: Verify synchronization behavior
+        run: ./scripts/Test-AgentGuidance.ps1
+      - name: Check committed guidance
+        run: ./scripts/Sync-AgentGuidance.ps1 -Check -Staged

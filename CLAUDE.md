@@ -1,0 +1,69 @@
+# Vijay Sai Chigullapally Portfolio
+
+This repository will contain Vijay Sai Chigullapally's personal portfolio. Follow the actual code and the generated project context below for the chosen framework and available commands. Do not import Megatron's Electron, SQLite, IPC, packaging, or product constraints.
+
+## Before working
+
+- Read this guide and [project context](.claude/project-context.md) (also available at [.agents/project-context.md](.agents/project-context.md)). Run `powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./scripts/Setup-AgentGuidance.ps1` at the beginning of a local Windows session to synchronize guidance and ensure the background watcher is running. On another OS, use `pwsh` and run the watcher in a terminal if needed.
+- Inspect only the files relevant to the task and their direct dependencies. Check Git status and preserve user changes.
+- Treat questions, analysis, and pasted specifications as read-only unless changes are explicitly authorized.
+- Before editing more than one file or making a browser-visible UI change, name the files, intended changes, and behavior to preserve. Wait for approval. Approval already given for that plan persists; routine implementation choices within it do not need another approval.
+
+## Windows development
+
+- Use PowerShell, absolute paths in scripts/configuration, quoted paths with spaces, and `-LiteralPath` for exact filesystem paths. Prefer `rg` for fast searches when available; otherwise use native PowerShell commands.
+- Do not assume Bash, WSL, Unix utilities, or Unix command flags. The tiny `.githooks/` shell launchers exist only because Git requires an executable entry point; all hook behavior lives in PowerShell.
+- After a shell, dependency, path, or permission failure, verify the shell, executable, working directory, quoting, and permissions before another attempt. Do not modify global execution policy.
+
+## Portfolio behavior and content
+
+- Use the existing framework, package manager, lockfile, commands, and conventions once the portfolio is added. Do not invent an app scaffold or select a stack while doing an unrelated task.
+- Before adding UI near hover effects, animation, or pointer behavior, inventory those interactions and state how each is preserved or intentionally changed. Identify required changes to existing styles and classes explicitly.
+- Preserve navigation, keyboard interaction, focus states, responsive layouts, reduced-motion support, and working project/contact links unless the approved task changes them.
+- Use supplied facts for biography, education, projects, contact details, and resume content. Ask for missing facts instead of inventing claims. Keep secrets and private documents out of public assets and client bundles.
+- Favor semantic HTML and accessible controls. Verify narrow and wide layouts and relevant loading, empty, error, hover, and focus states.
+
+## Implementation and verification
+
+- Keep functions focused and modules decoupled. Validate boundary inputs, use descriptive names and early returns, and handle specific errors visibly. Prefer pure functions and small local state.
+- Extract non-obvious configuration into named constants or environment variables. Comments explain reasons that names and structure cannot express.
+- Use the `test-driven-development` skill for meaningful application logic or synchronization behavior. A regression test should reproduce an observable failure. Prose, simple styling, constants, and reversible configuration do not need tests that merely copy their implementation.
+- Use `visual-verify` after a portfolio UI change. Run the actual site and exercise the changed flow; lint and type checks alone do not prove it works. State clearly when execution or rendering could not be verified.
+- When browser/screenshot usage is known to exceed 50% of a constrained allowance, state that and obtain approval before further use unless already authorized.
+- Run checks appropriate to the change. Fix regressions caused by the change and report unrelated failures. Do not claim verification that was not performed.
+
+## Keeping guidance current
+
+- `CLAUDE.md` and `AGENTS.md` are equal, editable peers. `.claude/skills/` and `.agents/skills/` are equal, editable peers, including supporting files. Edit either side; the watcher propagates changes, additions, renames, and skill-file deletions. Tool-specific files such as `.claude/settings.json` stay with their tool.
+- The generated context section below and both `project-context.md` files are maintained by `scripts/Sync-AgentGuidance.ps1`. It discovers repository facts and fingerprints code; it cannot infer architectural intent or rewrite human decisions. Update the manual guidance and relevant skills when a code change alters workflows, architecture, routes, commands, or verification requirements.
+- Never hand-edit generated context. Resolve an actual two-sided conflict by making the peers agree, or explicitly run `Sync-AgentGuidance.ps1 -ResolveFrom Claude` or `-ResolveFrom Agents` after reviewing which version to keep. No timestamp-based winner is chosen.
+- Run `Sync-AgentGuidance.ps1 -Check` before finishing. Stage the changed counterparts and generated context deliberately. Pre-commit checks both disk and the Git index and never stages files on your behalf. CI checks committed content independently of local watcher state.
+- The watcher is local to this checkout. Setup starts it in the background on Windows; rerun setup after a restart. Git checkout/merge hooks restart it, and future agents should run setup as directed above. GitHub checks take effect once these files are committed and pushed.
+
+## Local skills
+
+- [grill-me](.claude/skills/grill-me/SKILL.md): stress-test a portfolio plan when requested.
+- [test-driven-development](.claude/skills/test-driven-development/SKILL.md): verify meaningful logic with failing-then-passing behavioral tests.
+- [visual-verify](.claude/skills/visual-verify/SKILL.md): verify the running portfolio and preserve existing interactions.
+
+Adapted from [Megatron](https://github.com/Megatron-HQ/Megatron/tree/7b80bd3d2be285734312a9eb8d008c65c09b8e4c), especially its shared guides, three skills, and mirror hook. The portfolio uses two-way synchronization and a live watcher rather than Megatron's commit-time, one-way generation.
+
+<!-- agent-context:start -->
+# Generated project context
+
+Generated from the current repository by `scripts/Sync-AgentGuidance.ps1`. Do not edit this section or either project-context.md file by hand.
+
+## Application
+
+No package.json or HTML entry point is present yet. The portfolio application has not been added.
+
+No JavaScript package-manager lockfile is present.
+
+## Code and configuration inventory
+
+Content fingerprint (SHA-256, text line endings normalized): `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`.
+
+No application source/configuration files detected yet.
+
+Git-ignored files, environment files, generated output, dependency trees, and guidance infrastructure are excluded. This inventory does not execute package scripts or infer design decisions. Update manual guidance when code changes alter how the project should be developed or verified.
+<!-- agent-context:end -->

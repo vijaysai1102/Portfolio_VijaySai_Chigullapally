@@ -1,0 +1,5 @@
+#!/bin/sh
+if command -v pwsh >/dev/null 2>&1; then
+  exec pwsh -NoProfile -ExecutionPolicy Bypass -File "$(git rev-parse --show-toplevel)/scripts/Invoke-AgentGuidanceHook.ps1" -Mode Refresh
+fi
+exec powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$(git rev-parse --show-toplevel)/scripts/Invoke-AgentGuidanceHook.ps1" -Mode Refresh
