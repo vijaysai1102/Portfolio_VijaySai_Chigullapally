@@ -40,6 +40,20 @@ try {
   assert.equal(html.includes('Synthetic fixture organization'), false, 'development fixture must not be public');
   assert.equal(html.includes('id="experience"'), false, 'empty experience must be omitted');
   assert.ok(html.includes('Ask the guide'), 'guide launcher is present');
+  const linkTags = [...html.matchAll(/<link\b[^>]*>/g)].map(match => match[0]);
+  const fonts = linkTags.filter(tag => tag.includes('as="font"')).map(tag => /href="([^"]+)"/.exec(tag)?.[1]);
+  assert.equal(fonts.length, 2, 'both local variable fonts preload');
+  for (const font of fonts) {
+    assert.ok(font?.startsWith('/_next/'), 'font stays on the site origin');
+    const resource = await fetch(new URL(font, origin));
+    assert.equal(resource.status, 200);
+    assert.equal(new TextDecoder().decode((await resource.arrayBuffer()).slice(0, 4)), 'wOF2');
+  }
+  for (const tag of linkTags.filter(tag => tag.includes('rel="stylesheet"'))) {
+    const href = /href="([^"]+)"/.exec(tag)?.[1];
+    const stylesheet = await fetch(new URL(href, origin));
+    assert.equal((await stylesheet.text()).includes('fonts.googleapis.com'), false, 'no external font stylesheet request');
+  }
   const robots = await fetch(`${origin}/robots.txt`);
   assert.equal(robots.status, 200);
   assert.match(await robots.text(), /User-agent: \*/i);

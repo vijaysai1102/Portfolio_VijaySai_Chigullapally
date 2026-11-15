@@ -2,9 +2,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { MAX_MESSAGE_CHARS, type ChatMessage, type ChatRequest } from '@/lib/chat-contract';
 import { conversationInput } from '@/lib/conversation';
-import { readGuideStream } from '@/lib/guide-stream';
 import type { SourceReference } from '@/lib/grounding';
-import { displayGuideText, type GuideAction } from '@/lib/guide-actions';
+import type { GuideAction } from '@/lib/guide-actions';
+import { displayGuideText } from '@/lib/guide-display';
 export type GuideTurn = ChatMessage & { id: string; complete: boolean; sources: SourceReference[]; actions: GuideAction[] };
 const MAX_VISIBLE_TURNS = 24;
 type GuideContext = Pick<ChatRequest, 'currentProject' | 'currentView'>;
@@ -42,6 +42,7 @@ export function useGuide() {
         throw new Error(typeof failure.error === 'string' ? failure.error : 'The guide is unavailable.');
       }
       if (!response.body) throw new Error('The guide connection is unavailable.');
+      const { readGuideStream } = await import('@/lib/guide-stream');
       let answer = '';
       for await (const event of readGuideStream(response.body)) {
         if (requestVersion !== version.current) return;

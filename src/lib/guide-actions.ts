@@ -17,4 +17,4 @@ export function actionsFromAnswer(answer: string): GuideAction[] {
   const ids = new Set([...answer.matchAll(/\[action:([a-z0-9-]+)\]/g)].map(match => match[1]));
   return [...ids].flatMap(id => { const action = guideAction(id); return action ? [action] : []; }).slice(0, 2);
 }
-export function displayGuideText(answer: string): string { return answer.replace(/\[action:[^\]]*(?:\]|$)/g, '').trim(); }
+export { displayGuideText } from './guide-display';
