@@ -55,15 +55,15 @@ Generated from the current repository by `scripts/Sync-AgentGuidance.ps1`. Do no
 
 ## Application
 
-No package.json or HTML entry point is present yet. The portfolio application has not been added.
+HTML files are present; no package.json is present. Inspect the site before choosing a server.
 
 No JavaScript package-manager lockfile is present.
 
 ## Code and configuration inventory
 
-Content fingerprint (SHA-256, text line endings normalized): `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`.
+Content fingerprint (SHA-256, text line endings normalized): `c2a58c4a8d46ad460e28164f1da8eaa3f4a4761b911b1966b83998c49ca01fee`.
 
-No application source/configuration files detected yet.
+- `docs/homepage-concept.html`
 
 Git-ignored files, environment files, generated output, dependency trees, and guidance infrastructure are excluded. This inventory does not execute package scripts or infer design decisions. Update manual guidance when code changes alter how the project should be developed or verified.
 <!-- agent-context:end -->

@@ -1,5 +1,8 @@
 # Ticket evidence
 
+## T05 — In review: visual verification unavailable
+File: homepage-concept.html. Desktop composition includes hero, neutral monogram, flagship sample surface, two supporting projects, about/contact, open-chat and selected-project states. Local preview attempted; HTTP probe timed out across executor boundaries. Browser host returned unavailable, so rendered review and screenshot inspection could not be performed; owner deferred design review. Palette contrast checks passed (5.29:1 minimum normal-text pair). Do not infer visual acceptance from static checks. Implementation can proceed under chat authorization; final visual review remains required.
+
 ## T04 — Done
 File: design-direction.md with inline vector board. Defined tokens, typography, centerpiece, portrait slot, interactions and reduced-motion fallback. No existing app interactions. Visual review by owner deferred per chat. Palette verified before implementation.
 
