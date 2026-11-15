@@ -1,6 +1,6 @@
 export type Project = {
   id: string; title: string; category: string; summary: string;
-  stack: string[]; source: string; sections: { heading: string; body: string }[];
+  stack: string[]; source: string; website?: string; sections: { heading: string; body: string }[];
 };
 export type Experience = { organization: string; title: string; period?: string; description: string; url?: string };
 export type Credential = { title: string; issuer?: string; date?: string; url?: string };
@@ -29,6 +29,7 @@ export function parseProject(value: unknown): Project {
   return {
     id, title: text(input.title, 'title'), category: text(input.category, 'category'),
     summary: text(input.summary, 'summary'), source: publicUrl(input.source),
+    ...(input.website === undefined ? {} : { website: publicUrl(input.website) }),
     stack: input.stack.map(item => text(item, 'stack item')),
     sections: input.sections.map(item => {
       const section = record(item);

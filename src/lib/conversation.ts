@@ -2,6 +2,7 @@ import { MAX_MESSAGE_CHARS, MAX_MESSAGES, parseChatRequest, type ChatMessage, ty
 import type { DemoView } from './demo';
 function topic(text: string): string | undefined {
   const candidates: [string, RegExp][] = [
+    ['living-campus', /\b(living[- ]campus|campus|npcs?)\b/i],
     ['megatron', /\b(megatron|skills?|plugins?)\b/i],
     ['weatherscope', /\b(weatherscope|weather|forecasting|precipitation)\b/i],
     ['f1-rag', /\b(f1|formula|regulations?|rag)\b/i],

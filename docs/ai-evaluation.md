@@ -121,3 +121,18 @@ Protected preview dpl_2XYXegP7CLSM67XgypMu3PPNAtNQ ran reviewed source 46ac373ea
 After recovering the usage-limited session, deployed the same source to Production as dpl_FpYVFwXad9a6xzLoFGGDSqkqAxzB with approved settings and permanent storage. Public health and ordinary routes passed. An actual browser question, “Show Megatron sample Skills view”, generated fictional skill descriptions supported by the existing explorer, linked to /projects/megatron and suggested /projects/megatron#demo-skills. Clicking the suggestion opened that route, selected Skills and closed the guide. After one request the UI showed five remaining questions. Inspected desktop 880px and mobile 390x844 answer screenshots; no horizontal overflow or captured console errors. Escape closed the reopened guide and returned focus to its launcher. No application change was required.
 
 These production checks complement the full earlier review; they do not claim another 32-case run, a new full accessibility/performance audit, physical mobile testing or manual screen-reader verification. No production quota exhaustion or destructive rollback was performed. See launch-status.md for recovery and remaining inputs.
+
+## Living Campus addition — targeted review, 2026-11-15
+
+Ran six real Gemini checks through the local production HTTP API with the existing isolated preview Redis and approved testing allowance. All six were manually acceptable; this is a targeted addition, not another run of the original 32-case set.
+
+| Case | Observed result |
+| --- | --- |
+| LC01 — Memory and embeddings | Correct importance/recency/type/keyword memory selection, SQLite state, and keyword/tag campus context; no embedding/vector-database claim; Living Campus source resolved |
+| LC02 — Emotions and results | Preserved simulated emotions and lack of verified engagement, reliable memory or autonomous social behavior |
+| LC03 — Fictional university | Named fictional Westbrook University from the case evidence |
+| LC04 — Personal university | Explicit unknown with no fabricated education; local refusal path made no provider call |
+| LC05 — Open Living Campus | Registered action resolves to /projects/living-campus and requires a visitor click |
+| LC06 — Switch to F1 | New F1 request overrides current Living Campus context and preserves the local-PDF/embedding/Chroma description and download limitation |
+
+Separately, the real mobile browser on /projects/living-campus asked “How do its characters remember our conversations?” without naming the project. It received a source-supported Living Campus answer, its memory-reliability caveat and valid open/highlight suggestions. Keyboard activation of Highlight returned to /#project-living-campus and closed the guide. The mobile pointer automation's first attempt did not activate the link; keyboard navigation passed after focusing the actual link. No physical touch claim is made. Raw owner-run synthetic answers remain private under ignored .agent-guidance/living-campus-quality-results.json. All previously published factual boundaries remain in place.

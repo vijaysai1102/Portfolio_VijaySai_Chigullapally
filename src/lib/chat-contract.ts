@@ -17,7 +17,7 @@ export function parseChatRequest(value: unknown): ChatRequest {
   });
   if (messages.at(-1)?.role !== 'user') throw new ChatError(400, 'The last message must be from the visitor');
   const currentProject = input.currentProject;
-  if (currentProject !== undefined && (typeof currentProject !== 'string' || !['megatron', 'weatherscope', 'f1-rag', 'pingback'].includes(currentProject))) throw new ChatError(400, 'Current project is invalid');
+  if (currentProject !== undefined && (typeof currentProject !== 'string' || !['megatron', 'weatherscope', 'f1-rag', 'living-campus', 'pingback'].includes(currentProject))) throw new ChatError(400, 'Current project is invalid');
   if (input.currentView !== undefined && (!isDemoView(input.currentView) || currentProject !== 'megatron')) throw new ChatError(400, 'Current demo view is invalid');
   return { messages, ...(currentProject ? { currentProject: String(currentProject) } : {}), ...(input.currentView ? { currentView: input.currentView as DemoView } : {}) };
 }

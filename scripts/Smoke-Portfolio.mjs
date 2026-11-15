@@ -82,12 +82,18 @@ try {
   const missingHtml = await missing.text();
   assert.match(missingHtml, /Back to the studio/);
   checkDocument(missingHtml, '/no-such-page');
-  for (const slug of ['megatron', 'weatherscope', 'f1-rag']) {
+  assert.ok(html.includes('id="project-living-campus"'), 'Living Campus is discoverable from selected work');
+  for (const slug of ['megatron', 'weatherscope', 'f1-rag', 'living-campus']) {
     const project = await fetch(`${origin}/projects/${slug}`);
     assert.equal(project.status, 200, `${slug} route`);
     const projectHtml = await project.text();
     assert.match(projectHtml, /About the evidence/);
     checkDocument(projectHtml, `/projects/${slug}`);
+    if (slug === 'living-campus') {
+      assert.ok(projectHtml.includes('https://github.com/vijaysai1102/Living-Campus'), 'Living Campus source resolves to the reviewed repository');
+      assert.ok(projectHtml.includes('https://vijaysai1102-ai-npc-agent-app-fjs6j1.streamlit.app/'), 'Living Campus app link is published');
+    }
+    if (slug === 'megatron') assert.ok(projectHtml.includes('https://megatron-site.vercel.app/'), 'Existing product website remains available');
   }
   console.log('PASS production homepage HTTP journey');
 } finally {

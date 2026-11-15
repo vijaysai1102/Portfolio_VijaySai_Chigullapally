@@ -1,6 +1,6 @@
 # Codex session handoff
 
-Updated 2026-11-15 after recovering and completing the interrupted live-AI release.
+Updated 2026-11-15 after recovering the live-AI release and adding Living Campus under the user's approved implementation plan.
 
 ## Current state
 
@@ -12,8 +12,8 @@ The existing Next.js portfolio and its real AI guide are deployed at https://vij
 | Repository | https://github.com/vijaysai1102/Portfolio_VijaySai_Chigullapally |
 | Branch | main; verified commits are pushed under the user's standing authorization |
 | Vercel project | vijay_portfolio |
-| Reviewed application source | 46ac373eaff287586bdddc2dbc4928e9d27a8b2a |
-| Verified live-AI deployment | dpl_FpYVFwXad9a6xzLoFGGDSqkqAxzB |
+| Initial verified live-AI source | 46ac373eaff287586bdddc2dbc4928e9d27a8b2a; Living Campus is added by the later commit containing this update |
+| Initial verified live-AI deployment | dpl_FpYVFwXad9a6xzLoFGGDSqkqAxzB; inspect current main/deployment before continuing |
 | Previous production, AI off | dpl_84ZDQM7SyDSqzBtV2Jjmgkzrk3jx, same application source |
 | Model | gemini-3.5-flash-lite |
 | Approved public request caps | 25/day, 250/month, 6/session |
@@ -55,7 +55,9 @@ Read next: root AGENTS.md, generated .agents/project-context.md, docs/launch-sta
 | Verification/deployment | tests/portfolio.test.ts, scripts/Smoke-Portfolio.mjs, .github/workflows/portfolio.yml, vercel.json |
 | Guidance | scripts/Setup-AgentGuidance.ps1, Sync-AgentGuidance.ps1, Watch-AgentGuidance.ps1, Test-AgentGuidance.ps1 |
 
-The light studio uses locally hosted DM Sans/Manrope fonts, olive accents, a neutral engineering graphic, responsive navigation, three substantive case pages and PingBack as additional work. GitHub is the supplied contact path. No email or resume is published.
+The light studio uses locally hosted DM Sans/Manrope fonts, olive accents, a neutral engineering graphic, responsive navigation, four substantive case pages and PingBack as additional work. Living Campus is the fourth selected project at /projects/living-campus, with a labeled conceptual illustration and source/app links. Its upstream source review is pinned in content-evidence.md; no live NPC conversation or upstream gameplay was reproduced. GitHub is the supplied contact path. No email or resume is published.
+
+The project model has an optional validated HTTPS website field. Case pages preserve Megatron's Product website label and use Open the app for Living Campus. Guide page context and quick links now derive from project data; chat boundary IDs and topic/evidence aliases still need an explicit addition for a new project. The fallback unknown answer also derives its project list from public content. Do not mistake Living Campus's fictional Westbrook University for supplied personal education.
 
 Megatron's independent fictional sample supports overview, skills and usage, search/empty/reset states and an expanded native dialog. Canonical fragments are #demo-overview, #demo-skills and #demo-usage. It performs no desktop/plugin operations and has no remote postMessage contract. See demo-integration.md.
 
@@ -64,6 +66,8 @@ Guide suggestions resolve registered destinations and require visitor selection;
 WeatherScope numbers are attributed to its saved report; the pipeline was not rerun. F1 architecture is source-reviewed, not proof of a reproduced regulatory answer. Preserve these limits.
 
 ## Verification evidence
+
+- Living Campus follow-up: local lint/types/29 tests/build/all-case HTTP smoke and static-secret scan passed; three added behavioral tests were observed failing before implementation and passing after, alongside the updated project-catalog expectation. The build required leaving the filesystem sandbox after a generated-output EPERM; no application change repaired that environmental failure. Inspected 1440px home, 390px case/chat and 320px card screenshots; keyboard card/highlight navigation, hover, page-context answers and existing Megatron Skills/product destinations passed. Six real targeted guide cases passed against isolated preview storage. Focused axe reported zero violations with manual contrast items; reduced-motion emulation passed. See the current commit's CI/deployment status after push; earlier full evaluation results below remain historical evidence.
 
 - Fresh recovery-session Windows Node 22.23.2 lint, typecheck, all 26 tests, build and production HTTP smoke passed. The first sandboxed smoke timed out on loopback despite server readiness; the unchanged smoke passed outside that network sandbox after process/port inspection.
 - Application CI at reviewed source passed Windows/macOS/Linux; guidance CI passed Windows/Linux. Earlier 18 guidance regressions and dev-start guidance-hash preservation remain recorded evidence, not newly repeated tests.

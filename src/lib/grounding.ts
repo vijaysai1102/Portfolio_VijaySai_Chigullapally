@@ -2,11 +2,12 @@ import type { ChatRequest } from './chat-contract';
 import { selectEvidence, type Evidence } from './knowledge';
 import { guideActions } from './guide-actions';
 import { demoItems } from './demo';
+import { additionalWork, projects } from '@/content/portfolio';
 export type SourceReference = Pick<Evidence, 'id' | 'title' | 'url'>;
 export function answerPlan(input: ChatRequest): { evidence: Evidence[]; system: string; localAnswer?: string } {
   const question = input.messages.at(-1)?.text ?? '';
   const evidence = selectEvidence(question, input.currentProject);
-  if (!evidence.length) return { evidence, system: '', localAnswer: 'I don’t have approved information to answer that. I can help you explore Megatron, WeatherScope AI, F1 Regulations RAG, and PingBack. You can also use the project and contact links directly.' };
+  if (!evidence.length) return { evidence, system: '', localAnswer: `I don’t have approved information to answer that. I can help you explore ${[...projects, ...additionalWork].map(project => project.title).join(', ')}. You can also use the project and contact links directly.` };
   const policy = [
     'You are Vijay Sai Chigullapally’s AI portfolio guide, not Vijay himself.',
     'Answer concisely using only the approved project evidence below. Cite supporting source IDs in square brackets, such as [megatron].',

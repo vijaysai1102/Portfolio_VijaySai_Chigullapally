@@ -1,5 +1,13 @@
 # Content evidence and update process
 
+## Living Campus — source review 2026-11-15
+
+Reviewed public repository [Living-Campus at 3e74ec9034a1d6df7b0750c948af5002e42f8222](https://github.com/vijaysai1102/Living-Campus/tree/3e74ec9034a1d6df7b0750c948af5002e42f8222) through agent-reach's GitHub CLI backend. Inspected README, app.py, config/settings.py, ai/gemini_client.py, ai/prompt_builder.py, core/database.py, core/memory_manager.py, core/rag_retriever.py, core/gossip_engine.py and the clock/story modules. No upstream code, tests, or paid character conversation were executed for this review.
+
+The source supports a fictional Westbrook University simulation in Streamlit, Groq-generated structured replies, SQLite character state, typed memories ranked by importance/recency/keyword overlap, bounded emotion/relationship changes, simulated schedules, delayed rule-based gossip, and authored JSON secrets/favors/arcs. Context retrieval is keyword/tag and time aware, not a vector database. Database tables key character state by NPC; do not claim isolated accounts, permanent hosted storage or measured scale. Emotions/relationships are simulation state, not evidence of human-like cognition.
+
+Repository metadata still mentions Llama 3.1. The reviewed settings instead default GROQ_MODEL to qwen/qwen3.8-27b with an environment override, and the legacy gemini_client.py imports the Groq client. The portfolio names Groq without promising current model availability. The repository's published Streamlit app URL returned HTTP 200 on review; this establishes a resolving link, not tested gameplay, model quality, or persistence across hosting restarts. The conceptual portfolio artwork is original and labeled; it is not an app screenshot. No personal contribution or sole-authorship claim is inferred.
+
 Additional work: PingBack README and repository metadata reviewed via GitHub CLI on 2026-11-14. Listed as non-fork; no sole-authorship inference is made. Scope states Claude Code notifications on Windows/macOS and separates agent adapters from core routing. Real notification delivery was not exercised. Only this reviewed additional item is included; no automatic repository dump or unsupported nanoGPT authorship claim.
 
 Public data lives in src/content/portfolio.ts; parseProject validates IDs, required fields, arrays, sections and HTTPS destinations and projects only known public fields. Private provenance lives here, outside public content imports. Run test/check/smoke after edits and inspect the resulting page before publishing personal facts. Personal experience, education and credentials remain empty per chat; no resume/email/portrait is supplied.

@@ -88,6 +88,27 @@ test('conversation follows corrections, page context and bounded isolated histor
   assert.equal(conversationInput([{ role: 'user', text: 'F1 retrieval' }]).currentProject, 'f1-rag');
   assert.equal(turns.length, 3);
 });
+test('Living Campus keeps its topic, source and explicit navigation through a follow-up', () => {
+  const conversation = conversationInput([
+    { role: 'user', text: 'How does Living Campus retrieve memories?' },
+    { role: 'assistant', text: 'It ranks stored character memories.' },
+    { role: 'user', text: 'How does that work?' },
+  ]);
+  assert.equal(conversation.currentProject, 'living-campus');
+  assert.equal(answerPlan(conversation).evidence[0]?.url, '/projects/living-campus');
+  assert.equal(conversationInput([{ role: 'user', text: 'Explain Living Campus RAG' }], 'f1-rag').currentProject, 'living-campus');
+  assert.equal(parseChatRequest({ messages: [{ role: 'user', text: 'How does this work?' }], currentProject: 'living-campus' }).currentProject, 'living-campus');
+  assert.deepEqual(actionsFromAnswer('[action:work]', 'Open Living Campus').map(action => action.href), ['/projects/living-campus']);
+  assert.deepEqual(actionsFromAnswer('', 'Highlight Living Campus').map(action => action.href), ['/#project-living-campus']);
+  assert.equal(guideAction('living-campus')?.href, '/projects/living-campus');
+});
+test('Living Campus university questions retain fictional context without inventing education', () => {
+  assert.equal(selectEvidence('Which university is Living Campus set in?')[0]?.id, 'living-campus');
+  assert.equal(selectEvidence('Which university is this set in?', 'living-campus')[0]?.id, 'living-campus');
+  assert.deepEqual(selectEvidence('Which university did Vijay attend?', 'living-campus'), []);
+  assert.deepEqual(selectEvidence('What degree does Vijay have in Living Campus?', 'living-campus'), []);
+  assert.equal(selectEvidence('How do the NPCs remember promises?')[0]?.id, 'living-campus');
+});
 test('grounding keeps unknown facts local and only resolves registered source IDs', () => {
   const unknown = answerPlan({ messages: [{ role: 'user', text: 'What is his employment history?' }] });
   assert.ok(unknown.localAnswer);
@@ -139,7 +160,7 @@ test('guide refuses unsupported personal authorship and lists every public proje
   for (const question of ['Did Vijay build every part of Megatron alone?', 'What were his personal contributions to WeatherScope?', 'Who owns the F1 agent?']) {
     assert.ok(answerPlan({ messages: [{ role: 'user', text: question }], currentProject: 'megatron' }).localAnswer, `Unsupported authorship must remain an explicit unknown: ${question}`);
   }
-  assert.deepEqual(selectEvidence('What projects can I explore here?').map(entry => entry.id), ['megatron', 'weatherscope', 'f1-rag', 'pingback']);
+  assert.deepEqual(selectEvidence('What projects can I explore here?').map(entry => entry.id), ['megatron', 'weatherscope', 'f1-rag', 'living-campus', 'pingback']);
   assert.equal(selectEvidence('How does Megatron inspect skills?')[0]?.id, 'megatron');
 });
 test('guide can explain the existing sample explorer without an active demo view', () => {
@@ -177,6 +198,12 @@ test('demo selection rejects unknown views and search has a deterministic empty 
   assert.deepEqual(filterDemo(items, 'missing'), []);
 });
 const validProject = { id: 'test-project', title: 'A project', category: 'Tools', summary: 'A useful system', stack: ['TypeScript'], source: 'https://example.com/project', sections: [] };
+test('optional project websites validate destinations while preserving projects without one', () => {
+  assert.equal(parseProject({ ...validProject, website: 'https://example.com/app' }).website, 'https://example.com/app');
+  assert.equal(parseProject(validProject).website, undefined);
+  assert.throws(() => parseProject({ ...validProject, website: 'javascript:alert(1)' }), /https/i);
+  assert.throws(() => parseProject({ ...validProject, website: 'https://user:secret@example.com' }), /credentials/i);
+});
 test('content rejects malformed IDs, missing fields and unsafe destinations', () => {
   assert.throws(() => parseProject({ ...validProject, id: '../outside' }), /id/i);
   assert.throws(() => parseProject({ ...validProject, title: '' }), /title/i);

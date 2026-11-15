@@ -2,10 +2,12 @@ import { additionalWork, profile, projects } from '@/content/portfolio';
 import { demoItems } from './demo';
 export type Evidence = { id: string; title: string; url: string; text: string; reviewedAt: string };
 const REVIEWED_AT = '2026-11-14';
+const LIVING_CAMPUS_REVIEWED_AT = '2026-11-15';
 const aliases: Record<string, string[]> = {
   megatron: ['megatron', 'skill', 'skills', 'plugin', 'plugins', 'usage', 'desktop'],
   weatherscope: ['weatherscope', 'weather', 'forecast', 'forecasting', 'temperature', 'precipitation'],
   'f1-rag': ['f1', 'formula', 'regulation', 'regulations', 'rag', 'retrieval'],
+  'living-campus': ['living-campus', 'living', 'campus', 'npc', 'npcs', 'gossip', 'memories', 'emotions'],
   pingback: ['pingback', 'notification', 'notifications'],
 };
 export const knowledge: Evidence[] = [...projects, ...additionalWork].map(project => ({
@@ -14,7 +16,7 @@ export const knowledge: Evidence[] = [...projects, ...additionalWork].map(projec
   text: [project.summary, `Technologies: ${project.stack.join(', ')}.`, ...project.sections.map(section => `${section.heading}: ${section.body}`),
     ...(project.id === 'megatron' ? [`Portfolio sample explorer: This website includes an independent fictional Megatron illustration. It has Overview, Skills and Usage views and accesses no local files or real usage records. Its displayed sample items are ${JSON.stringify(demoItems)}.`] : []),
   ].join('\n'),
-  reviewedAt: REVIEWED_AT,
+  reviewedAt: project.id === 'living-campus' ? LIVING_CAMPUS_REVIEWED_AT : REVIEWED_AT,
 })).concat([{
   id: 'profile', title: 'About Vijay', url: '/#about', reviewedAt: REVIEWED_AT,
   text: [
@@ -27,10 +29,12 @@ export const knowledge: Evidence[] = [...projects, ...additionalWork].map(projec
   ].join('\n'),
 }]);
 export function selectEvidence(query: string, currentProject?: string): Evidence[] {
+  const fictionalCampusContext = (currentProject === 'living-campus' || /\b(living[- ]campus|campus|npcs?)\b/i.test(query))
+    && !/\b(vijay|his|he|attend\w*|graduat\w*|education|degree)\b/i.test(query);
   const missingTopics: [RegExp, boolean][] = [
     [/\b(contributions?|authorship|ownership)\b|\b(vijay|he)\b.*\b(alone|himself|sole|every part)\b|\bwho\b.*\b(owns?|built|wrote|created)\b/i, true],
     [/\b(experience|employ\w*|salary|hired|work history|career|companies|employers?|job titles?)\b|\bwhere\b.*\b(worked|working)\b/i, profile.experience.length === 0],
-    [/\b(education|degree|university)\b/i, profile.education.length === 0],
+    [/\b(education|degree|university)\b/i, profile.education.length === 0 && !fictionalCampusContext],
     [/\b(certification|credential)\b/i, profile.certifications.length === 0],
     [/\bemail\b/i, !profile.email],
     [/\bresume\b/i, !profile.resume],

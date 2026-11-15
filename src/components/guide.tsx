@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useId, useRef, useState } from 'react';
 import { MAX_MESSAGE_CHARS } from '@/lib/chat-contract';
+import { projects } from '@/content/portfolio';
 import { useGuide } from './use-guide';
 import { useDemoView } from './use-demo-view';
 
@@ -19,7 +20,7 @@ export function Guide() {
   const titleId = useId();
   const inputId = useId();
   const pathname = usePathname();
-  const currentProject = /^\/projects\/(megatron|weatherscope|f1-rag)$/.exec(pathname)?.[1];
+  const currentProject = projects.find(project => pathname === `/projects/${project.id}`)?.id;
   const currentView = useDemoView();
   const context = { currentProject, ...(currentProject === 'megatron' ? { currentView } : {}) };
   const online = availability === 'online';
@@ -50,7 +51,7 @@ export function Guide() {
       <header className="guide-header"><div className="guide-avatar" aria-hidden="true">✳</div><div><h2 id={titleId}>The studio guide</h2><span>Vijay’s AI portfolio guide</span></div><button className="guide-close" onClick={close} aria-label="Close guide">×</button></header>
       <div className="guide-status" role="status">{guide.busy ? 'Finding an answer in the portfolio…' : availability === 'checking' ? 'Checking guide availability…' : online ? 'Ready to explore the work.' : 'The AI guide is currently offline.'}</div>
       <div ref={log} className="guide-messages" role="log" aria-label="Portfolio conversation" aria-live="polite" aria-relevant="additions" onScroll={() => { if (log.current) nearBottom.current = log.current.scrollHeight - log.current.scrollTop - log.current.clientHeight < 80; }}>
-        {!guide.messages.length && <div className="guide-welcome"><span aria-hidden="true">✳</span><h3>A different way<br />to look around.</h3><p>{online ? 'Ask about a project, a technical decision, or the evidence behind the work.' : 'Every project is still here to explore. Start with one of the links below.'}</p><div className="guide-quick-links"><Link href="/projects/megatron" onClick={close}>Megatron ↗</Link><Link href="/projects/weatherscope" onClick={close}>WeatherScope AI ↗</Link><Link href="/projects/f1-rag" onClick={close}>F1 Regulations RAG ↗</Link></div>{!online && availability !== 'checking' && <button className="guide-check" onClick={() => void checkAvailability()}>Check availability again</button>}</div>}
+        {!guide.messages.length && <div className="guide-welcome"><span aria-hidden="true">✳</span><h3>A different way<br />to look around.</h3><p>{online ? 'Ask about a project, a technical decision, or the evidence behind the work.' : 'Every project is still here to explore. Start with one of the links below.'}</p><div className="guide-quick-links">{projects.map(project => <Link key={project.id} href={`/projects/${project.id}`} onClick={close}>{project.title} ↗</Link>)}</div>{!online && availability !== 'checking' && <button className="guide-check" onClick={() => void checkAvailability()}>Check availability again</button>}</div>}
         {guide.messages.map(turn => <article key={turn.id} className={`guide-turn ${turn.role}`}><span>{turn.role === 'user' ? 'You' : 'Guide'}</span><p>{turn.text || 'Thinking…'}</p>{turn.sources.length > 0 && <nav aria-label="Answer sources">{turn.sources.map(source => <Link key={source.id} href={source.url} onClick={close}>{source.title} ↗</Link>)}</nav>}{turn.complete && turn.actions.length > 0 && <nav className="guide-actions" aria-label="Suggested navigation">{turn.actions.map(action => <Link key={action.id} href={action.href} onClick={event => { close(); if (pathname === '/projects/megatron' && action.id.startsWith('demo-')) { event.preventDefault(); window.location.hash = new URL(action.href, window.location.href).hash; } }}>{action.label} ↗</Link>)}</nav>}</article>)}
       </div>
       {guide.remaining !== null && <div className="guide-allowance" role="status">{guide.remaining ? `${guide.remaining} questions remain in this session.` : 'Session limit reached. Explore the project links or return later.'}</div>}
