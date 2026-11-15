@@ -32,3 +32,6 @@ Header, navigation, menu Escape/focus-return behavior, footer, skip link, sticky
 
 ## T11 — Partial: real portrait and final personal copy pending
 Added responsive editorial hero, reserved portrait integration and original static engineering orbit graphic; no substitute photo or rejected asset. Existing anchors, link hover/focus, header/menu and reduced-motion behavior preserved. Full checks and production HTTP passed. Portrait and approved personal wording absent, so final asset-dependent acceptance remains pending. Browser host unavailable: narrow/wide/touch/slow-image render review not performed.
+
+## T12 — Implementation verified; browser review pending
+Added flagship Megatron and two supporting project cards from validated records. Source destinations remain active until each case study has sections. Original code-native artwork is explicitly illustrative/sample data, with no claimed project metrics. Entire cards are normal links; text and tags remain visible on touch. Existing hero/menu/anchors/focus preserved; new arrow/border hover transitions opt out under reduced motion. Full checks/build/HTTP passed; actual pointer/keyboard/mobile rendering unavailable.
