@@ -10,6 +10,6 @@ export function Hero() {
       <div className="portrait-slot">{profile.portrait ? <Image src={profile.portrait.src} alt={profile.portrait.alt} width={260} height={310} priority /> : <div className="monogram" aria-hidden="true"><span>v<span className="monogram-dot">.</span></span><small>THINK / BUILD / REFINE</small></div>}</div>
       <span className="orbit-label label-interface"><span>01</span> Interface</span><span className="orbit-label label-system"><span>02</span> System</span><span className="orbit-label label-evidence"><span>03</span> Evidence</span><figcaption>A little curiosity. A lot of making.</figcaption>
     </figure>
-    <div className="hero-bottom"><span>SOFTWARE & EXPLORATIONS</span><a href="#work" aria-label="Scroll to selected work">SCROLL TO EXPLORE <span aria-hidden="true">↓</span></a></div>
+    <div className="hero-bottom"><span>SOFTWARE & EXPLORATIONS</span><a href="#work" aria-label="Scroll to explore selected work">SCROLL TO EXPLORE <span aria-hidden="true">↓</span></a></div>
   </section>;
 }
