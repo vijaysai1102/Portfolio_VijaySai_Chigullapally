@@ -47,3 +47,6 @@ Authored WeatherScope case study from reviewed forecasting code and saved REPORT
 
 ## T16 — Partial: approved answer example, contribution and browser review pending
 Case study traced to ingestion.py/rag_agent.py and README. Correctly describes local PDF ingestion, MiniLM/Chroma retrieval, citation prompting and separate web enrichment; explicitly avoids regulatory correctness guarantees. Source review is not a live answer test. Full checks and all three case-study HTTP routes passed. No supplied/recorded regulation example or personal contribution claim was invented. Browser review unavailable.
+
+## T17 — Implementation verified; contribution/visual review pending
+Added PingBack as a reviewed additional source-linked project. README/repository metadata reviewed; no sole-authorship or runtime notification claim. Reuses validated records and ordinary links; no unnecessary filters. Existing flagship prominence, card hover/focus, menu and motion rules preserved. Full checks and all production routes passed. Browser unavailable; personal attribution wording awaits chat.

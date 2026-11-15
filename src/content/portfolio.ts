@@ -30,3 +30,8 @@ export const projects = [
 ].map(parseProject);
 
 export const getProject = (id: string) => projects.find(project => project.id === id);
+export const additionalWork = [parseProject({
+  id: 'pingback', title: 'PingBack', category: 'Developer tools',
+  summary: 'Local notifications when Claude Code needs attention, with Windows and macOS platform adapters.',
+  stack: ['TypeScript', 'CLI', 'Native notifications'], source: 'https://github.com/vijaysai1102/PingBack', sections: [],
+})];

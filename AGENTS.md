@@ -75,7 +75,7 @@ Lockfiles: package-lock.json. Use the matching package manager; investigate mixe
 
 ## Code and configuration inventory
 
-Content fingerprint (SHA-256, text line endings normalized): `4364191c80e1ed3c1aa25280d1d443c770a060d13858225acf13828339ce1d49`.
+Content fingerprint (SHA-256, text line endings normalized): `45dca4dcbede2d3edc3d428bd41f585597d72523b4edfba017dde3099cb4c6cf`.
 
 - `docs/homepage-concept.html`
 - `eslint.config.mjs`
@@ -88,6 +88,7 @@ Content fingerprint (SHA-256, text line endings normalized): `4364191c80e1ed3c1a
 - `src/app/not-found.tsx`
 - `src/app/page.tsx`
 - `src/app/projects/[slug]/page.tsx`
+- `src/components/additional-work.tsx`
 - `src/components/footer.tsx`
 - `src/components/header.tsx`
 - `src/components/hero.tsx`
