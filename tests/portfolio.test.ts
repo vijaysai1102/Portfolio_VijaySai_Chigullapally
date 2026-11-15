@@ -18,6 +18,13 @@ import { conversationInput } from '../src/lib/conversation';
 import { readGuideStream } from '../src/lib/guide-stream';
 import { actionsFromAnswer, displayGuideText, guideAction } from '../src/lib/guide-actions';
 import { reserveUsage, usageConfig } from '../src/lib/server/usage';
+import { siteConfig } from '../src/lib/server/site';
+test('sharing origin is explicit and preview/unconfigured sites do not request indexing', () => {
+  assert.equal(siteConfig({}).indexable, false);
+  assert.equal(siteConfig({ SITE_URL: 'https://portfolio.example', VERCEL_ENV: 'preview' }).indexable, false);
+  assert.equal(siteConfig({ SITE_URL: 'https://portfolio.example', VERCEL_ENV: 'production' }).origin, 'https://portfolio.example');
+  assert.throws(() => siteConfig({ SITE_URL: 'https://user:secret@portfolio.example' }), /SITE_URL/i);
+});
 test('release configuration requires explicit budgets and malformed quota results fail closed', async () => {
   assert.throws(() => usageConfig({}), /configured/i);
   assert.throws(() => usageConfig({ UPSTASH_REDIS_REST_URL: 'https://quota.example', UPSTASH_REDIS_REST_TOKEN: 'test-token', AI_DAILY_REQUEST_LIMIT: '5', AI_SESSION_REQUEST_LIMIT: '3' }), /limits/i);

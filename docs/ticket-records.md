@@ -89,3 +89,6 @@ Expanded deterministic provider framing/safety, quota configuration/result, payl
 
 ## T30 — Partial: rendered polish review pending
 Inventoried and preserved card arrow/border hovers, static orbit, sticky/menu/Escape/focus, native demo modal/search/reset/URL state, guide controls and ordinary anchors. Added brief CSS arrival with existing reduced-motion important override; larger privacy text, 44px mobile controls, non-zooming mobile demo input and clearer source-scope copy. Removed internal future-content notes from public case text without inventing contributions. Full checks and all production HTTP passed. Browser unavailable: no rendered polish/hover/touch/reduced-motion observation claimed.
+
+## T31 — Partial: public origin and deployed sharing verification pending
+Added page-specific metadata, original favicon, static 1200x630 share PNG and robots/sitemap with explicit-origin and preview indexing gates. Origin/indexing regression failed before implementation then passed; full lint/types/22 tests/build passed. Actual PNG/robots/sitemap/page/API HTTP passed after correcting case-sensitive robots test assumption. Saved and visually inspected share-preview.png: text fits without clipping. No guessed domain, role or personal claim. Final canonical origin/social-cache behavior needs deployment; website browser review unavailable.

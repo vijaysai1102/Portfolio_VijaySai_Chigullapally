@@ -5,13 +5,14 @@ import { getProject, projects } from '@/content/portfolio';
 import { ActionLink, Arrow, Eyebrow, Tags } from '@/components/primitives';
 import { ProjectArt } from '@/components/project-art';
 import { MegatronDemo } from '@/components/megatron-demo';
+import { pageMetadata } from '@/lib/server/site';
 
 type Props = { params: Promise<{ slug: string }> };
 export const dynamicParams = false;
 export function generateStaticParams() { return projects.filter(project => project.sections.length).map(project => ({ slug: project.id })); }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = getProject((await params).slug);
-  return project ? { title: `${project.title} — Vijay Sai Chigullapally`, description: project.summary } : {};
+  return project ? pageMetadata(project.title, project.summary, `/projects/${project.id}`) : {};
 }
 export default async function ProjectPage({ params }: Props) {
   const project = getProject((await params).slug);
