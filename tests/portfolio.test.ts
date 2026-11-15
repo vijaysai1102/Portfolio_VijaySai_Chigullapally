@@ -3,6 +3,14 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { parseProject } from '../src/content/model';
 import { profile, projects } from '../src/content/portfolio';
+import { filterDemo, isDemoView } from '../src/lib/demo';
+test('demo selection rejects unknown views and search has a deterministic empty state', () => {
+  assert.equal(isDemoView('https://outside.example'), false);
+  assert.equal(isDemoView('skills'), true);
+  const items = [{ title: 'Review', detail: 'Inspect changes', badge: 'Local' }];
+  assert.deepEqual(filterDemo(items, '  INSPECT '), items);
+  assert.deepEqual(filterDemo(items, 'missing'), []);
+});
 const validProject = { id: 'test-project', title: 'A project', category: 'Tools', summary: 'A useful system', stack: ['TypeScript'], source: 'https://example.com/project', sections: [] };
 test('content rejects malformed IDs, missing fields and unsafe destinations', () => {
   assert.throws(() => parseProject({ ...validProject, id: '../outside' }), /id/i);

@@ -38,3 +38,6 @@ Added flagship Megatron and two supporting project cards from validated records.
 
 ## T13 — Partial: contribution details and rendered review pending
 Added reusable static case-study route, contents navigation, source/evidence note, related destinations and Megatron technical narrative. Reviewed README and scanner docs; costs/cached update limits distinguished. No personal ownership, testimonials or adoption claims published. Full checks and real homepage/404/Megatron HTTP journeys passed. Desktop application not run; browser render/interaction unavailable. Personal contribution and early-feedback wording await chat.
+
+## T14 — Partial: interactive browser verification pending
+Inspected existing site headers/HTML and documented reuse limits in demo-integration.md. Added independent labeled sample explorer with allowed views, search/empty/reset, native expand/close dialog and external product fallback. View guard test failed before implementation and passes after; full checks and production routes passed. No remote bridge, file access or real telemetry. Existing case links and focus styles preserved; native dialog behavior is not claimed verified without browser access.
