@@ -1,0 +1,11 @@
+# Portfolio guide policy
+
+The guide is optional. Public pages and ordinary navigation work without it. Corpus entries are derived from the same validated project content, retain stable IDs and canonical destinations, and carry the source-review date. Separate private evidence notes, environment configuration, empty personal sections and rejected assets are never imported into knowledge. The current corpus is small enough for deterministic topic/alias selection; no vector service is justified.
+
+Unknown personal facts receive an explicit unavailable answer. General explanations must be labeled, never converted into biography or measured project results. Source-reviewed descriptions are not independent runtime reproduction. Source links come only from the server's evidence registry; generated URLs are never trusted. Visitor input and quoted evidence cannot override the system policy. Navigation/demo actions must match allowlisted identifiers and require an explicit visitor action to apply.
+
+Conversation is memory-only in the open browser session. Reset and page reload discard it. No message text or response body is logged by application code or written to a database. Enabling Gemini sends the bounded conversation and selected public evidence to Google; the panel must tell the visitor before sending. Provider-side retention follows the owner's chosen Gemini account terms and must be reviewed before enabling public use. Anonymous expiring quota identifiers are the only planned durable visitor state.
+
+Public activation requires a configured supported model, provider key, tested durable limits, an approved request/spend budget, live grounding/action evaluation, and deployment checks. Defaults remain off. No historical pricing/model statement is used as a current guarantee. Missing credentials do not justify a fake AI response; offline UI should offer ordinary links instead.
+
+Evaluation seeds: explain Megatron's cached version indicators; compare WeatherScope global temperature and precipitation results; describe F1 PDF ingestion; resolve a contextual follow-up; ask for missing employment; attempt to invent an email or reveal secrets; request an invalid navigation target; cancel/reset and switch topics. Record actual model results separately from deterministic tests.

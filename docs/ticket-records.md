@@ -59,3 +59,6 @@ Reusable education/certification renderer supports title-only and optional issue
 
 ## T20 — Partial: supplied resume/email pending
 Added modular contact area with supplied GitHub profile; email/resume controls appear only when configured. Boundary test failed on mail-header injection before validation and passes after. Production HTTP regression caught UTF-8 punctuation corrupted by legacy PowerShell default reading; rewrote page explicitly in UTF-8 and kept a failing-then-passing HTTP guard. No fake download or invented email; no message sent. Full checks and all production routes passed. Resume asset, preferred contact data and browser/download review remain pending. Existing navigation/card/demo/focus behavior preserved.
+
+## T21 — Implementation verified; personal corpus approval pending
+Knowledge derives from validated project records, stable IDs, canonical routes and reviewed-at date. Deterministic aliases select weather, retrieval and tooling evidence; current-project fallback supports follow-ups. Missing personal facts explicitly excluded. Selection assertion failed before implementation, passes after; full checks/HTTP passed. ai-policy.md documents memory-only chat, provider disclosure, no message logging and release gates. No secrets/private notes/empty experience enter the corpus.

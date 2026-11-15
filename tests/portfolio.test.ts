@@ -9,6 +9,13 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { ExperienceSection } from '../src/components/experience';
 import { CredentialSection } from '../src/components/credentials';
 import { emailHref, resumeHref } from '../src/lib/contact';
+import { selectEvidence } from '../src/lib/knowledge';
+test('knowledge selects project evidence and refuses missing personal facts', () => {
+  assert.equal(selectEvidence('weather forecasting')[0]?.id, 'weatherscope');
+  assert.equal(selectEvidence('why that approach?', 'megatron')[0]?.id, 'megatron');
+  assert.deepEqual(selectEvidence('Where was Vijay employed?', 'megatron'), []);
+  assert.equal(JSON.stringify(selectEvidence('all projects')).includes('privateNotes'), false);
+});
 test('contact links reject mail-header injection and unsafe resume paths', () => {
   assert.throws(() => emailHref('person@example.com?bcc=other@example.com'), /email/i);
   assert.throws(() => resumeHref('//outside.example/resume.pdf'), /resume/i);
