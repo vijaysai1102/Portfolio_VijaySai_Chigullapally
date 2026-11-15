@@ -25,7 +25,28 @@ function Write-Fixture {
 
 function Read-Fixture {
     param([string]$Path)
-    return [IO.File]::ReadAllText((Join-Path $fixtureRoot $Path), $utf8)
+    $maximumAttempts = 20
+    for ($attempt = 0; $attempt -lt $maximumAttempts; $attempt++) {
+        $stream = $null
+        $reader = $null
+        try {
+            # The watcher replaces complete files atomically; observers must permit rename/delete sharing.
+            $stream = [IO.File]::Open((Join-Path $fixtureRoot $Path), 'Open', 'Read', ([IO.FileShare]::ReadWrite -bor [IO.FileShare]::Delete))
+            $reader = [IO.StreamReader]::new($stream, $utf8, $true)
+            return $reader.ReadToEnd()
+        }
+        catch [IO.IOException] {
+            $cause = $_.Exception
+            while ($cause.InnerException) { $cause = $cause.InnerException }
+            $windowsErrorCode = $cause.HResult -band 65535
+            if ($windowsErrorCode -notin @(32, 33) -or $attempt -eq ($maximumAttempts - 1)) { throw }
+            Start-Sleep -Milliseconds 25
+        }
+        finally {
+            if ($null -ne $reader) { $reader.Dispose() }
+            elseif ($null -ne $stream) { $stream.Dispose() }
+        }
+    }
 }
 
 function Invoke-FixtureGit {
@@ -109,6 +130,13 @@ try {
             $contextDifference = Compare-Object ($legacyContext.Split("`n")) ($modernContext.Split("`n")) | Out-String
             throw "Assertion failed: modern engine accepts legacy context. Differences: $contextDifference"
         }
+    }
+
+    Run-Case 'fixture reader permits a compatible shared writer during watcher observation' {
+        Write-Fixture 'shared-reader.txt' "Complete fixture snapshot.`n"
+        $sharedWriter = [IO.File]::Open((Join-Path $fixtureRoot 'shared-reader.txt'), 'Open', 'ReadWrite', ([IO.FileShare]::ReadWrite -bor [IO.FileShare]::Delete))
+        try { Assert-True ((Read-Fixture 'shared-reader.txt') -eq "Complete fixture snapshot.`n") 'observer reads while replacement-compatible writer handle exists' }
+        finally { $sharedWriter.Dispose() }
     }
 
     Run-Case 'root edits propagate from Agents and from Claude' {

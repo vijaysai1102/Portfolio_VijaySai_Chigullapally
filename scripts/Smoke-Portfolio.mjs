@@ -1,6 +1,6 @@
 import { spawn } from 'node:child_process';
 import { resolve } from 'node:path';
-import { writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
 
 const port = 3100;
@@ -64,6 +64,7 @@ try {
   assert.match(share.headers.get('content-type') ?? '', /image\/png/);
   const shareBytes = new Uint8Array(await share.arrayBuffer());
   assert.ok(shareBytes.length > 1000);
+  mkdirSync(resolve('.agent-guidance'), { recursive: true });
   writeFileSync(resolve('.agent-guidance/share-preview.png'), shareBytes);
   const offline = await fetch(`${origin}/api/chat`, { method: 'POST', headers: { Origin: origin, 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [{ role: 'user', text: 'Tell me about Megatron' }] }) });
   assert.equal(offline.status, 503, 'AI must fail closed without release configuration');

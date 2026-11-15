@@ -25,6 +25,8 @@ This repository will contain Vijay Sai Chigullapally's personal portfolio. Follo
 
 ## Implementation and verification
 
+- `.github/workflows/portfolio.yml` repeats lockfile installation, all app checks, and real production HTTP smoke on Windows, macOS, and Linux. Local checks must pass before pushing; CI adds platform coverage. `vercel.json` targets Next.js at the repository root. Keep preview/production configuration separate and follow `docs/deployment.md`; neither a local build nor mocked provider/storage tests establish a verified deployment.
+
 - The app uses Next.js App Router, React, TypeScript and npm. Use `npm.cmd ci`, `npm.cmd run dev`, `npm.cmd run lint`, `npm.cmd run typecheck`, `npm.cmd test`, and `npm.cmd run build` on Windows. `npm.cmd run check` runs the four checks sequentially. Source areas: `src/app` (routes), `src/components` (UI), `src/content` (public facts), `src/lib` (validated logic). Tests use Node test through tsx. Server secrets stay in ignored `.env.local`; AI defaults off. Generated context is synchronized after each ticket. Chat on 2026-11-14 authorizes sequential implementation and a verified commit/push to main for each ticket without another approval gate; personal facts await chat inputs. Browser verification limitations must be recorded before pushing.
 
 - Keep functions focused and modules decoupled. Validate boundary inputs, use descriptive names and early returns, and handle specific errors visibly. Prefer pure functions and small local state.
@@ -75,7 +77,7 @@ Lockfiles: package-lock.json. Use the matching package manager; investigate mixe
 
 ## Code and configuration inventory
 
-Content fingerprint (SHA-256, text line endings normalized): `9c4cf0d779c7b23b22c4abec8654fa2381fe8f7bfbd25f1766c76021ee08f7f7`.
+Content fingerprint (SHA-256, text line endings normalized): `c4fb9194034f2b400b822d7ed49b5bb93eb01a528d84bf7e4219ae714b42055d`.
 
 - `docs/homepage-concept.html`
 - `eslint.config.mjs`
@@ -125,6 +127,7 @@ Content fingerprint (SHA-256, text line endings normalized): `9c4cf0d779c7b23b22
 - `src/lib/server/usage.ts`
 - `tests/portfolio.test.ts`
 - `tsconfig.json`
+- `vercel.json`
 
 Git-ignored files, environment files, generated output, dependency trees, and guidance infrastructure are excluded. This inventory does not execute package scripts or infer design decisions. Update manual guidance when code changes alter how the project should be developed or verified.
 <!-- agent-context:end -->

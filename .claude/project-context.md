@@ -22,7 +22,7 @@ Lockfiles: package-lock.json. Use the matching package manager; investigate mixe
 
 ## Code and configuration inventory
 
-Content fingerprint (SHA-256, text line endings normalized): `9c4cf0d779c7b23b22c4abec8654fa2381fe8f7bfbd25f1766c76021ee08f7f7`.
+Content fingerprint (SHA-256, text line endings normalized): `c4fb9194034f2b400b822d7ed49b5bb93eb01a528d84bf7e4219ae714b42055d`.
 
 - `docs/homepage-concept.html`
 - `eslint.config.mjs`
@@ -72,5 +72,6 @@ Content fingerprint (SHA-256, text line endings normalized): `9c4cf0d779c7b23b22
 - `src/lib/server/usage.ts`
 - `tests/portfolio.test.ts`
 - `tsconfig.json`
+- `vercel.json`
 
 Git-ignored files, environment files, generated output, dependency trees, and guidance infrastructure are excluded. This inventory does not execute package scripts or infer design decisions. Update manual guidance when code changes alter how the project should be developed or verified.
