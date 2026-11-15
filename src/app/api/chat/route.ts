@@ -1,6 +1,7 @@
 import { ChatError } from '@/lib/chat-contract';
 import { streamGemini } from '@/lib/server/gemini';
 import { readChatRequest } from '@/lib/server/request';
+import { answerPlan, citedSources } from '@/lib/grounding';
 export const runtime = 'nodejs';
 export const maxDuration = 30;
 const configured = () => process.env.AI_ENABLED === 'true' && process.env.AI_RELEASE_APPROVED === 'true' && Boolean(process.env.GEMINI_API_KEY && process.env.GEMINI_MODEL);
@@ -10,6 +11,7 @@ export async function POST(request: Request) {
   try {
     const input = await readChatRequest(request);
     if (!configured()) throw new ChatError(503, 'The AI guide is offline. You can still explore every project using the links.');
+    const plan = answerPlan(input);
     const abort = new AbortController();
     const signal = AbortSignal.any([request.signal, abort.signal]);
     let cancelled = false;
@@ -18,7 +20,19 @@ export async function POST(request: Request) {
       async start(controller) {
         const send = (event: unknown) => { if (!cancelled) controller.enqueue(encoder.encode(`${JSON.stringify(event)}\n`)); };
         try {
-          for await (const event of streamGemini({ apiKey: process.env.GEMINI_API_KEY!, model: process.env.GEMINI_MODEL!, system: 'You are Vijay’s portfolio AI guide. Do not invent personal facts or reveal private configuration.', messages: input.messages, signal })) send(event);
+          if (plan.localAnswer) {
+            send({ type: 'token', text: plan.localAnswer });
+            send({ type: 'sources', sources: [] });
+          } else {
+            let answer = '';
+            for await (const event of streamGemini({ apiKey: process.env.GEMINI_API_KEY!, model: process.env.GEMINI_MODEL!, system: plan.system, messages: input.messages, signal })) {
+              if (event.type === 'token') answer += event.text;
+              send(event);
+            }
+            const sources = citedSources(answer, plan.evidence);
+            if (!sources.length) throw new ChatError(422, 'The answer could not be linked to approved evidence. Please open a project source or try again.');
+            send({ type: 'sources', sources });
+          }
           send({ type: 'done' });
         } catch (error) { if (!cancelled) send({ type: 'error', message: errorMessage(error) }); }
         finally { if (!cancelled) controller.close(); }

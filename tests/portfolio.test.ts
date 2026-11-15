@@ -13,6 +13,14 @@ import { selectEvidence } from '../src/lib/knowledge';
 import { parseChatRequest } from '../src/lib/chat-contract';
 import { streamGemini } from '../src/lib/server/gemini';
 import { readChatRequest } from '../src/lib/server/request';
+import { answerPlan, citedSources } from '../src/lib/grounding';
+test('grounding keeps unknown facts local and only resolves registered source IDs', () => {
+  const unknown = answerPlan({ messages: [{ role: 'user', text: 'What is his employment history?' }] });
+  assert.ok(unknown.localAnswer);
+  const weather = selectEvidence('weather');
+  assert.deepEqual(citedSources('[weatherscope] [invented] https://outside.example', weather).map(source => source.id), ['weatherscope']);
+  assert.equal(answerPlan({ messages: [{ role: 'user', text: 'Explain weather' }] }).evidence[0]?.id, 'weatherscope');
+});
 test('same-origin validation uses browser host when Next normalizes an internal URL', async () => {
   const request = new Request('http://localhost:3100/api/chat', { method: 'POST', headers: { Host: '127.0.0.1:3100', Origin: 'http://127.0.0.1:3100', 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [{ role: 'user', text: 'Hello' }] }) });
   assert.deepEqual((await readChatRequest(request)).messages, [{ role: 'user', text: 'Hello' }]);
