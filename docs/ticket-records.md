@@ -29,3 +29,6 @@ Added global tokens, responsive spacing/type, semantic links, tags and labels; v
 
 ## T10 — Implementation verified; interactive browser review pending
 Header, navigation, menu Escape/focus-return behavior, footer, skip link, sticky anchor offsets and intentional 404. Native links and back behavior retained; primitive hover/focus/reduced-motion rules preserved. Production HTTP smoke now validates every homepage anchor and a real 404 destination; full checks passed. Browser unavailable, so menu activation, back/forward, narrow rendering and actual focus traversal remain unverified.
+
+## T11 — Partial: real portrait and final personal copy pending
+Added responsive editorial hero, reserved portrait integration and original static engineering orbit graphic; no substitute photo or rejected asset. Existing anchors, link hover/focus, header/menu and reduced-motion behavior preserved. Full checks and production HTTP passed. Portrait and approved personal wording absent, so final asset-dependent acceptance remains pending. Browser host unavailable: narrow/wide/touch/slow-image render review not performed.
