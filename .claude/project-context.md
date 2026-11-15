@@ -22,7 +22,7 @@ Lockfiles: package-lock.json. Use the matching package manager; investigate mixe
 
 ## Code and configuration inventory
 
-Content fingerprint (SHA-256, text line endings normalized): `a5933208b642772ea25a47d5ef7dac90f6022bc77d2bc5a9fa0abca42e62848a`.
+Content fingerprint (SHA-256, text line endings normalized): `620dcacb2a3d73b2ef25e02500b483bdb645e454f745577895ab17f54afcf57d`.
 
 - `docs/homepage-concept.html`
 - `eslint.config.mjs`

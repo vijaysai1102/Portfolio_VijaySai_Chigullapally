@@ -41,3 +41,6 @@ Added reusable static case-study route, contents navigation, source/evidence not
 
 ## T14 — Partial: interactive browser verification pending
 Inspected existing site headers/HTML and documented reuse limits in demo-integration.md. Added independent labeled sample explorer with allowed views, search/empty/reset, native expand/close dialog and external product fallback. View guard test failed before implementation and passes after; full checks and production routes passed. No remote bridge, file access or real telemetry. Existing case links and focus styles preserved; native dialog behavior is not claimed verified without browser access.
+
+## T15 — Partial: personal contribution and browser review pending
+Authored WeatherScope case study from reviewed forecasting code and saved REPORT.md. Temperature and weak/negative precipitation results retain target, metric, 90-day one-step holdout, aggregate scope and source-report status; no retraining claimed. Added direct artifact link and production HTTP route check. Full app checks passed. Conceptual artwork is labeled, not an exported result plot. Personal contribution and visual QA remain pending.
