@@ -20,3 +20,6 @@ Files: portfolio-brief.md; original backlog captured. Checked conversation prece
 
 ## T02 — Done
 Reviewed all 36 identifiers and dependency ordering: dependencies refer only to earlier tickets. Added execution amendment; original detailed acceptance and verification remain intact. Public AI stays gated on T28/T29. Chat authorizes continuous implementation and push after each verified ticket. Personal claims deferred. Record partial and blocked portions explicitly. Verification: numbering/dependency review and guidance check.
+
+## T08 — Done
+Added typed profile/project/experience/credential models, boundary validation, public field projection, stable IDs and separate evidence notes. Empty personal collections remain empty. Observed validation and private-note leakage tests fail before implementation, then pass. Full lint/typecheck/tests/build and production HTTP smoke passed. No UI change.
