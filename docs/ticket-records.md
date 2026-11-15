@@ -1,5 +1,8 @@
 # Ticket evidence
 
+## T07 — Done (browser render unavailable)
+Added Next.js/React/TypeScript/npm scaffold, lockfile, ESLint, security headers, server-only env example, production HTTP smoke, README and manual guidance. Verified Node 22.23.2 clean `npm ci`, lint, typecheck, test, production build and production homepage HTTP response. Corrected Windows test-glob resolution by using explicit test entry. Real pre-commit exposed NLS/ICU source ordering differences between PowerShell engines: added a failing isolated cross-engine regression, then fixed with an explicitly typed ordinal sort in Sync-AgentGuidance.ps1. Test-AgentGuidance.ps1 now runs 16 behavior checks including both actual Windows engines. Browser host unavailable, so rendered page not observed. Production npm audit: zero; seven moderate dev-only minimatch/typescript-eslint advisories remain after compatible audit fix; Next plugins require deprecated ESLint 9. No forced major upgrades. Durable storage decision: atomic Redis REST limits, fail closed; no cloud resources created. Credentials and real-model smoke remain future dependencies.
+
 ## T06 — In review: visual verification unavailable
 File: mobile-composition.md and responsive concept from T05. Specified 360/390/tablet, menu/chat/demo behavior, dynamic viewport and reduced motion. Static review only: CUA browser unavailable. Actual rendered QA pending. Palette verified in T05.
 

@@ -110,13 +110,15 @@ function Get-ManualGuidance {
 }
 
 function Get-ProjectContext {
-    $sourceFiles = @($script:Files | Where-Object {
+    [string[]]$sourceFiles = @($script:Files | Where-Object {
         $_ -notmatch '(^|/)(\.git|\.claude|\.agents|\.agent-guidance|node_modules|\.next|dist|build|coverage|vendor|\.venv|playwright-report|test-results)(/|$)' -and
         $_ -notmatch '(^|/)\.env($|\.)' -and $_ -notmatch '(^|/)(package-lock\.json|yarn\.lock|pnpm-lock\.yaml|bun\.lockb?)$' -and
         $_ -match '\.(html?|css|scss|sass|less|[cm]?jsx?|tsx?|json|toml|ya?ml|py|vue|svelte|astro|ps1)$' -and
         -not ($_.StartsWith('scripts/') -and $script:InfrastructureScripts -contains (Split-Path -Leaf $_)) -and
         $_ -notmatch '^\.github/'
-    } | Sort-Object)
+    })
+    # Culture sorting differs between Windows PowerShell (NLS) and PowerShell 7 (ICU).
+    [Array]::Sort($sourceFiles, [StringComparer]::Ordinal)
     $fingerprintEntries = foreach ($path in $sourceFiles) {
         $hash = Get-BytesHash ($script:Utf8.GetBytes((Read-RepositoryText $path)))
         "$path|$hash"

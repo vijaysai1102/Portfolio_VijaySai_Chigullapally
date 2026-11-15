@@ -84,6 +84,33 @@ try {
         & $syncScript -Root $fixtureRoot -Check | Out-Null
     }
 
+    Run-Case 'Windows PowerShell and PowerShell 7 agree on punctuation in source filenames' {
+        $legacyEngine = Get-Command powershell.exe -ErrorAction SilentlyContinue
+        $modernEngine = Get-Command pwsh.exe -ErrorAction SilentlyContinue
+        if (-not $legacyEngine -or -not $modernEngine) {
+            Write-Output 'SKIP cross-engine check: both Windows engines are required.'
+            return
+        }
+        Write-Fixture 'src/order-item.ts' "export const first = 1;`n"
+        Write-Fixture 'src/order.item.ts' "export const second = 2;`n"
+        & $legacyEngine.Source -NoProfile -ExecutionPolicy Bypass -File $syncScript -Root $fixtureRoot | Out-Null
+        Assert-True ($LASTEXITCODE -eq 0) 'legacy engine generates context'
+        $previousPreference = $ErrorActionPreference
+        try {
+            $ErrorActionPreference = 'Continue'
+            $crossEngineOutput = & $modernEngine.Source -NoProfile -ExecutionPolicy Bypass -File $syncScript -Root $fixtureRoot -Check 2>&1
+            $crossEngineExitCode = $LASTEXITCODE
+        }
+        finally { $ErrorActionPreference = $previousPreference }
+        if ($crossEngineExitCode -ne 0) {
+            $legacyContext = Read-Fixture '.claude/project-context.md'
+            & $modernEngine.Source -NoProfile -ExecutionPolicy Bypass -File $syncScript -Root $fixtureRoot | Out-Null
+            $modernContext = Read-Fixture '.claude/project-context.md'
+            $contextDifference = Compare-Object ($legacyContext.Split("`n")) ($modernContext.Split("`n")) | Out-String
+            throw "Assertion failed: modern engine accepts legacy context. Differences: $contextDifference"
+        }
+    }
+
     Run-Case 'root edits propagate from Agents and from Claude' {
         Write-Fixture 'AGENTS.md' ((Read-Fixture 'AGENTS.md').Replace('Manual instructions.', 'Agents edit.'))
         & $syncScript -Root $fixtureRoot | Out-Null

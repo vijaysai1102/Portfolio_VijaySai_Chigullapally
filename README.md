@@ -1,6 +1,14 @@
 # Vijay Sai Chigullapally Portfolio
 
-The portfolio website will be added here. No application framework or development command is configured yet.
+Personal portfolio built with Next.js App Router, React, TypeScript and npm. Node.js 22+ is required. On Windows use PowerShell and `npm.cmd`.
+
+```powershell
+npm.cmd ci
+npm.cmd run dev
+npm.cmd run check
+```
+
+The local site runs at http://127.0.0.1:3000. `npm.cmd run build` prepares production; `npm.cmd start` runs it. `src/content` owns public content, `src/components` owns interaction, and `src/lib` owns validated server logic. Keep secrets in ignored `.env.local`; see `.env.example` for names. AI is disabled by default and requires live verification and durable usage storage before enabling publicly. No personal experience, education, portrait or resume is inferred. See `docs/ticket-records.md` for implementation evidence and outstanding inputs.
 
 ## Shared agent guidance
 

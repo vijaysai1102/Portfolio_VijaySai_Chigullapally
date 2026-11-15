@@ -25,6 +25,8 @@ This repository will contain Vijay Sai Chigullapally's personal portfolio. Follo
 
 ## Implementation and verification
 
+- The app uses Next.js App Router, React, TypeScript and npm. Use `npm.cmd ci`, `npm.cmd run dev`, `npm.cmd run lint`, `npm.cmd run typecheck`, `npm.cmd test`, and `npm.cmd run build` on Windows. `npm.cmd run check` runs the four checks sequentially. Source areas: `src/app` (routes), `src/components` (UI), `src/content` (public facts), `src/lib` (validated logic). Tests use Node test through tsx. Server secrets stay in ignored `.env.local`; AI defaults off. Generated context is synchronized after each ticket. Chat on 2026-11-14 authorizes sequential implementation and a verified commit/push to main for each ticket without another approval gate; personal facts await chat inputs. Browser verification limitations must be recorded before pushing.
+
 - Keep functions focused and modules decoupled. Validate boundary inputs, use descriptive names and early returns, and handle specific errors visibly. Prefer pure functions and small local state.
 - Extract non-obvious configuration into named constants or environment variables. Comments explain reasons that names and structure cannot express.
 - Use the `test-driven-development` skill for meaningful application logic or synchronization behavior. A regression test should reproduce an observable failure. Prose, simple styling, constants, and reversible configuration do not need tests that merely copy their implementation.
@@ -55,15 +57,36 @@ Generated from the current repository by `scripts/Sync-AgentGuidance.ps1`. Do no
 
 ## Application
 
-HTML files are present; no package.json is present. Inspect the site before choosing a server.
+Package: `vijay-portfolio`.
+Detected framework/tool dependencies: next, react.
 
-No JavaScript package-manager lockfile is present.
+### Package scripts
+
+- `build`: `next build`
+- `check`: `npm run lint && npm run typecheck && npm test && npm run build`
+- `dev`: `next dev --hostname 127.0.0.1`
+- `lint`: `eslint .`
+- `smoke`: `node scripts/Smoke-Portfolio.mjs`
+- `start`: `next start --hostname 127.0.0.1`
+- `test`: `tsx --test tests/portfolio.test.ts`
+- `typecheck`: `tsc --noEmit`
+
+Lockfiles: package-lock.json. Use the matching package manager; investigate mixed lockfiles.
 
 ## Code and configuration inventory
 
-Content fingerprint (SHA-256, text line endings normalized): `c2a58c4a8d46ad460e28164f1da8eaa3f4a4761b911b1966b83998c49ca01fee`.
+Content fingerprint (SHA-256, text line endings normalized): `f2f202895bcd1990c98c130f7b76666220adcf7bcc94ff646f93b0336cbcea90`.
 
 - `docs/homepage-concept.html`
+- `eslint.config.mjs`
+- `next-env.d.ts`
+- `next.config.ts`
+- `package.json`
+- `scripts/Smoke-Portfolio.mjs`
+- `src/app/layout.tsx`
+- `src/app/page.tsx`
+- `tests/portfolio.test.ts`
+- `tsconfig.json`
 
 Git-ignored files, environment files, generated output, dependency trees, and guidance infrastructure are excluded. This inventory does not execute package scripts or infer design decisions. Update manual guidance when code changes alter how the project should be developed or verified.
 <!-- agent-context:end -->
