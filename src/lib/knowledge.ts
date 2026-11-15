@@ -42,12 +42,15 @@ export function selectEvidence(query: string, currentProject?: string): Evidence
   ];
   if (missingTopics.some(([pattern, missing]) => missing && pattern.test(query))) return [];
   const words = new Set(query.toLowerCase().split(/[^a-z0-9-]+/));
-  const scores = knowledge.map(entry => ({ entry, score: (aliases[entry.id] ?? []).filter(word => words.has(word)).length }));
-  const matched = scores.filter(item => item.score > 0).sort((a, b) => b.score - a.score).map(item => item.entry);
-  if (matched.length) return matched.slice(0, 3);
+  const namedProjects = knowledge.filter(entry => entry.id !== 'profile'
+    && (words.has(entry.id) || words.has(entry.id.split('-')[0]) || query.toLowerCase().includes(entry.title.toLowerCase())));
+  if (namedProjects.length) return namedProjects.slice(0, 3);
   if (/\b(name|github|contact|email|resume|education|degree|certifications?|experience|employment)\b/i.test(query)) return knowledge.filter(entry => entry.id === 'profile');
   const current = knowledge.find(entry => entry.id === currentProject);
   if (current) return [current];
+  const scores = knowledge.map(entry => ({ entry, score: (aliases[entry.id] ?? []).filter(word => words.has(word)).length }));
+  const matched = scores.filter(item => item.score > 0).sort((a, b) => b.score - a.score).map(item => item.entry);
+  if (matched.length) return matched.slice(0, 3);
   if (/\b(projects?|work|portfolio|build|built)\b/i.test(query)) return knowledge.filter(entry => entry.id !== 'profile');
   if (/\bvijay\b/i.test(query)) return knowledge.filter(entry => entry.id === 'profile');
   return [];

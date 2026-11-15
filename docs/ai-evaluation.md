@@ -136,3 +136,11 @@ Ran six real Gemini checks through the local production HTTP API with the existi
 | LC06 — Switch to F1 | New F1 request overrides current Living Campus context and preserves the local-PDF/embedding/Chroma description and download limitation |
 
 Separately, the real mobile browser on /projects/living-campus asked “How do its characters remember our conversations?” without naming the project. It received a source-supported Living Campus answer, its memory-reliability caveat and valid open/highlight suggestions. Keyboard activation of Highlight returned to /#project-living-campus and closed the guide. The mobile pointer automation's first attempt did not activate the link; keyboard navigation passed after focusing the actual link. No physical touch claim is made. Raw owner-run synthetic answers remain private under ignored .agent-guidance/living-campus-quality-results.json. All previously published factual boundaries remain in place.
+
+### Follow-up context and citation regressions
+
+Final review reproduced generic “retrieval” and “RAG” questions switching from Living Campus to F1. Added a failing regression and corrected selection so explicit project names win, then the current project, then generic keyword fallback. Shared RAG language preserves page/prior conversation context; a context-free RAG request retains the existing F1 default. Explicit F1 switches still work across those follow-ups.
+
+A real rerun also produced the correct limitations answer with [living campus] instead of [living-campus], which the source gate refused. A failing-then-passing test now covers normalization of spaces to hyphens only for IDs present in the supplied evidence. Unknown or unsupplied sources remain rejected. The failed synthetic output is retained privately in living-campus-citation-format-failure.json.
+
+After both corrections, full lint/types/31 tests/build/HTTP smoke passed. Reran LC01–LC06 and added LC07 (“What kind of retrieval does this project use?”) and LC08 (“Does it use RAG?”), both on Living Campus. All eight were manually acceptable with correct sources/actions and retained factual boundaries. This follow-up result supersedes the interrupted citation-format rerun; no automatic provider retry or production quota change was introduced.

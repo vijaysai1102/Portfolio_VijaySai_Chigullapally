@@ -27,7 +27,7 @@ export function answerPlan(input: ChatRequest): { evidence: Evidence[]; system: 
   return { evidence, system: policy.join('\n') };
 }
 export function citedSources(text: string, evidence: Evidence[]): SourceReference[] {
-  const ids = new Set([...text.matchAll(/\[([a-z0-9-]+)\]/g)].map(match => match[1]));
+  const ids = new Set([...text.matchAll(/\[([a-z0-9]+(?:[- ][a-z0-9]+)*)\]/g)].map(match => match[1].replaceAll(' ', '-')));
   const cited = evidence.filter(entry => ids.has(entry.id));
   const approvedValues = new Set(cited.flatMap(entry => decimalValues(entry.text)));
   if (decimalValues(text).some(value => !approvedValues.has(value))) return [];

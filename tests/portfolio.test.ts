@@ -109,6 +109,18 @@ test('Living Campus university questions retain fictional context without invent
   assert.deepEqual(selectEvidence('What degree does Vijay have in Living Campus?', 'living-campus'), []);
   assert.equal(selectEvidence('How do the NPCs remember promises?')[0]?.id, 'living-campus');
 });
+test('shared retrieval language stays on the current project until an explicit topic switch', () => {
+  assert.equal(selectEvidence('What kind of retrieval does this project use?', 'living-campus')[0]?.id, 'living-campus');
+  assert.equal(conversationInput([{ role: 'user', text: 'Does it use RAG?' }], 'living-campus').currentProject, 'living-campus');
+  const followUp = conversationInput([
+    { role: 'user', text: 'Explain Living Campus' },
+    { role: 'user', text: 'Does it use RAG?' },
+    { role: 'user', text: 'Why that approach?' },
+  ]);
+  assert.equal(followUp.currentProject, 'living-campus');
+  assert.equal(conversationInput([{ role: 'user', text: 'Actually, explain F1 retrieval.' }], 'living-campus').currentProject, 'f1-rag');
+  assert.equal(conversationInput([{ role: 'user', text: 'Explain RAG' }]).currentProject, 'f1-rag');
+});
 test('grounding keeps unknown facts local and only resolves registered source IDs', () => {
   const unknown = answerPlan({ messages: [{ role: 'user', text: 'What is his employment history?' }] });
   assert.ok(unknown.localAnswer);
@@ -124,6 +136,12 @@ test('source attribution rejects decimal results that differ from the supplied e
   assert.deepEqual(citedSources('The saved precipitation R² is 0.01 [weatherscope].', evidence).map(source => source.id), ['weatherscope']);
   assert.deepEqual(citedSources('The saved temperature R² is 0.936 [weatherscope].', evidence).map(source => source.id), ['weatherscope']);
   assert.deepEqual(citedSources('1. The saved results were not rerun [weatherscope].', evidence).map(source => source.id), ['weatherscope']);
+});
+test('source citations normalize spaced IDs only against the supplied evidence registry', () => {
+  const campus = selectEvidence('Explain Living Campus');
+  assert.deepEqual(citedSources('This is a simulation [living campus].', campus).map(source => source.id), ['living-campus']);
+  assert.deepEqual(citedSources('This is a simulation [living college].', campus), []);
+  assert.deepEqual(citedSources('This is a simulation [living campus].', selectEvidence('Explain Megatron')), []);
 });
 test('same-origin validation uses browser host when Next normalizes an internal URL', async () => {
   const request = new Request('http://localhost:3100/api/chat', { method: 'POST', headers: { Host: '127.0.0.1:3100', Origin: 'http://127.0.0.1:3100', 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [{ role: 'user', text: 'Hello' }] }) });

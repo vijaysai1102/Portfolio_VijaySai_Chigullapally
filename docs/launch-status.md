@@ -20,6 +20,8 @@ Local lint/types/29 tests, production build, all-case HTTP smoke and client secr
 
 ## Remaining inputs and manual checks
 
+The Living Campus follow-up adds two more behavioral regressions (31 tests total), preserves project context for generic retrieval/RAG questions, and canonicalizes spaced source IDs only against supplied evidence. All local checks and the eight-case targeted live rerun passed after the fixes; the original 32-case score remains historical. See ai-evaluation.md for the reproduced failures and corrected results.
+
 | Item | State |
 | --- | --- |
 | Personal content/assets | Intentionally deferred to the user's facts; nothing inferred from FDE or other role positioning |
