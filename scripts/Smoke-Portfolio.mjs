@@ -20,7 +20,12 @@ try {
   assert.ok(ready, `Server not ready: ${logs}`);
   const response = await fetch(origin);
   assert.equal(response.status, 200);
-  assert.match(await response.text(), /Vijay Sai Chigullapally/);
+  const html = await response.text();
+  assert.match(html, /Vijay Sai Chigullapally/);
+  for (const anchor of ['main', 'home', 'work', 'about', 'contact']) assert.ok(html.includes(`id="${anchor}"`), `Missing ${anchor} destination`);
+  const missing = await fetch(`${origin}/no-such-page`);
+  assert.equal(missing.status, 404);
+  assert.match(await missing.text(), /Back to the studio/);
   console.log('PASS production homepage HTTP journey');
 } finally {
   server.kill();

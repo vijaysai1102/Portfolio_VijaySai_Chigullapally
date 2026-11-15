@@ -75,7 +75,7 @@ Lockfiles: package-lock.json. Use the matching package manager; investigate mixe
 
 ## Code and configuration inventory
 
-Content fingerprint (SHA-256, text line endings normalized): `efa5ae40b82cf4dc39278307258f04ee68a9180a8e707828402cfcad7f55617f`.
+Content fingerprint (SHA-256, text line endings normalized): `b294ad4f6149f58e1a7060f5d20635fea69ed2a850b41f62b1ca19490c0429fc`.
 
 - `docs/homepage-concept.html`
 - `eslint.config.mjs`
@@ -85,7 +85,10 @@ Content fingerprint (SHA-256, text line endings normalized): `efa5ae40b82cf4dc39
 - `scripts/Smoke-Portfolio.mjs`
 - `src/app/globals.css`
 - `src/app/layout.tsx`
+- `src/app/not-found.tsx`
 - `src/app/page.tsx`
+- `src/components/footer.tsx`
+- `src/components/header.tsx`
 - `src/components/primitives.tsx`
 - `src/content/model.ts`
 - `src/content/portfolio.ts`

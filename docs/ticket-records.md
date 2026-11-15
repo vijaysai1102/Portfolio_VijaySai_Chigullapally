@@ -26,3 +26,6 @@ Added typed profile/project/experience/credential models, boundary validation, p
 
 ## T09 — Implementation verified; rendered review pending
 Added global tokens, responsive spacing/type, semantic links, tags and labels; visible focus, native touch targets and reduced-motion styles. Initial scaffold has no animation/pointer behavior to preserve. Existing homepage identity and GitHub path preserved. Full lint/types/tests/build/production HTTP passed. Browser host unavailable: narrow/wide visual, focus and contrast-in-browser review pending. Palette normal text contrast verified in T05; external fonts have system fallbacks.
+
+## T10 — Implementation verified; interactive browser review pending
+Header, navigation, menu Escape/focus-return behavior, footer, skip link, sticky anchor offsets and intentional 404. Native links and back behavior retained; primitive hover/focus/reduced-motion rules preserved. Production HTTP smoke now validates every homepage anchor and a real 404 destination; full checks passed. Browser unavailable, so menu activation, back/forward, narrow rendering and actual focus traversal remain unverified.
