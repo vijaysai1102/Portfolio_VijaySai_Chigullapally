@@ -5,6 +5,18 @@ import assert from 'node:assert/strict';
 
 const port = 3100;
 const origin = `http://127.0.0.1:${port}`;
+function checkDocument(html, route) {
+  const document = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '').replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '');
+  assert.match(document, /<html[^>]*lang="en"/i, `${route}: document language`);
+  assert.equal((document.match(/<main\b/gi) ?? []).length, 1, `${route}: one main landmark`);
+  assert.equal((document.match(/<h1\b/gi) ?? []).length, 1, `${route}: one primary heading`);
+  assert.equal(/<main[^>]*tabindex="-1"/i.test(document), true, `${route}: skip destination can receive focus`);
+  const ids = [...document.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
+  assert.equal(new Set(ids).size, ids.length, `${route}: unique IDs including dialog fields`);
+  for (const [, target] of document.matchAll(/\bhref="#([^"]+)"/g)) assert.ok(ids.includes(target), `${route}: fragment ${target} exists`);
+  for (const [, label] of document.matchAll(/\baria-labelledby="([^"]+)"/g)) for (const id of label.split(/\s+/)) assert.ok(ids.includes(id), `${route}: accessible label reference exists`);
+  for (const [, field] of document.matchAll(/<(?:input|textarea)\b[^>]*\bid="([^"]+)"/g)) assert.ok(document.includes(`for="${field}"`), `${route}: form field has a label`);
+}
 const server = spawn(process.execPath, [resolve('node_modules/next/dist/bin/next'), 'start', '--hostname', '127.0.0.1', '--port', String(port)], { stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, AI_ENABLED: 'false', AI_RELEASE_APPROVED: 'false' } });
 let logs = '';
 server.stdout.on('data', chunk => { logs += chunk; });
@@ -22,6 +34,7 @@ try {
   const response = await fetch(origin);
   assert.equal(response.status, 200);
   const html = await response.text();
+  checkDocument(html, '/');
   assert.match(html, /Vijay Sai Chigullapally/);
   assert.equal(/Ã¢|â€|Â·/.test(html), false, 'public text must preserve UTF-8 punctuation on Windows');
   assert.equal(html.includes('Synthetic fixture organization'), false, 'development fixture must not be public');
@@ -51,11 +64,15 @@ try {
   for (const anchor of ['main', 'home', 'work', 'about', 'contact']) assert.ok(html.includes(`id="${anchor}"`), `Missing ${anchor} destination`);
   const missing = await fetch(`${origin}/no-such-page`);
   assert.equal(missing.status, 404);
-  assert.match(await missing.text(), /Back to the studio/);
+  const missingHtml = await missing.text();
+  assert.match(missingHtml, /Back to the studio/);
+  checkDocument(missingHtml, '/no-such-page');
   for (const slug of ['megatron', 'weatherscope', 'f1-rag']) {
     const project = await fetch(`${origin}/projects/${slug}`);
     assert.equal(project.status, 200, `${slug} route`);
-    assert.match(await project.text(), /About the evidence/);
+    const projectHtml = await project.text();
+    assert.match(projectHtml, /About the evidence/);
+    checkDocument(projectHtml, `/projects/${slug}`);
   }
   console.log('PASS production homepage HTTP journey');
 } finally {

@@ -18,7 +18,7 @@ export default async function ProjectPage({ params }: Props) {
   const project = getProject((await params).slug);
   if (!project || !project.sections.length) notFound();
   const related = projects.filter(item => item.id !== project.id);
-  return <main id="main" className="container case-page">
+  return <main id="main" tabIndex={-1} className="container case-page">
     <Link href="/#work" className="text-link case-back"><Arrow direction="←" /> All work</Link>
     <header className="case-heading"><Eyebrow>{project.category} / A closer look</Eyebrow><h1>{project.title}</h1><p>{project.summary}</p><div className="case-actions"><ActionLink href={project.source}>View the source</ActionLink>{project.id === 'megatron' && <a className="text-link" href="https://megatron-site.vercel.app/">Product website <Arrow /></a>}</div><Tags values={project.stack} /></header>
     <div className={`case-art case-art-${project.id}`}><ProjectArt id={project.id} /></div>
