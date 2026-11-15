@@ -123,3 +123,7 @@ Used Orca's actual Chromium browser on the deployed site and a local production 
 ## Follow-up T31/T34 — Production deployment verified
 
 Vercel deployed a147c8d03188241b1f1bafc4f42ef4d64394c878 successfully (deployment 7uhecPjMtVFLNyyXuXjGTEnfFoWm). The live homepage now returns index/follow, its confirmed canonical and /share Open Graph image; robots permits crawling and the sitemap contains home and all three cases. Application CI passed on Windows/macOS/Linux; guidance CI passed on Windows/Linux. Production /api/chat remains unavailable by design pending private configuration and approved budgets. Social-service cache previews, protected preview AI trials and a disruptive rollback were not exercised.
+
+## Follow-up T07 — Development dependency advisories resolved
+
+Scoped the patched minimatch 11.0.1 override to TypeScript ESLint's parser dependency, retaining compatible ESLint 9 and all runtime dependencies. Confirmed the consumer's CommonJS named-export API and glob contract with the installed package. A fresh lockfile install, lint, types, 22 application tests, production build and HTTP smoke all passed locally on Windows Node 22.23.2; full npm audit now reports zero vulnerabilities. ESLint's deprecation warning remains because the Next plugin peer range still constrains its major version. CI provides additional macOS/Linux coverage after push.
