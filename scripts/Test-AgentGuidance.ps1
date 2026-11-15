@@ -212,6 +212,15 @@ try {
         Assert-True ((Read-Fixture '.agents/project-context.md') -ceq (Read-Fixture '.claude/project-context.md')) 'folder context peers match'
     }
 
+    Run-Case 'generated Next type bootstrap changes do not stale project guidance' {
+        $before = Read-Fixture '.claude/project-context.md'
+        Write-Fixture 'next-env.d.ts' "import './.next/types/routes.d.ts';`n"
+        & $syncScript -Root $fixtureRoot | Out-Null
+        Assert-True ((Read-Fixture '.claude/project-context.md') -ceq $before) 'generated Next type bootstrap is excluded'
+        Write-Fixture 'next-env.d.ts' "import './.next/dev/types/routes.d.ts';`n"
+        & $syncScript -Root $fixtureRoot -Check | Out-Null
+    }
+
     Run-Case 'ignored files and tool-specific settings stay outside shared synchronization' {
         $contextBefore = Read-Fixture '.claude/project-context.md'
         Write-Fixture '.env.local' 'PRIVATE_TOKEN=not-a-real-secret'

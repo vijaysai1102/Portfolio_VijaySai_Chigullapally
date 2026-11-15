@@ -25,6 +25,8 @@ This repository will contain Vijay Sai Chigullapally's personal portfolio. Follo
 
 ## Implementation and verification
 
+- Next's generated next-env.d.ts is ignored and excluded from the context fingerprint. Do not stage it. agentRules is disabled because this repository owns and mirrors its guides; next dev must not add a second guide writer. Read/write source and Markdown explicitly as UTF-8 on Windows.
+
 - `.github/workflows/portfolio.yml` repeats lockfile installation, all app checks, and real production HTTP smoke on Windows, macOS, and Linux. Local checks must pass before pushing; CI adds platform coverage. `vercel.json` targets Next.js at the repository root. Keep preview/production configuration separate and follow `docs/deployment.md`; neither a local build nor mocked provider/storage tests establish a verified deployment.
 
 - The app uses Next.js App Router, React, TypeScript and npm. Use `npm.cmd ci`, `npm.cmd run dev`, `npm.cmd run lint`, `npm.cmd run typecheck`, `npm.cmd test`, and `npm.cmd run build` on Windows. `npm.cmd run check` runs the four checks sequentially. Source areas: `src/app` (routes), `src/components` (UI), `src/content` (public facts), `src/lib` (validated logic). Tests use Node test through tsx. Server secrets stay in ignored `.env.local`; AI defaults off. Generated context is synchronized after each ticket. Chat on 2026-11-14 authorizes sequential implementation and a verified commit/push to main for each ticket without another approval gate; personal facts await chat inputs. Browser verification limitations must be recorded before pushing.
@@ -77,11 +79,10 @@ Lockfiles: package-lock.json. Use the matching package manager; investigate mixe
 
 ## Code and configuration inventory
 
-Content fingerprint (SHA-256, text line endings normalized): `c4fb9194034f2b400b822d7ed49b5bb93eb01a528d84bf7e4219ae714b42055d`.
+Content fingerprint (SHA-256, text line endings normalized): `018eb74a3ac4cea2c9886f41f7bf0938fa1a6815acc3664e660f6c13f744b127`.
 
 - `docs/homepage-concept.html`
 - `eslint.config.mjs`
-- `next-env.d.ts`
 - `next.config.ts`
 - `package.json`
 - `scripts/Smoke-Portfolio.mjs`

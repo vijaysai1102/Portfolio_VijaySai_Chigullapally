@@ -22,11 +22,10 @@ Lockfiles: package-lock.json. Use the matching package manager; investigate mixe
 
 ## Code and configuration inventory
 
-Content fingerprint (SHA-256, text line endings normalized): `c4fb9194034f2b400b822d7ed49b5bb93eb01a528d84bf7e4219ae714b42055d`.
+Content fingerprint (SHA-256, text line endings normalized): `018eb74a3ac4cea2c9886f41f7bf0938fa1a6815acc3664e660f6c13f744b127`.
 
 - `docs/homepage-concept.html`
 - `eslint.config.mjs`
-- `next-env.d.ts`
 - `next.config.ts`
 - `package.json`
 - `scripts/Smoke-Portfolio.mjs`

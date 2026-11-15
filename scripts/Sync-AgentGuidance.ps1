@@ -112,7 +112,7 @@ function Get-ManualGuidance {
 function Get-ProjectContext {
     [string[]]$sourceFiles = @($script:Files | Where-Object {
         $_ -notmatch '(^|/)(\.git|\.claude|\.agents|\.agent-guidance|node_modules|\.next|dist|build|coverage|vendor|\.venv|playwright-report|test-results)(/|$)' -and
-        $_ -notmatch '(^|/)\.env($|\.)' -and $_ -notmatch '(^|/)(package-lock\.json|yarn\.lock|pnpm-lock\.yaml|bun\.lockb?)$' -and
+        $_ -notmatch '(^|/)\.env($|\.)' -and $_ -notmatch '(^|/)next-env\.d\.ts$' -and $_ -notmatch '(^|/)(package-lock\.json|yarn\.lock|pnpm-lock\.yaml|bun\.lockb?)$' -and
         $_ -match '\.(html?|css|scss|sass|less|[cm]?jsx?|tsx?|json|toml|ya?ml|py|vue|svelte|astro|ps1)$' -and
         -not ($_.StartsWith('scripts/') -and $script:InfrastructureScripts -contains (Split-Path -Leaf $_)) -and
         $_ -notmatch '^\.github/'
