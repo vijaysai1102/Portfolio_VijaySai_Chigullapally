@@ -53,8 +53,8 @@ usage-controls.md explains atomic reservation, TTLs, UTC buckets, conservative f
 
 ## Deployment, shutdown and recovery
 
-Follow deployment.md and launch-status.md. Vercel account/project, preview, final origin and production remain unconfigured. Install/connect the Vercel integration to continue account-backed work. Review the exact preview commit, store and environment boundaries before promotion. Changing build-time SITE_URL/indexing requires a new build/deployment.
+Follow deployment.md and launch-status.md. Production is live at https://vijayportfolio-eight.vercel.app, linked to main through Vercel project vijay_portfolio. A verified deployment/commit recovery record is in launch-status.md. Review the exact preview commit, store and environment boundaries before any live AI trial or promotion. Vercel production defaults to this confirmed origin; set SITE_URL for a custom domain and rebuild. Preview builds remain unindexed.
 
 To shut off generation, set AI_ENABLED=false and AI_RELEASE_APPROVED=false in the affected environment and redeploy. Verify available=false and offline POST behavior; ordinary links/pages should stay usable. Record the previous known-good deployment ID/URL and commit before production promotion. Use the actual Vercel rollback/promotion controls only after account access; those controls and recovery have not been exercised here.
 
-Known limitations and per-ticket evidence are in ticket-records.md, accessibility-review.md, performance-review.md, ai-evaluation.md and launch-status.md. The final source can be reviewed now; production acceptance and live-service/browser verification remain explicit unfinished work.
+Known limitations and per-ticket evidence are in ticket-records.md, accessibility-review.md, performance-review.md, ai-evaluation.md and launch-status.md. Responsive/keyboard browser checks and mobile lab performance now have recorded evidence. Manual assistive-technology review and live provider/store/budget evaluation remain separate; preserve the user's deferred personal-content decisions.

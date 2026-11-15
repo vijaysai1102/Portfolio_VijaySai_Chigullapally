@@ -2,6 +2,8 @@
 
 Personal portfolio built with Next.js App Router, React, TypeScript and npm. Node.js 22+ is required. On Windows use PowerShell and `npm.cmd`.
 
+Live: [vijayportfolio-eight.vercel.app](https://vijayportfolio-eight.vercel.app). Production is deployed; current browser, performance and operational evidence is in the [launch status](docs/launch-status.md).
+
 ```powershell
 npm.cmd ci
 npm.cmd run dev
