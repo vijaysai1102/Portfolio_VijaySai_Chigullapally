@@ -4,7 +4,8 @@ import { MAX_MESSAGE_CHARS, type ChatMessage } from '@/lib/chat-contract';
 import { conversationInput } from '@/lib/conversation';
 import { readGuideStream } from '@/lib/guide-stream';
 import type { SourceReference } from '@/lib/grounding';
-export type GuideTurn = ChatMessage & { id: string; complete: boolean; sources: SourceReference[] };
+import { displayGuideText, type GuideAction } from '@/lib/guide-actions';
+export type GuideTurn = ChatMessage & { id: string; complete: boolean; sources: SourceReference[]; actions: GuideAction[] };
 const MAX_VISIBLE_TURNS = 24;
 
 export function useGuide() {
@@ -29,7 +30,7 @@ export function useGuide() {
     lastAttempt.current = { text, history: base };
     const userId = crypto.randomUUID();
     const answerId = crypto.randomUUID();
-    commit([...base, { id: userId, role: 'user', text, complete: true, sources: [] }, { id: answerId, role: 'assistant', text: '', complete: false, sources: [] }].slice(-MAX_VISIBLE_TURNS) as GuideTurn[]);
+    commit([...base, { id: userId, role: 'user', text, complete: true, sources: [], actions: [] }, { id: answerId, role: 'assistant', text: '', complete: false, sources: [], actions: [] }].slice(-MAX_VISIBLE_TURNS) as GuideTurn[]);
     setBusy(true); setError(null);
     const updateAnswer = (change: Partial<GuideTurn>) => commit(history.current.map(turn => turn.id === answerId ? { ...turn, ...change } : turn));
     try {
@@ -42,8 +43,9 @@ export function useGuide() {
       let answer = '';
       for await (const event of readGuideStream(response.body)) {
         if (requestVersion !== version.current) return;
-        if (event.type === 'token') { answer += event.text; updateAnswer({ text: answer }); }
+        if (event.type === 'token') { answer += event.text; updateAnswer({ text: displayGuideText(answer) }); }
         if (event.type === 'sources') updateAnswer({ sources: event.sources });
+        if (event.type === 'actions') updateAnswer({ actions: event.actions });
         if (event.type === 'done') updateAnswer({ complete: true });
       }
     } catch (failure) {

@@ -16,6 +16,13 @@ import { readChatRequest } from '../src/lib/server/request';
 import { answerPlan, citedSources } from '../src/lib/grounding';
 import { conversationInput } from '../src/lib/conversation';
 import { readGuideStream } from '../src/lib/guide-stream';
+import { actionsFromAnswer, displayGuideText, guideAction } from '../src/lib/guide-actions';
+test('guide actions are bounded identifiers and cannot introduce external code or URLs', () => {
+  assert.equal(guideAction('javascript:alert(1)'), undefined);
+  assert.equal(guideAction('megatron')?.href, '/projects/megatron');
+  assert.deepEqual(actionsFromAnswer('[action:megatron] [action:unknown] [action:megatron]').map(action => action.id), ['megatron']);
+  assert.equal(displayGuideText('A useful answer. [action:megatron]'), 'A useful answer.');
+});
 test('guide transport preserves split UTF-8 and canonicalizes source destinations', async () => {
   const encoded = new TextEncoder().encode('{"type":"token","text":"Café"}\n{"type":"sources","sources":[{"id":"megatron","url":"https://outside.example"}]}\n{"type":"done"}\n');
   const body = new ReadableStream<Uint8Array>({ start(controller) { for (const byte of encoded) controller.enqueue(new Uint8Array([byte])); controller.close(); } });

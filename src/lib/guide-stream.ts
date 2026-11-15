@@ -1,6 +1,7 @@
 import type { SourceReference } from './grounding';
 import { additionalWork, projects } from '@/content/portfolio';
-export type GuideEvent = { type: 'token'; text: string } | { type: 'sources'; sources: SourceReference[] } | { type: 'done' };
+import { guideAction, type GuideAction } from './guide-actions';
+export type GuideEvent = { type: 'token'; text: string } | { type: 'sources'; sources: SourceReference[] } | { type: 'actions'; actions: GuideAction[] } | { type: 'done' };
 function decodeEvent(line: string): GuideEvent | undefined {
   let value;
   try { value = JSON.parse(line); } catch { throw new Error('The guide returned an unreadable response.'); }
@@ -15,6 +16,7 @@ function decodeEvent(line: string): GuideEvent | undefined {
     return { type: 'sources', sources };
   }
   if (value.type === 'done') return { type: 'done' };
+  if (value.type === 'actions' && Array.isArray(value.actions)) return { type: 'actions', actions: value.actions.slice(0, 2).flatMap((item: { id?: unknown }) => { const action = guideAction(item?.id); return action ? [action] : []; }) };
   if (value.type === 'usage') return undefined;
   throw new Error('The guide returned an unsupported response.');
 }

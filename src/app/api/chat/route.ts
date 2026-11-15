@@ -3,6 +3,7 @@ import { streamGemini } from '@/lib/server/gemini';
 import { readChatRequest } from '@/lib/server/request';
 import { answerPlan, citedSources } from '@/lib/grounding';
 import { conversationInput } from '@/lib/conversation';
+import { actionsFromAnswer, guideAction } from '@/lib/guide-actions';
 export const runtime = 'nodejs';
 export const maxDuration = 30;
 const configured = () => process.env.AI_ENABLED === 'true' && process.env.AI_RELEASE_APPROVED === 'true' && Boolean(process.env.GEMINI_API_KEY && process.env.GEMINI_MODEL);
@@ -25,6 +26,7 @@ export async function POST(request: Request) {
           if (plan.localAnswer) {
             send({ type: 'token', text: plan.localAnswer });
             send({ type: 'sources', sources: [] });
+            send({ type: 'actions', actions: [guideAction('work')] });
           } else {
             let answer = '';
             for await (const event of streamGemini({ apiKey: process.env.GEMINI_API_KEY!, model: process.env.GEMINI_MODEL!, system: plan.system, messages: input.messages, signal })) {
@@ -34,6 +36,7 @@ export async function POST(request: Request) {
             const sources = citedSources(answer, plan.evidence);
             if (!sources.length) throw new ChatError(422, 'The answer could not be linked to approved evidence. Please open a project source or try again.');
             send({ type: 'sources', sources });
+            send({ type: 'actions', actions: actionsFromAnswer(answer) });
           }
           send({ type: 'done' });
         } catch (error) { if (!cancelled) send({ type: 'error', message: errorMessage(error) }); }

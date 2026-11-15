@@ -1,5 +1,7 @@
 # Portfolio guide policy
 
+Navigation uses validated text suggestion markers, not provider tool execution. The model may append an allowlisted action identifier; the server and client resolve it to canonical label/href, discard unknown IDs, and cap suggestions at two. Markers are hidden from displayed text. A visitor selects a normal link to apply it. No arbitrary URL, script, shell command or external message is accepted. Because these are terminal plain-text suggestions, no provider function-call/tool-response history is invented or replayed.
+
 Conversation contract: at most ten messages per request, 2,000 characters per incoming message, 24,000 raw request bytes. Older assistant context is clipped; the newest visitor request is preserved and validated. Explicit new topic wins, then the current page project, then prior visitor topic. Previous answers never become authoritative corpus evidence. Requests carry their own bounded histories; the server keeps no mutable shared conversation state. The forthcoming UI must abort before reset/retry and ignore stale request updates.
 
 The guide is optional. Public pages and ordinary navigation work without it. Corpus entries are derived from the same validated project content, retain stable IDs and canonical destinations, and carry the source-review date. Separate private evidence notes, environment configuration, empty personal sections and rejected assets are never imported into knowledge. The current corpus is small enough for deterministic topic/alias selection; no vector service is justified.
