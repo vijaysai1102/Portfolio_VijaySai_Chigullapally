@@ -68,3 +68,6 @@ Added bounded same-origin JSON input, privileged-role rejection, provider adapte
 
 ## T23 — Partial: real-model grounding evaluation pending
 Connected evidence selection/system policy to generation. Unknown facts return an explicit lookup limitation without a paid model call; cited links resolve only registered IDs from selected evidence. Missing valid citations causes an error event instead of accepting a completed answer. Grounding test failed first and passes after; full checks/API/page HTTP passed. Visitor/repository text treated as data and no secrets included. This does not prove model factuality or injection resistance: real factual/ambiguous/adversarial evaluation remains gated by missing credentials.
+
+## T24 — Partial: live multi-turn/cancellation review pending
+Pure conversation preparation bounds history, clips older assistant context, preserves newest user intent and prioritizes explicit correction/current page/prior topic. Server requests remain independent with no shared conversation store. Context test failed before implementation and passes after; full checks plus all page/API HTTP passed. Personal facts still come only from approved corpus. Live-model follow-ups and browser reset/cancel/session journeys remain unverified without credentials/browser host.

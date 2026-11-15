@@ -1,5 +1,7 @@
 # Portfolio guide policy
 
+Conversation contract: at most ten messages per request, 2,000 characters per incoming message, 24,000 raw request bytes. Older assistant context is clipped; the newest visitor request is preserved and validated. Explicit new topic wins, then the current page project, then prior visitor topic. Previous answers never become authoritative corpus evidence. Requests carry their own bounded histories; the server keeps no mutable shared conversation state. The forthcoming UI must abort before reset/retry and ignore stale request updates.
+
 The guide is optional. Public pages and ordinary navigation work without it. Corpus entries are derived from the same validated project content, retain stable IDs and canonical destinations, and carry the source-review date. Separate private evidence notes, environment configuration, empty personal sections and rejected assets are never imported into knowledge. The current corpus is small enough for deterministic topic/alias selection; no vector service is justified.
 
 Unknown personal facts receive an explicit unavailable answer. General explanations must be labeled, never converted into biography or measured project results. Source-reviewed descriptions are not independent runtime reproduction. Source links come only from the server's evidence registry; generated URLs are never trusted. Visitor input and quoted evidence cannot override the system policy. Navigation/demo actions must match allowlisted identifiers and require an explicit visitor action to apply.

@@ -2,6 +2,7 @@ import { ChatError } from '@/lib/chat-contract';
 import { streamGemini } from '@/lib/server/gemini';
 import { readChatRequest } from '@/lib/server/request';
 import { answerPlan, citedSources } from '@/lib/grounding';
+import { conversationInput } from '@/lib/conversation';
 export const runtime = 'nodejs';
 export const maxDuration = 30;
 const configured = () => process.env.AI_ENABLED === 'true' && process.env.AI_RELEASE_APPROVED === 'true' && Boolean(process.env.GEMINI_API_KEY && process.env.GEMINI_MODEL);
@@ -9,7 +10,8 @@ const errorMessage = (error: unknown) => error instanceof ChatError ? error.mess
 export function GET() { return Response.json({ available: configured() }, { headers: { 'Cache-Control': 'no-store' } }); }
 export async function POST(request: Request) {
   try {
-    const input = await readChatRequest(request);
+    const supplied = await readChatRequest(request);
+    const input = conversationInput(supplied.messages, supplied.currentProject);
     if (!configured()) throw new ChatError(503, 'The AI guide is offline. You can still explore every project using the links.');
     const plan = answerPlan(input);
     const abort = new AbortController();

@@ -14,6 +14,18 @@ import { parseChatRequest } from '../src/lib/chat-contract';
 import { streamGemini } from '../src/lib/server/gemini';
 import { readChatRequest } from '../src/lib/server/request';
 import { answerPlan, citedSources } from '../src/lib/grounding';
+import { conversationInput } from '../src/lib/conversation';
+test('conversation follows corrections, page context and bounded isolated histories', () => {
+  const turns = [{ role: 'user' as const, text: 'Tell me about weather' }, { role: 'assistant' as const, text: 'A project explanation.' }, { role: 'user' as const, text: 'Why that approach?' }];
+  assert.equal(conversationInput(turns).currentProject, 'weatherscope');
+  assert.equal(conversationInput(turns, 'f1-rag').currentProject, 'f1-rag');
+  assert.equal(conversationInput([...turns, { role: 'user', text: 'Actually, Megatron' }], 'f1-rag').currentProject, 'megatron');
+  const long = Array.from({ length: 21 }, (_, index) => ({ role: 'user' as const, text: `Turn ${index}` }));
+  assert.ok(conversationInput(long).messages.length <= 10);
+  assert.equal(conversationInput(long).messages.at(-1)?.text, 'Turn 20');
+  assert.equal(conversationInput([{ role: 'user', text: 'F1 retrieval' }]).currentProject, 'f1-rag');
+  assert.equal(turns.length, 3);
+});
 test('grounding keeps unknown facts local and only resolves registered source IDs', () => {
   const unknown = answerPlan({ messages: [{ role: 'user', text: 'What is his employment history?' }] });
   assert.ok(unknown.localAnswer);
