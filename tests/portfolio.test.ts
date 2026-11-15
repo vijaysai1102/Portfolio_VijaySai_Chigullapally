@@ -15,6 +15,15 @@ import { streamGemini } from '../src/lib/server/gemini';
 import { readChatRequest } from '../src/lib/server/request';
 import { answerPlan, citedSources } from '../src/lib/grounding';
 import { conversationInput } from '../src/lib/conversation';
+import { readGuideStream } from '../src/lib/guide-stream';
+test('guide transport preserves split UTF-8 and canonicalizes source destinations', async () => {
+  const encoded = new TextEncoder().encode('{"type":"token","text":"Café"}\n{"type":"sources","sources":[{"id":"megatron","url":"https://outside.example"}]}\n{"type":"done"}\n');
+  const body = new ReadableStream<Uint8Array>({ start(controller) { for (const byte of encoded) controller.enqueue(new Uint8Array([byte])); controller.close(); } });
+  const events = [];
+  for await (const event of readGuideStream(body)) events.push(event);
+  assert.deepEqual(events[0], { type: 'token', text: 'Café' });
+  assert.equal(events[1]?.type === 'sources' && events[1].sources[0]?.url, '/projects/megatron');
+});
 test('conversation follows corrections, page context and bounded isolated histories', () => {
   const turns = [{ role: 'user' as const, text: 'Tell me about weather' }, { role: 'assistant' as const, text: 'A project explanation.' }, { role: 'user' as const, text: 'Why that approach?' }];
   assert.equal(conversationInput(turns).currentProject, 'weatherscope');

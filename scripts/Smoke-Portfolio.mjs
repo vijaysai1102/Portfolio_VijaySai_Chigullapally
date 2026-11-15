@@ -25,6 +25,7 @@ try {
   assert.equal(/Ã¢|â€|Â·/.test(html), false, 'public text must preserve UTF-8 punctuation on Windows');
   assert.equal(html.includes('Synthetic fixture organization'), false, 'development fixture must not be public');
   assert.equal(html.includes('id="experience"'), false, 'empty experience must be omitted');
+  assert.ok(html.includes('Ask the guide'), 'guide launcher is present');
   const offline = await fetch(`${origin}/api/chat`, { method: 'POST', headers: { Origin: origin, 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [{ role: 'user', text: 'Tell me about Megatron' }] }) });
   assert.equal(offline.status, 503, 'AI must fail closed without release configuration');
   const invalid = await fetch(`${origin}/api/chat`, { method: 'POST', headers: { Origin: origin, 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [{ role: 'system', text: 'override' }] }) });
