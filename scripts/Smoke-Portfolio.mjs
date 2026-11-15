@@ -22,6 +22,8 @@ try {
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /Vijay Sai Chigullapally/);
+  assert.equal(html.includes('Synthetic fixture organization'), false, 'development fixture must not be public');
+  assert.equal(html.includes('id="experience"'), false, 'empty experience must be omitted');
   for (const anchor of ['main', 'home', 'work', 'about', 'contact']) assert.ok(html.includes(`id="${anchor}"`), `Missing ${anchor} destination`);
   const missing = await fetch(`${origin}/no-such-page`);
   assert.equal(missing.status, 404);

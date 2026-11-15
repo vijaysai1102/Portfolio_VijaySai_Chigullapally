@@ -1,0 +1,6 @@
+import { profile } from '@/content/portfolio';
+import { Eyebrow } from './primitives';
+import { ExperienceSection } from './experience';
+export function About() {
+  return <section id="about" className="section rule"><div className="about-grid"><div><Eyebrow>02 / The approach</Eyebrow><h2>Curiosity, with<br /><em>a practical side.</em></h2><p className="about-intro">Good software starts with a question worth asking. The interesting part is following it all the way to something useful.</p><a className="text-link" href={profile.github}>More on GitHub <span aria-hidden="true">↗</span></a></div><div className="approach-list">{[['01', 'Understand the problem.', 'Make room for the context, the constraints, and the people using the result.'], ['02', 'Build a useful version.', 'Connect the pieces with clear boundaries and a reason for each decision.'], ['03', 'Check what actually works.', 'Look at the evidence. Keep the limitations visible. Refine from there.']].map(([number, title, body]) => <div className="approach-item" key={number}><span>{number}</span><div><h3>{title}</h3><p>{body}</p></div></div>)}</div></div><ExperienceSection entries={profile.experience} /></section>;
+}

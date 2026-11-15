@@ -4,6 +4,14 @@ import { readFileSync } from 'node:fs';
 import { parseProject } from '../src/content/model';
 import { profile, projects } from '../src/content/portfolio';
 import { filterDemo, isDemoView } from '../src/lib/demo';
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { ExperienceSection } from '../src/components/experience';
+test('experience omits empty data and renders a future supplied entry', () => {
+  assert.equal(renderToStaticMarkup(createElement(ExperienceSection, { entries: [] })), '');
+  const fixture = { organization: 'Synthetic fixture organization', title: 'Fixture role', description: 'Development-only example.' };
+  assert.match(renderToStaticMarkup(createElement(ExperienceSection, { entries: [fixture] })), /Synthetic fixture organization/);
+});
 test('demo selection rejects unknown views and search has a deterministic empty state', () => {
   assert.equal(isDemoView('https://outside.example'), false);
   assert.equal(isDemoView('skills'), true);

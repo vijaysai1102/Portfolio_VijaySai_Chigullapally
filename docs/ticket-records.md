@@ -50,3 +50,6 @@ Case study traced to ingestion.py/rag_agent.py and README. Correctly describes l
 
 ## T17 — Implementation verified; contribution/visual review pending
 Added PingBack as a reviewed additional source-linked project. README/repository metadata reviewed; no sole-authorship or runtime notification claim. Reuses validated records and ordinary links; no unnecessary filters. Existing flagship prominence, card hover/focus, menu and motion rules preserved. Full checks and all production routes passed. Browser unavailable; personal attribution wording awaits chat.
+
+## T18 — Implementation verified; responsive fixture review pending
+Experience layout connected to the empty production collection. Synthetic populated fixture exists only in tests; its initial missing-render assertion failed before implementation and passes after. Production HTTP asserts no fixture or empty experience section leaks. Added modular About section and preserved all existing anchors/hover/focus/menu/demo behavior. Full checks and routes passed. Browser narrow/wide fixture review unavailable; no employment facts inserted.
