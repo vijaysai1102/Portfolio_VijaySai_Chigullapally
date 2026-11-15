@@ -10,6 +10,8 @@ npm.cmd run check
 
 The local site runs at http://127.0.0.1:3000. `npm.cmd run build` prepares production; `npm.cmd start` runs it. `src/content` owns public content, `src/components` owns interaction, and `src/lib` owns validated server logic. Keep secrets in ignored `.env.local`; see `.env.example` for names. AI is disabled by default and requires live verification and durable usage storage before enabling publicly. No personal experience, education, portrait or resume is inferred. See `docs/ticket-records.md` for implementation evidence and outstanding inputs.
 
+[Maintenance guide](docs/maintenance.md) · [Launch status](docs/launch-status.md) · [Ticket evidence](docs/ticket-records.md) · [Deployment](docs/deployment.md)
+
 ## Shared agent guidance
 
 `CLAUDE.md` and `AGENTS.md` contain matching project instructions. Shared skills live in both `.claude/skills/` and `.agents/skills/`. Edit either peer; synchronization uses a saved baseline to identify which side changed, including skill additions, renames, binary supporting files, and deletions. The root guides link to the shared skills and context. Tool-specific settings remain separate.
