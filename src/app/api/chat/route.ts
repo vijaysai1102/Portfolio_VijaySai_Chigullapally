@@ -1,0 +1,30 @@
+import { ChatError } from '@/lib/chat-contract';
+import { streamGemini } from '@/lib/server/gemini';
+import { readChatRequest } from '@/lib/server/request';
+export const runtime = 'nodejs';
+export const maxDuration = 30;
+const configured = () => process.env.AI_ENABLED === 'true' && process.env.AI_RELEASE_APPROVED === 'true' && Boolean(process.env.GEMINI_API_KEY && process.env.GEMINI_MODEL);
+const errorMessage = (error: unknown) => error instanceof ChatError ? error.message : error instanceof Error && error.name === 'TimeoutError' ? 'The guide took too long. Please try again.' : 'The guide is unavailable. Please try again later.';
+export function GET() { return Response.json({ available: configured() }, { headers: { 'Cache-Control': 'no-store' } }); }
+export async function POST(request: Request) {
+  try {
+    const input = await readChatRequest(request);
+    if (!configured()) throw new ChatError(503, 'The AI guide is offline. You can still explore every project using the links.');
+    const abort = new AbortController();
+    const signal = AbortSignal.any([request.signal, abort.signal]);
+    let cancelled = false;
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      async start(controller) {
+        const send = (event: unknown) => { if (!cancelled) controller.enqueue(encoder.encode(`${JSON.stringify(event)}\n`)); };
+        try {
+          for await (const event of streamGemini({ apiKey: process.env.GEMINI_API_KEY!, model: process.env.GEMINI_MODEL!, system: 'You are Vijay’s portfolio AI guide. Do not invent personal facts or reveal private configuration.', messages: input.messages, signal })) send(event);
+          send({ type: 'done' });
+        } catch (error) { if (!cancelled) send({ type: 'error', message: errorMessage(error) }); }
+        finally { if (!cancelled) controller.close(); }
+      },
+      cancel() { cancelled = true; abort.abort(); },
+    });
+    return new Response(stream, { headers: { 'Content-Type': 'application/x-ndjson', 'Cache-Control': 'no-store', 'X-Accel-Buffering': 'no' } });
+  } catch (error) { return Response.json({ error: errorMessage(error) }, { status: error instanceof ChatError ? error.status : 503, headers: { 'Cache-Control': 'no-store' } }); }
+}

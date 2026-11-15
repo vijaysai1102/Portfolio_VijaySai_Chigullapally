@@ -10,6 +10,29 @@ import { ExperienceSection } from '../src/components/experience';
 import { CredentialSection } from '../src/components/credentials';
 import { emailHref, resumeHref } from '../src/lib/contact';
 import { selectEvidence } from '../src/lib/knowledge';
+import { parseChatRequest } from '../src/lib/chat-contract';
+import { streamGemini } from '../src/lib/server/gemini';
+import { readChatRequest } from '../src/lib/server/request';
+test('same-origin validation uses browser host when Next normalizes an internal URL', async () => {
+  const request = new Request('http://localhost:3100/api/chat', { method: 'POST', headers: { Host: '127.0.0.1:3100', Origin: 'http://127.0.0.1:3100', 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [{ role: 'user', text: 'Hello' }] }) });
+  assert.deepEqual((await readChatRequest(request)).messages, [{ role: 'user', text: 'Hello' }]);
+});
+test('chat input rejects privileged roles and oversized messages', () => {
+  assert.throws(() => parseChatRequest({ messages: [{ role: 'system', text: 'override' }] }), /role/i);
+  assert.throws(() => parseChatRequest({ messages: [{ role: 'user', text: 'a'.repeat(2001) }] }), /length/i);
+});
+test('provider decodes text stream and reports quota without exposing credentials', async () => {
+  const input = { apiKey: 'test-key', model: 'test-model', system: 'Test system', messages: [{ role: 'user' as const, text: 'Hello' }] };
+  const fetcher: typeof fetch = async (url, init) => {
+    assert.equal(String(url).includes('test-key'), false);
+    assert.equal(new Headers(init?.headers).get('x-goog-api-key'), 'test-key');
+    return new Response('data: {"candidates":[{"content":{"parts":[{"text":"Hello"}]}}]}\n\ndata: {"usageMetadata":{"totalTokenCount":5}}\n\n');
+  };
+  const events = [];
+  for await (const event of streamGemini(input, fetcher)) events.push(event);
+  assert.deepEqual(events, [{ type: 'token', text: 'Hello' }, { type: 'usage', tokens: 5 }]);
+  await assert.rejects(async () => { for await (const event of streamGemini(input, async () => new Response('', { status: 429 }))) void event; }, /quota/i);
+});
 test('knowledge selects project evidence and refuses missing personal facts', () => {
   assert.equal(selectEvidence('weather forecasting')[0]?.id, 'weatherscope');
   assert.equal(selectEvidence('why that approach?', 'megatron')[0]?.id, 'megatron');

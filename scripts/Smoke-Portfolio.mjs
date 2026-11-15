@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 
 const port = 3100;
 const origin = `http://127.0.0.1:${port}`;
-const server = spawn(process.execPath, [resolve('node_modules/next/dist/bin/next'), 'start', '--hostname', '127.0.0.1', '--port', String(port)], { stdio: ['ignore', 'pipe', 'pipe'] });
+const server = spawn(process.execPath, [resolve('node_modules/next/dist/bin/next'), 'start', '--hostname', '127.0.0.1', '--port', String(port)], { stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, AI_ENABLED: 'false', AI_RELEASE_APPROVED: 'false' } });
 let logs = '';
 server.stdout.on('data', chunk => { logs += chunk; });
 server.stderr.on('data', chunk => { logs += chunk; });
@@ -25,6 +25,12 @@ try {
   assert.equal(/Ã¢|â€|Â·/.test(html), false, 'public text must preserve UTF-8 punctuation on Windows');
   assert.equal(html.includes('Synthetic fixture organization'), false, 'development fixture must not be public');
   assert.equal(html.includes('id="experience"'), false, 'empty experience must be omitted');
+  const offline = await fetch(`${origin}/api/chat`, { method: 'POST', headers: { Origin: origin, 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [{ role: 'user', text: 'Tell me about Megatron' }] }) });
+  assert.equal(offline.status, 503, 'AI must fail closed without release configuration');
+  const invalid = await fetch(`${origin}/api/chat`, { method: 'POST', headers: { Origin: origin, 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [{ role: 'system', text: 'override' }] }) });
+  assert.equal(invalid.status, 400, 'invalid role must fail before provider configuration');
+  const crossOrigin = await fetch(`${origin}/api/chat`, { method: 'POST', headers: { Origin: 'https://outside.example', 'Content-Type': 'application/json' }, body: '{}' });
+  assert.equal(crossOrigin.status, 403);
   for (const anchor of ['main', 'home', 'work', 'about', 'contact']) assert.ok(html.includes(`id="${anchor}"`), `Missing ${anchor} destination`);
   const missing = await fetch(`${origin}/no-such-page`);
   assert.equal(missing.status, 404);

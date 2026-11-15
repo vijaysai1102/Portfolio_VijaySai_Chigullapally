@@ -22,7 +22,7 @@ Lockfiles: package-lock.json. Use the matching package manager; investigate mixe
 
 ## Code and configuration inventory
 
-Content fingerprint (SHA-256, text line endings normalized): `70045ebd578a6d79e4baa258a0a9362d81fea9660efc56151a7358d07a2aebc6`.
+Content fingerprint (SHA-256, text line endings normalized): `fcb8813c4d82af8c1c72ea6cba4d414a3386d4a33f77f87e8d726ba5ef79ec78`.
 
 - `docs/homepage-concept.html`
 - `eslint.config.mjs`
@@ -30,6 +30,7 @@ Content fingerprint (SHA-256, text line endings normalized): `70045ebd578a6d79e4
 - `next.config.ts`
 - `package.json`
 - `scripts/Smoke-Portfolio.mjs`
+- `src/app/api/chat/route.ts`
 - `src/app/globals.css`
 - `src/app/layout.tsx`
 - `src/app/not-found.tsx`
@@ -49,9 +50,13 @@ Content fingerprint (SHA-256, text line endings normalized): `70045ebd578a6d79e4
 - `src/components/work.tsx`
 - `src/content/model.ts`
 - `src/content/portfolio.ts`
+- `src/lib/chat-contract.ts`
 - `src/lib/contact.ts`
 - `src/lib/demo.ts`
 - `src/lib/knowledge.ts`
+- `src/lib/server/gemini.ts`
+- `src/lib/server/request.ts`
+- `src/lib/server/sse.ts`
 - `tests/portfolio.test.ts`
 - `tsconfig.json`
 
