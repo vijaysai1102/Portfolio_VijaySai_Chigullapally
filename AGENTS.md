@@ -75,7 +75,7 @@ Lockfiles: package-lock.json. Use the matching package manager; investigate mixe
 
 ## Code and configuration inventory
 
-Content fingerprint (SHA-256, text line endings normalized): `68bb6985bbd7ed22b4adf71e337c9f56f9cfcfeeb096334fc7d386921e15d341`.
+Content fingerprint (SHA-256, text line endings normalized): `e7b6be1706d0be244acc6ee9169bcf494843b5ac8cd4029ee14de515d1596238`.
 
 - `docs/homepage-concept.html`
 - `eslint.config.mjs`
@@ -117,6 +117,7 @@ Content fingerprint (SHA-256, text line endings normalized): `68bb6985bbd7ed22b4
 - `src/lib/server/gemini.ts`
 - `src/lib/server/request.ts`
 - `src/lib/server/sse.ts`
+- `src/lib/server/usage.ts`
 - `tests/portfolio.test.ts`
 - `tsconfig.json`
 

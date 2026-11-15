@@ -31,3 +31,4 @@
 @media(max-width:700px){.guide-launcher{right:18px;bottom:16px;gap:12px;font-size:11px;min-height:48px}.guide-dialog{inset:auto 12px 12px;width:calc(100% - 24px);max-width:none;max-height:calc(100dvh - 24px);height:620px;border-radius:12px}.guide-header{padding:14px 16px}.guide-messages{padding:20px 16px}.guide-form{padding:12px 14px}.guide-form textarea{font-size:16px}.guide-form-actions button{min-height:44px}.guide-dialog .guide-prompts button{min-height:44px}}
 .project-card:target{outline:3px solid var(--olive);outline-offset:6px}.guide-turn .guide-actions a{display:flex;align-items:center;min-height:44px;padding:10px 13px;border:1px solid #b3c3a2;background:transparent;font-size:11px}
 .demo-section{position:relative}.demo-anchor{position:absolute;top:0;width:1px;height:1px;pointer-events:none;scroll-margin-top:110px}
+.guide-allowance{padding:9px 20px;font-size:10px;color:var(--olive);background:var(--soft);border-top:1px solid var(--line);flex-shrink:0}

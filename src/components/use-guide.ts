@@ -13,6 +13,7 @@ export function useGuide() {
   const [messages, setMessages] = useState<GuideTurn[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [remaining, setRemaining] = useState<number | null>(null);
   const history = useRef<GuideTurn[]>([]);
   const active = useRef<AbortController | null>(null);
   const version = useRef(0);
@@ -47,6 +48,7 @@ export function useGuide() {
         if (event.type === 'token') { answer += event.text; updateAnswer({ text: displayGuideText(answer) }); }
         if (event.type === 'sources') updateAnswer({ sources: event.sources });
         if (event.type === 'actions') updateAnswer({ actions: event.actions });
+        if (event.type === 'limit') setRemaining(event.remainingSession);
         if (event.type === 'done') updateAnswer({ complete: true });
       }
     } catch (failure) {
@@ -68,5 +70,5 @@ export function useGuide() {
     const attempt = lastAttempt.current;
     if (attempt) void run(attempt.text, context, attempt.history);
   }
-  return { messages, busy, error, send: run, stop, reset, retry };
+  return { messages, busy, error, remaining, send: run, stop, reset, retry };
 }

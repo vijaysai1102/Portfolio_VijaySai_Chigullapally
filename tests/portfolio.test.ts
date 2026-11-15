@@ -17,6 +17,14 @@ import { answerPlan, citedSources } from '../src/lib/grounding';
 import { conversationInput } from '../src/lib/conversation';
 import { readGuideStream } from '../src/lib/guide-stream';
 import { actionsFromAnswer, displayGuideText, guideAction } from '../src/lib/guide-actions';
+import { reserveUsage } from '../src/lib/server/usage';
+test('durable quota fails closed on rejection/outage and reports remaining session allowance', async () => {
+  const config = { url: 'https://quota.example', token: 'test-token', daily: 5, monthly: 10, session: 3 };
+  const session = '12345678-1234-4123-8123-123456789012';
+  await assert.rejects(() => reserveUsage(config, session, async () => new Response('Unavailable', { status: 500 })), /unavailable/i);
+  await assert.rejects(() => reserveUsage(config, session, async () => Response.json({ result: [0] })), /limit/i);
+  assert.deepEqual(await reserveUsage(config, session, async () => Response.json({ result: [1, 4, 8, 2] })), { remainingSession: 1 });
+});
 test('guide actions are bounded identifiers and cannot introduce external code or URLs', () => {
   assert.equal(guideAction('javascript:alert(1)'), undefined);
   assert.equal(guideAction('megatron')?.href, '/projects/megatron');

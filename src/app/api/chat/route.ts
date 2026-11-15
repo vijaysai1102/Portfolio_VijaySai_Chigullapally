@@ -4,9 +4,10 @@ import { readChatRequest } from '@/lib/server/request';
 import { answerPlan, citedSources } from '@/lib/grounding';
 import { conversationInput } from '@/lib/conversation';
 import { actionsFromAnswer, guideAction } from '@/lib/guide-actions';
+import { reserveUsage, usageConfig, usageConfigured, usageSession } from '@/lib/server/usage';
 export const runtime = 'nodejs';
 export const maxDuration = 30;
-const configured = () => process.env.AI_ENABLED === 'true' && process.env.AI_RELEASE_APPROVED === 'true' && Boolean(process.env.GEMINI_API_KEY && process.env.GEMINI_MODEL);
+const configured = () => process.env.AI_ENABLED === 'true' && process.env.AI_RELEASE_APPROVED === 'true' && Boolean(process.env.GEMINI_API_KEY && process.env.GEMINI_MODEL) && usageConfigured();
 const errorMessage = (error: unknown) => error instanceof ChatError ? error.message : error instanceof Error && error.name === 'TimeoutError' ? 'The guide took too long. Please try again.' : 'The guide is unavailable. Please try again later.';
 export function GET() { return Response.json({ available: configured() }, { headers: { 'Cache-Control': 'no-store' } }); }
 export async function POST(request: Request) {
@@ -15,6 +16,8 @@ export async function POST(request: Request) {
     const input = conversationInput(supplied.messages, supplied.currentProject, supplied.currentView);
     if (!configured()) throw new ChatError(503, 'The AI guide is offline. You can still explore every project using the links.');
     const plan = answerPlan(input);
+    const session = usageSession(request);
+    const allowance = await reserveUsage(usageConfig(), session.id, fetch, new Date(), request.signal);
     const abort = new AbortController();
     const signal = AbortSignal.any([request.signal, abort.signal]);
     let cancelled = false;
@@ -23,6 +26,7 @@ export async function POST(request: Request) {
       async start(controller) {
         const send = (event: unknown) => { if (!cancelled) controller.enqueue(encoder.encode(`${JSON.stringify(event)}\n`)); };
         try {
+          send({ type: 'limit', remainingSession: allowance.remainingSession });
           if (plan.localAnswer) {
             send({ type: 'token', text: plan.localAnswer });
             send({ type: 'sources', sources: [] });
@@ -44,6 +48,6 @@ export async function POST(request: Request) {
       },
       cancel() { cancelled = true; abort.abort(); },
     });
-    return new Response(stream, { headers: { 'Content-Type': 'application/x-ndjson', 'Cache-Control': 'no-store', 'X-Accel-Buffering': 'no' } });
+    return new Response(stream, { headers: { 'Content-Type': 'application/x-ndjson', 'Cache-Control': 'no-store', 'X-Accel-Buffering': 'no', 'Set-Cookie': session.cookie } });
   } catch (error) { return Response.json({ error: errorMessage(error) }, { status: error instanceof ChatError ? error.status : 503, headers: { 'Cache-Control': 'no-store' } }); }
 }
