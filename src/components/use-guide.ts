@@ -1,12 +1,13 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { MAX_MESSAGE_CHARS, type ChatMessage } from '@/lib/chat-contract';
+import { MAX_MESSAGE_CHARS, type ChatMessage, type ChatRequest } from '@/lib/chat-contract';
 import { conversationInput } from '@/lib/conversation';
 import { readGuideStream } from '@/lib/guide-stream';
 import type { SourceReference } from '@/lib/grounding';
 import { displayGuideText, type GuideAction } from '@/lib/guide-actions';
 export type GuideTurn = ChatMessage & { id: string; complete: boolean; sources: SourceReference[]; actions: GuideAction[] };
 const MAX_VISIBLE_TURNS = 24;
+type GuideContext = Pick<ChatRequest, 'currentProject' | 'currentView'>;
 
 export function useGuide() {
   const [messages, setMessages] = useState<GuideTurn[]>([]);
@@ -19,11 +20,11 @@ export function useGuide() {
   const commit = (next: GuideTurn[]) => { history.current = next; setMessages(next); };
   useEffect(() => () => active.current?.abort(), []);
 
-  async function run(value: string, currentProject?: string, base = history.current.filter(turn => turn.complete)) {
+  async function run(value: string, context: GuideContext = {}, base = history.current.filter(turn => turn.complete)) {
     if (active.current) return;
     const text = value.trim();
     if (!text || text.length > MAX_MESSAGE_CHARS) { setError('Please enter a question of up to 2,000 characters.'); return; }
-    const input = conversationInput([...base.map(({ role, text }) => ({ role, text })), { role: 'user', text }], currentProject);
+    const input = conversationInput([...base.map(({ role, text }) => ({ role, text })), { role: 'user', text }], context.currentProject, context.currentView);
     const requestVersion = ++version.current;
     const controller = new AbortController();
     active.current = controller;
@@ -63,9 +64,9 @@ export function useGuide() {
     setBusy(false); setError('Response stopped. You can retry or ask another question.');
   }
   function reset() { stop(); version.current++; commit([]); lastAttempt.current = null; setError(null); }
-  function retry(currentProject?: string) {
+  function retry(context: GuideContext = {}) {
     const attempt = lastAttempt.current;
-    if (attempt) void run(attempt.text, currentProject, attempt.history);
+    if (attempt) void run(attempt.text, context, attempt.history);
   }
   return { messages, busy, error, send: run, stop, reset, retry };
 }

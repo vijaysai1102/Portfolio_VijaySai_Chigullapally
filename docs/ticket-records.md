@@ -77,3 +77,6 @@ Added native dialog/launcher, memory-only conversation hook, source links, sugge
 
 ## T26 — Partial: real-model/browser guided journey pending
 Allowlisted project/open/highlight/section/source suggestions resolve to canonical links at server and client; unknown IDs/URLs discarded, duplicates removed and capped at two. Optional visitor click applies navigation; no autonomous external action or invented provider tool protocol. Action test failed before implementation then passed; full checks and production routes passed. Fragment highlights use existing project IDs and preserve hover/focus/reduced motion. Actual guided clicks/back/forward and model action quality remain unverified.
+
+## T27 — Partial: real guided browser journey pending
+Added allowlisted demo fragments, native same-page navigation, URL-backed view subscription, view-scoped search and reset. Guide request validates current sample view only for Megatron; model context labels sample items fictional. Fragment test failed first then passed; full checks/all production routes passed. No remote bridge, arbitrary commands or actual plugin operations. Native dialog and ordinary controls preserved. Actual ask/open-view/reset/focus/back journey and live model selection unavailable without browser/key.

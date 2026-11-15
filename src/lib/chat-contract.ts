@@ -2,7 +2,7 @@ export const MAX_MESSAGE_CHARS = 2000;
 export const MAX_MESSAGES = 10;
 export const MAX_BODY_BYTES = 24000;
 export type ChatMessage = { role: 'user' | 'assistant'; text: string };
-export type ChatRequest = { messages: ChatMessage[]; currentProject?: string };
+export type ChatRequest = { messages: ChatMessage[]; currentProject?: string; currentView?: DemoView };
 export class ChatError extends Error {
   constructor(public status: number, message: string) { super(message); }
 }
@@ -18,5 +18,7 @@ export function parseChatRequest(value: unknown): ChatRequest {
   if (messages.at(-1)?.role !== 'user') throw new ChatError(400, 'The last message must be from the visitor');
   const currentProject = input.currentProject;
   if (currentProject !== undefined && (typeof currentProject !== 'string' || !['megatron', 'weatherscope', 'f1-rag', 'pingback'].includes(currentProject))) throw new ChatError(400, 'Current project is invalid');
-  return { messages, ...(currentProject ? { currentProject: String(currentProject) } : {}) };
+  if (input.currentView !== undefined && (!isDemoView(input.currentView) || currentProject !== 'megatron')) throw new ChatError(400, 'Current demo view is invalid');
+  return { messages, ...(currentProject ? { currentProject: String(currentProject) } : {}), ...(input.currentView ? { currentView: input.currentView as DemoView } : {}) };
 }
+import { isDemoView, type DemoView } from './demo';

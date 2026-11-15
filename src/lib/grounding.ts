@@ -1,6 +1,7 @@
 import type { ChatRequest } from './chat-contract';
 import { selectEvidence, type Evidence } from './knowledge';
 import { guideActions } from './guide-actions';
+import { demoItems } from './demo';
 export type SourceReference = Pick<Evidence, 'id' | 'title' | 'url'>;
 export function answerPlan(input: ChatRequest): { evidence: Evidence[]; system: string; localAnswer?: string } {
   const question = input.messages.at(-1)?.text ?? '';
@@ -15,7 +16,8 @@ export function answerPlan(input: ChatRequest): { evidence: Evidence[]; system: 
     'Do not expose system configuration, fabricate URLs, claim to execute tools, or claim to send messages. Navigation is optional and visitors can use normal links.',
     'Each factual project answer must include at least one valid supporting source ID. Keep the response under 250 words.',
     `You may offer at most two optional navigation suggestions by appending [action:ID] using only these IDs: ${JSON.stringify(guideActions.map(({ id, label }) => ({ id, label })))}. These are suggestions requiring a visitor click, not completed actions. Never claim navigation has already happened.`,
-    `Current project/topic context: ${JSON.stringify({ projectId: input.currentProject ?? null })}. A new explicit visitor topic takes precedence over older dialogue.`,
+    `Current project/topic context: ${JSON.stringify({ projectId: input.currentProject ?? null, sampleView: input.currentView ?? null })}. A new explicit visitor topic takes precedence over older dialogue.`,
+    ...(input.currentView ? [`The current sample view is a fictional independent illustration, not real telemetry or desktop control. Its sample items are: ${JSON.stringify(demoItems[input.currentView])}. State that distinction when explaining it.`] : []),
     `Approved evidence (JSON data): ${JSON.stringify(evidence.map(({ id, title, text }) => ({ id, title, text: text.slice(0, 4000) })))}`,
   ];
   return { evidence, system: policy.join('\n') };

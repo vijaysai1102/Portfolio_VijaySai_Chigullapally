@@ -1,4 +1,5 @@
 import { MAX_MESSAGE_CHARS, MAX_MESSAGES, parseChatRequest, type ChatMessage, type ChatRequest } from './chat-contract';
+import type { DemoView } from './demo';
 function topic(text: string): string | undefined {
   const candidates: [string, RegExp][] = [
     ['megatron', /\b(megatron|skills?|plugins?)\b/i],
@@ -8,11 +9,11 @@ function topic(text: string): string | undefined {
   ];
   return candidates.find(([, pattern]) => pattern.test(text))?.[0];
 }
-export function conversationInput(messages: ChatMessage[], currentProject?: string): ChatRequest {
+export function conversationInput(messages: ChatMessage[], currentProject?: string, currentView?: DemoView): ChatRequest {
   const lastQuestion = messages.findLast(message => message.role === 'user')?.text ?? '';
   const previousTopic = messages.filter(message => message.role === 'user').map(message => topic(message.text)).findLast(Boolean);
   const current = topic(lastQuestion) ?? currentProject ?? previousTopic;
   const bounded = messages.filter(message => message.text.trim()).slice(-MAX_MESSAGES).map(message => ({ ...message, text: message.role === 'assistant' ? message.text.slice(0, MAX_MESSAGE_CHARS) : message.text }));
   if (bounded[0]?.role === 'assistant') bounded.shift();
-  return parseChatRequest({ messages: bounded, ...(current ? { currentProject: current } : {}) });
+  return parseChatRequest({ messages: bounded, ...(current ? { currentProject: current } : {}), ...(current === 'megatron' && currentView ? { currentView } : {}) });
 }

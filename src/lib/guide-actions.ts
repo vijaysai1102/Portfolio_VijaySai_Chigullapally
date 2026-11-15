@@ -1,4 +1,5 @@
 import { additionalWork, projects } from '@/content/portfolio';
+import { demoViews } from './demo';
 export type GuideAction = Readonly<{ id: string; label: string; href: string }>;
 export const guideActions: readonly GuideAction[] = [
   { id: 'work', label: 'Explore all work', href: '/#work' },
@@ -9,6 +10,7 @@ export const guideActions: readonly GuideAction[] = [
     { id: `highlight-${project.id}`, label: `Highlight ${project.title}`, href: `/#project-${project.id}` },
   ]),
   ...additionalWork.map(project => ({ id: project.id, label: `View ${project.title} source`, href: project.source })),
+  ...demoViews.map(view => ({ id: `demo-${view}`, label: `Explore sample ${view}`, href: `/projects/megatron#demo-${view}` })),
 ];
 export function guideAction(id: unknown): GuideAction | undefined { return guideActions.find(action => action.id === id); }
 export function actionsFromAnswer(answer: string): GuideAction[] {

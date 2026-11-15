@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { parseProject } from '../src/content/model';
 import { profile, projects } from '../src/content/portfolio';
-import { filterDemo, isDemoView } from '../src/lib/demo';
+import { demoViewFromHash, filterDemo, isDemoView } from '../src/lib/demo';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { ExperienceSection } from '../src/components/experience';
@@ -22,6 +22,12 @@ test('guide actions are bounded identifiers and cannot introduce external code o
   assert.equal(guideAction('megatron')?.href, '/projects/megatron');
   assert.deepEqual(actionsFromAnswer('[action:megatron] [action:unknown] [action:megatron]').map(action => action.id), ['megatron']);
   assert.equal(displayGuideText('A useful answer. [action:megatron]'), 'A useful answer.');
+});
+test('demo navigation accepts only documented fragment states', () => {
+  assert.equal(demoViewFromHash('#demo-skills'), 'skills');
+  assert.equal(demoViewFromHash('#demo-usage'), 'usage');
+  assert.equal(demoViewFromHash('#demo-delete'), undefined);
+  assert.equal(demoViewFromHash('https://outside.example'), undefined);
 });
 test('guide transport preserves split UTF-8 and canonicalizes source destinations', async () => {
   const encoded = new TextEncoder().encode('{"type":"token","text":"Café"}\n{"type":"sources","sources":[{"id":"megatron","url":"https://outside.example"}]}\n{"type":"done"}\n');

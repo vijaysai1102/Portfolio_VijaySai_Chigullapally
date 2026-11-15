@@ -12,7 +12,7 @@ export function GET() { return Response.json({ available: configured() }, { head
 export async function POST(request: Request) {
   try {
     const supplied = await readChatRequest(request);
-    const input = conversationInput(supplied.messages, supplied.currentProject);
+    const input = conversationInput(supplied.messages, supplied.currentProject, supplied.currentView);
     if (!configured()) throw new ChatError(503, 'The AI guide is offline. You can still explore every project using the links.');
     const plan = answerPlan(input);
     const abort = new AbortController();

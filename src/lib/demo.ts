@@ -1,6 +1,10 @@
 export const demoViews = ['overview', 'skills', 'usage'] as const;
 export type DemoView = typeof demoViews[number];
 export type DemoItem = { title: string; detail: string; badge: string };
+export function demoViewFromHash(hash: string): DemoView | undefined {
+  const value = /^#demo-([a-z]+)$/.exec(hash)?.[1];
+  return isDemoView(value) ? value : undefined;
+}
 export function isDemoView(value: unknown): value is DemoView { return demoViews.some(view => view === value); }
 export function filterDemo(items: DemoItem[], query: string): DemoItem[] {
   const search = query.trim().toLowerCase();
