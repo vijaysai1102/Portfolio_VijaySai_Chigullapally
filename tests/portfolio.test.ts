@@ -19,8 +19,10 @@ import { readGuideStream } from '../src/lib/guide-stream';
 import { actionsFromAnswer, displayGuideText, guideAction } from '../src/lib/guide-actions';
 import { reserveUsage, usageConfig } from '../src/lib/server/usage';
 import { siteConfig } from '../src/lib/server/site';
-test('sharing origin is explicit and preview/unconfigured sites do not request indexing', () => {
+test('sharing origin uses the confirmed production deployment and keeps previews unindexed', () => {
   assert.equal(siteConfig({}).indexable, false);
+  assert.deepEqual(siteConfig({ VERCEL_ENV: 'production' }), { origin: 'https://vijayportfolio-eight.vercel.app', indexable: true });
+  assert.deepEqual(siteConfig({ VERCEL_ENV: 'preview' }), { indexable: false });
   assert.equal(siteConfig({ SITE_URL: 'https://portfolio.example', VERCEL_ENV: 'preview' }).indexable, false);
   assert.equal(siteConfig({ SITE_URL: 'https://portfolio.example', VERCEL_ENV: 'production' }).origin, 'https://portfolio.example');
   assert.throws(() => siteConfig({ SITE_URL: 'https://user:secret@portfolio.example' }), /SITE_URL/i);

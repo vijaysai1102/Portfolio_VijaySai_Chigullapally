@@ -1,6 +1,6 @@
 # Deployment preparation
 
-Target: Vercel, using the repository root, Next.js and the committed npm lockfile. vercel.json declares the framework and standard install/build commands. The API exports a 30-second function duration; actual account/runtime limits must be checked on the deployed preview. No cloud project, paid plan, domain or production promotion has been created by local implementation.
+Deployed production: https://vijayportfolio-eight.vercel.app, confirmed over HTTP on 2026-11-15 following the user's deployment. Vercel builds the repository root using Next.js and the committed npm lockfile. vercel.json declares the framework and standard install/build commands. The API exports a 30-second function duration; live AI/account limits still require private configuration and approved budgets. GitHub's Vercel commit status, rather than its empty deployments list, exposes the actual deployment.
 
 ## Preview
 
@@ -10,15 +10,15 @@ Verify the actual preview: homepage, every case route, 404, icon/share PNG, loca
 
 ## Production gate
 
-Production remains pending: supplied personal facts, portrait and resume/contact decisions; approved project contributions/examples; browser/accessibility/performance review; actual preview results; account/domain/canonical origin; live guide/store evaluation if AI is enabled. A static-first launch with AI disabled is possible only after the remaining content and site review are accepted. This document does not silently waive those gates.
+Production is deployed with neutral personal content and AI disabled. Final content, browser/accessibility/performance review and live guide/store evaluation remain separate acceptance items; see launch-status.md for current evidence and required inputs.
 
-Configure SITE_URL to the final HTTPS origin before building. Vercel production enables indexing only with that origin; other hosts also require SITE_INDEXABLE=true. Deploy/publish the reviewed revision rather than a moving branch result. Confirm deployed links, all routes, canonical metadata/robots/sitemap, asset loading and guide state at the intended domain.
+Vercel production defaults to the confirmed HTTPS origin above. Set SITE_URL before building when adopting a custom domain; other hosts also require SITE_INDEXABLE=true. Preview builds remain unindexed. Confirm the deployed commit, links, all routes, canonical metadata/robots/sitemap, asset loading and guide state at the intended domain.
 
 ## Disable and rollback
 
 To disable generation, set AI_ENABLED=false and AI_RELEASE_APPROVED=false in the relevant Vercel environment and redeploy. The ordinary portfolio remains available. Confirm /api/chat reports available=false and valid POST returns 503. Do not put a secret into a health request.
 
-Before promotion, record the previous known-good deployment ID/URL and commit. Use Vercel's actual rollback/promote controls for that deployment when needed; the account must be connected to verify the precise controls. No rollback has been exercised because no deployment exists yet. Keep preview and production budgets/storage separate. Review provider/Redis operational dashboards without logging conversation bodies.
+Before promotion, record the previous known-good deployment ID/URL and commit. The initial deployed revision was 198775e7120cbe7c9bf9c370eb5cc1bec6be4df8, Vercel deployment 5txVuThtv4segabaw6sADi6Q18P5 in project vijay_portfolio. Its home and three case pages returned 200. Use Vercel's rollback/promote controls when needed; no disruptive rollback has been exercised on the user's live site. Keep preview and production budgets/storage separate. Review provider/Redis operational dashboards without logging conversation bodies.
 
 ## Local and CI evidence
 

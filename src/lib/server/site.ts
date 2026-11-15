@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
+
+const CONFIRMED_PRODUCTION_ORIGIN = 'https://vijayportfolio-eight.vercel.app';
+
 export function siteConfig(environment: Record<string, string | undefined> = process.env): { origin?: string; indexable: boolean } {
-  const supplied = environment.SITE_URL;
+  const supplied = environment.SITE_URL || (environment.VERCEL_ENV === 'production' ? CONFIRMED_PRODUCTION_ORIGIN : undefined);
   if (!supplied) return { indexable: false };
   let url: URL;
   try { url = new URL(supplied); } catch { throw new Error('SITE_URL must be a valid HTTPS origin'); }
