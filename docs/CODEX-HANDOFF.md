@@ -247,7 +247,7 @@ Next steps for this track:
 1. Establish the user's intended model, private configuration location and approved caps. Enter secrets in ignored local environment settings or Vercel settings, with preview/production separation.
 2. Read [AI policy](ai-policy.md), [evaluation](ai-evaluation.md) and [usage controls](usage-controls.md).
 3. Run an authorized protected-preview trial. Both flags must be true in that test environment for the current API gate to permit generation. Production stays disabled during evaluation.
-4. Exercise factual/unsupported/adversarial questions, citations, corrections/context, stop/retry/reset, user-clicked actions, quota exhaustion, concurrent reservations, expiry and provider/store failures.
+4. Use the versioned 32-case review set and proposed rubric in [AI evaluation](ai-evaluation.md). Approve the rubric before the final run. Exercise citations, corrections/context, stop/retry/reset, user-clicked actions, quota exhaustion, concurrent reservations, expiry and provider/store failures; the prepared set is not a completed live evaluation.
 5. Verify actual streaming UI and keyboard/mobile behavior. Record model, date, failures, fixes and observed usage without exposing credentials or retaining visitor conversations unnecessarily.
 6. Enable production only after live quality, usage and deployment requirements are satisfied. Request caps are not an exact invoice guarantee.
 
