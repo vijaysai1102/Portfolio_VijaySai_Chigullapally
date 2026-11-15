@@ -40,7 +40,7 @@ export async function POST(request: Request) {
             const sources = citedSources(answer, plan.evidence);
             if (!sources.length) throw new ChatError(422, 'The answer could not be linked to approved evidence. Please open a project source or try again.');
             send({ type: 'sources', sources });
-            send({ type: 'actions', actions: actionsFromAnswer(answer) });
+            send({ type: 'actions', actions: actionsFromAnswer(answer, input.messages.at(-1)?.text, input.currentProject) });
           }
           send({ type: 'done' });
         } catch (error) { if (!cancelled) send({ type: 'error', message: errorMessage(error) }); }

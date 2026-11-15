@@ -6,9 +6,9 @@ Node tests verify input roles/lengths, explicit missing budgets, quota refusal/o
 
 Quality cases exposed two retrieval failures: known identity was absent from evidence, and “Where has he worked?” could inherit unrelated project context. Added a public identity record derived from supplied name/GitHub and optional approved profile collections; expanded missing-career handling. Regression failed before the fixes and passes after. No new biography/experience claim was added. Private notes remain outside the corpus.
 
-## Live evaluation still required
+## Live evaluation
 
-No valid Gemini key or approved generation budget has been supplied. No real answer, paid generation, model latency or provider cancellation has been evaluated. Live scratch-Redis concurrency, expiry, rollover and failure/recovery checks now passed; a real invalid-key Gemini error path and its quota consumption also passed. See [usage controls](usage-controls.md) for scope and results. Production AI_RELEASE_APPROVED remains false. Neither these failure checks nor a disabled endpoint establish a working live chatbot.
+The owner supplied a private Gemini key and permanent Redis settings, approved a $1 test allowance and $5 monthly target, and authorized completing live AI. Live model answers, sources/actions and browser lifecycle checks have now been reviewed, alongside real Redis concurrency/expiry/failure checks. See the results below and [usage controls](usage-controls.md). Deployment/release state is recorded in [launch status](launch-status.md); an available health endpoint alone remains insufficient evidence.
 
 | Script | Check before approval |
 | --- | --- |
@@ -25,7 +25,7 @@ Record model identifier, date, prompt, actual answer, sources/actions, manual su
 
 ## Versioned live review set — v1, 2026-11-15
 
-Status: prepared, not executed. No model, spend ceiling, request caps or final rubric has been approved for this continuation. Confirm those inputs before making paid calls. Keep production disabled; use a protected preview and a separate preview Redis database. Recheck the cases against approved public content after any content update.
+Status: executed on 2026-11-15 using gemini-3.5-flash-lite, real isolated Redis and the actual local production HTTP API. Applied the plan's 90%/zero-blocker bar to the authorized live-AI work. Recheck the cases against approved public content after any content update; future evaluations need an appropriate approved allowance and isolated storage.
 
 Use the actual browser, API, provider and store together. Start each case with a fresh conversation unless its setup says otherwise. A sequence within a row is one scored case; keep its individual responses in the review record. Do not substitute a mocked response or configuration health check for an observed answer. Check supporting source text, not just the existence of a citation.
 
@@ -103,3 +103,13 @@ Observed reservation counts / provider usage / remaining allowance:
 Acceptable or failed / release blocker / reviewer rationale:
 Fix commit / rerun result / operational and device limitations:
 ```
+
+## Live review results — 2026-11-15
+
+Reviewed all 32 cases and 11 independent critical repeats using the configured Gemini model. After fixes and targeted reruns, all 32 cases met the documented checks, including the requested WeatherScope, highlight and Skills destinations. Critical repeats contained no invented personal/ownership/adoption claims, verified regulatory answers or unsupported actions. Some unknown/adversarial requests intentionally took the local refusal path, so their passing result does not claim Gemini handled an adversarial prompt.
+
+The live review found and corrected four gaps with failing-then-passing regressions: unsupported authorship could become a citation error; generic project evidence omitted PingBack; a metric was miscopied from 0.010 to 0.10; and sample evidence/requested actions were unreliable. Sample evidence now derives from the actual fictional explorer, decimal source checks reject unsupported values, and explicit navigation resolves from the registry. The numeric check's sentence-ending punctuation regression was reproduced and fixed before release. Plain-text instructions avoid literal LaTeX/formatting artifacts in the existing chat display.
+
+The real browser flow rendered a generated answer and source, selected Skills through the suggested link, navigated to WeatherScope, stopped after an actual quota reservation, retried without duplicating the user turn, reset conversation without resetting allowance and disabled input at the session cap. Inspected the 390x844 session-limit screenshot: dialog, privacy text, input and controls fit. Escape closed the guide and restored launcher focus; no captured browser console errors or horizontal overflow. These were Chromium browser/emulation checks, not a physical touch/virtual-keyboard or screen-reader review.
+
+Raw owner-run synthetic answers, timing/token data and temporary verification scripts are private under ignored .agent-guidance/. No real visitor conversations were collected. The quality runner's conservative reported-token estimate, including development failures/reruns, was under $0.20 at this checkpoint; it prices combined tokens at the higher output rate and excludes browser/deployment calls. It is not an invoice or account-wide spending guarantee. Further deployed checks and recovery evidence are recorded separately before production activation.

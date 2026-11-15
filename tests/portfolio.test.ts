@@ -54,6 +54,15 @@ test('guide actions are bounded identifiers and cannot introduce external code o
   assert.deepEqual(actionsFromAnswer('[action:megatron] [action:unknown] [action:megatron]').map(action => action.id), ['megatron']);
   assert.equal(displayGuideText('A useful answer. [action:megatron]'), 'A useful answer.');
 });
+test('explicit navigation requests select the requested registered destination', () => {
+  assert.deepEqual(actionsFromAnswer('[action:work] [action:megatron]', 'Highlight Megatron in the work section.').map(action => action.id), ['highlight-megatron']);
+  assert.deepEqual(actionsFromAnswer('[action:highlight-megatron]', 'Show Megatron sample Skills view.').map(action => action.id), ['demo-skills']);
+  assert.deepEqual(actionsFromAnswer('[action:work]', 'Open the WeatherScope case study.').map(action => action.id), ['weatherscope']);
+  assert.deepEqual(actionsFromAnswer('[action:work]', 'Show Usage', 'megatron').map(action => action.id), ['demo-usage']);
+  assert.deepEqual(actionsFromAnswer('[action:megatron]', 'Do not open Megatron.').map(action => action.id), []);
+  assert.ok(actionsFromAnswer('[action:work]', 'Show sample Overview, Skills and Usage.').length <= 2);
+  assert.deepEqual(actionsFromAnswer('[action:work] [action:unknown]', 'What is a local index?').map(action => action.id), ['work']);
+});
 test('demo navigation accepts only documented fragment states', () => {
   assert.equal(demoViewFromHash('#demo-skills'), 'skills');
   assert.equal(demoViewFromHash('#demo-usage'), 'usage');
@@ -86,6 +95,15 @@ test('grounding keeps unknown facts local and only resolves registered source ID
   assert.deepEqual(citedSources('[weatherscope] [invented] https://outside.example', weather).map(source => source.id), ['weatherscope']);
   assert.equal(answerPlan({ messages: [{ role: 'user', text: 'Explain weather' }] }).evidence[0]?.id, 'weatherscope');
 });
+test('source attribution rejects decimal results that differ from the supplied evidence', () => {
+  const evidence = selectEvidence('WeatherScope');
+  assert.deepEqual(citedSources('The saved precipitation R² is 0.10 [weatherscope].', evidence), []);
+  assert.deepEqual(citedSources('The saved precipitation R² is -0.010 [weatherscope].', evidence), []);
+  assert.deepEqual(citedSources('The saved precipitation R² is 0.010 [weatherscope].', evidence).map(source => source.id), ['weatherscope']);
+  assert.deepEqual(citedSources('The saved precipitation R² is 0.01 [weatherscope].', evidence).map(source => source.id), ['weatherscope']);
+  assert.deepEqual(citedSources('The saved temperature R² is 0.936 [weatherscope].', evidence).map(source => source.id), ['weatherscope']);
+  assert.deepEqual(citedSources('1. The saved results were not rerun [weatherscope].', evidence).map(source => source.id), ['weatherscope']);
+});
 test('same-origin validation uses browser host when Next normalizes an internal URL', async () => {
   const request = new Request('http://localhost:3100/api/chat', { method: 'POST', headers: { Host: '127.0.0.1:3100', Origin: 'http://127.0.0.1:3100', 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [{ role: 'user', text: 'Hello' }] }) });
   assert.deepEqual((await readChatRequest(request)).messages, [{ role: 'user', text: 'Hello' }]);
@@ -116,6 +134,22 @@ test('knowledge selects project evidence and refuses missing personal facts', ()
 test('guide quality covers known identity and refuses career paraphrases despite project context', () => {
   assert.equal(answerPlan({ messages: [{ role: 'user', text: 'What is Vijay’s name?' }] }).evidence[0]?.id, 'profile');
   assert.ok(answerPlan({ messages: [{ role: 'user', text: 'Where has he worked?' }], currentProject: 'megatron' }).localAnswer);
+});
+test('guide refuses unsupported personal authorship and lists every public project', () => {
+  for (const question of ['Did Vijay build every part of Megatron alone?', 'What were his personal contributions to WeatherScope?', 'Who owns the F1 agent?']) {
+    assert.ok(answerPlan({ messages: [{ role: 'user', text: question }], currentProject: 'megatron' }).localAnswer, `Unsupported authorship must remain an explicit unknown: ${question}`);
+  }
+  assert.deepEqual(selectEvidence('What projects can I explore here?').map(entry => entry.id), ['megatron', 'weatherscope', 'f1-rag', 'pingback']);
+  assert.equal(selectEvidence('How does Megatron inspect skills?')[0]?.id, 'megatron');
+});
+test('guide can explain the existing sample explorer without an active demo view', () => {
+  const plan = answerPlan({ messages: [{ role: 'user', text: "Show Megatron's sample Skills view." }] });
+  const evidence = plan.evidence.find(entry => entry.id === 'megatron');
+  assert.ok(evidence);
+  assert.match(evidence.text, /fictional/i);
+  assert.match(evidence.text, /Code review/);
+  assert.match(evidence.text, /overview/i);
+  assert.match(evidence.text, /usage/i);
 });
 test('contact links reject mail-header injection and unsafe resume paths', () => {
   assert.throws(() => emailHref('person@example.com?bcc=other@example.com'), /email/i);
