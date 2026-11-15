@@ -53,3 +53,6 @@ Added PingBack as a reviewed additional source-linked project. README/repository
 
 ## T18 — Implementation verified; responsive fixture review pending
 Experience layout connected to the empty production collection. Synthetic populated fixture exists only in tests; its initial missing-render assertion failed before implementation and passes after. Production HTTP asserts no fixture or empty experience section leaks. Added modular About section and preserved all existing anchors/hover/focus/menu/demo behavior. Full checks and routes passed. Browser narrow/wide fixture review unavailable; no employment facts inserted.
+
+## T19 — Partial: supplied personal facts pending
+Reusable education/certification renderer supports title-only and optional issuer/date/valid HTTPS link without invented badges or metadata. Empty collections omitted. Populated fixture render failed before implementation and passes after; full checks and production routes passed. In accordance with chat, earlier personal facts are not published until supplied here. Real content and narrow/wide browser review pending.

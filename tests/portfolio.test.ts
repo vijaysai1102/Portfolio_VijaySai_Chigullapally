@@ -7,6 +7,13 @@ import { filterDemo, isDemoView } from '../src/lib/demo';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { ExperienceSection } from '../src/components/experience';
+import { CredentialSection } from '../src/components/credentials';
+test('credentials render titles without inventing optional issuer/date/links', () => {
+  assert.equal(renderToStaticMarkup(createElement(CredentialSection, { title: 'Education', entries: [] })), '');
+  const html = renderToStaticMarkup(createElement(CredentialSection, { title: 'Certifications', entries: [{ title: 'Synthetic long credential title for development only' }] }));
+  assert.match(html, /Synthetic long credential title/);
+  assert.equal(html.includes('href='), false);
+});
 test('experience omits empty data and renders a future supplied entry', () => {
   assert.equal(renderToStaticMarkup(createElement(ExperienceSection, { entries: [] })), '');
   const fixture = { organization: 'Synthetic fixture organization', title: 'Fixture role', description: 'Development-only example.' };
