@@ -8,7 +8,7 @@ Quality cases exposed two retrieval failures: known identity was absent from evi
 
 ## Live evaluation still required
 
-No Gemini key/model quota or actual Redis service was supplied. No real answer, paid usage, model latency, provider cancellation or multi-instance Redis test was run. AI_RELEASE_APPROVED remains false. Do not interpret mocked streams or a disabled endpoint as a working live integration.
+No valid Gemini key or approved generation budget has been supplied. No real answer, paid generation, model latency or provider cancellation has been evaluated. Live scratch-Redis concurrency, expiry, rollover and failure/recovery checks now passed; a real invalid-key Gemini error path and its quota consumption also passed. See [usage controls](usage-controls.md) for scope and results. Production AI_RELEASE_APPROVED remains false. Neither these failure checks nor a disabled endpoint establish a working live chatbot.
 
 | Script | Check before approval |
 | --- | --- |

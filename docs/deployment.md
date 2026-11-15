@@ -4,6 +4,25 @@ Deployed production: https://vijayportfolio-eight.vercel.app, confirmed over HTT
 
 ## Preview
 
+### Where to add the Gemini key
+
+For local testing, edit .env.local at the repository root (C:\Vijay Sai Chigullapally Portfolio\.env.local) and fill the GEMINI_API_KEY= line with the private key. This ignored file was created during live-AI setup; do not put a key in .env.example, public assets, source code or any NEXT_PUBLIC variable. Restart the local server after configuration changes. Create/manage the key in [Google AI Studio](https://aistudio.google.com/api-keys), following [Google's current key guidance](https://ai.google.dev/gemini-api/docs/api-key).
+
+For a deployed trial, open [the portfolio environment settings](https://vercel.com/vijaysaichigullapally1-9798s-projects/vijay_portfolio/settings/environment-variables), add GEMINI_API_KEY as a Secret and select Preview initially. Configure the other required values below in the same environment. Environment changes require a new deployment; they do not modify an existing deployment. See [Vercel environment variables](https://vercel.com/docs/environment-variables). Production configuration follows only after the trial passes.
+
+| Setting | Required value |
+| --- | --- |
+| GEMINI_API_KEY | Private Gemini key; never paste it into chat. |
+| GEMINI_MODEL | Planned model: gemini-3.5-flash-lite, still listed as stable in [Google's model documentation](https://ai.google.dev/gemini-api/docs/models/gemini-3.5-flash-lite) checked on 2026-11-15. Account access must be verified with the owner's key. |
+| UPSTASH_REDIS_REST_URL | HTTPS REST origin for the isolated preview database. |
+| UPSTASH_REDIS_REST_TOKEN | Private write-capable REST token; store as a Secret. |
+| AI_DAILY_REQUEST_LIMIT | Owner-approved positive daily request cap. |
+| AI_MONTHLY_REQUEST_LIMIT | Owner-approved positive monthly request cap. |
+| AI_SESSION_REQUEST_LIMIT | Owner-approved positive per-session request cap. The example's 12 is not an approved budget. |
+| AI_ENABLED / AI_RELEASE_APPROVED | Keep both false in production. Both must be true only in the isolated live trial environment once its key, limits and access controls are ready. |
+
+Local .env.local currently includes the planned model and temporary scratch Redis settings, with both flags false and daily/monthly caps blank. The scratch database expires on 2026-11-18; do not deploy it as production storage. Provision permanent production storage separately. The current missing inputs are the owner's Gemini key, approved testing/public allowance and Vercel team access. Key presence or available=true does not establish connectivity or readiness.
+
 Import the existing repository into the intended Vercel account/project when that connection is available. Keep AI_ENABLED=false and AI_RELEASE_APPROVED=false initially. Configure a separate preview Redis database before any live AI trial; never reuse production quota keys. Supply secrets through Vercel environment settings, not chat, source files or NEXT_PUBLIC variables. Environment names are in .env.example. Build with Node 22, then deploy the exact reviewed commit as a preview. VERCEL_ENV=preview keeps indexing disabled. Choose preview access/protection deliberately in the actual account.
 
 Verify the actual preview: homepage, every case route, 404, icon/share PNG, local fonts, links, mobile navigation, keyboard/dialog behavior, demo search/reset/expand/direct fragments and offline guide. Then, with approved budget/key/model/store and access protection, perform the real provider, quota, source/action and outage scenarios in ai-evaluation.md and usage-controls.md. Record URL, commit and results. A passing local build is not deployment verification.
