@@ -1,293 +1,107 @@
 # Codex session handoff
 
-Prepared on 2026-11-15 for continuing Vijay Sai Chigullapally's portfolio in another Codex session.
+Updated 2026-11-15 after recovering and completing the interrupted live-AI release.
 
-## 1. Start here
+## Current state
 
-The portfolio is implemented and deployed. Continue from the existing Next.js application and its written plan; do not scaffold a replacement or repeat the completed build.
+The existing Next.js portfolio and its real AI guide are deployed at https://vijayportfolio-eight.vercel.app. Do not scaffold a replacement or repeat completed tickets. Personal content remains intentionally deferred.
 
-| Item | Current reference |
+| Item | Reference |
 | --- | --- |
-| Checkout | `C:\Vijay Sai Chigullapally Portfolio` |
-| Shell | PowerShell on Windows |
+| Checkout | C:\Vijay Sai Chigullapally Portfolio |
 | Repository | https://github.com/vijaysai1102/Portfolio_VijaySai_Chigullapally |
-| Working branch | `main` |
-| Live site | https://vijayportfolio-eight.vercel.app |
-| Vercel project | `vijay_portfolio` |
-| Source baseline before this document | `c412ca686f713ab1e1c539cf37dac03d4e418409` |
-| Baseline Git state | Clean; implementation and follow-up commits pushed to `origin/main` |
-| Public AI guide | Offline; the ordinary portfolio works independently |
+| Branch | main; verified commits are pushed under the user's standing authorization |
+| Vercel project | vijay_portfolio |
+| Reviewed application source | 46ac373eaff287586bdddc2dbc4928e9d27a8b2a |
+| Verified live-AI deployment | dpl_FpYVFwXad9a6xzLoFGGDSqkqAxzB |
+| Previous production, AI off | dpl_84ZDQM7SyDSqzBtV2Jjmgkzrk3jx, same application source |
+| Model | gemini-3.5-flash-lite |
+| Approved public request caps | 25/day, 250/month, 6/session |
+| Approved spend | Up to $1 for testing; $5 monthly public-Gemini target. Request caps are not an exact invoice guarantee |
+| Production storage | Owner-created permanent Upstash Redis, separate from the temporary preview database |
+| Preview configuration | Both AI flags false for new deployments after the trial; scratch Redis expires 2026-11-18 |
 
-This is a dated snapshot. Check current Git status, source, CI and deployment state before acting. The commit containing this handoff follows the baseline above.
+These references are a dated snapshot. Later documentation commits can trigger new Vercel deployments of unchanged application code. Check current Git, CI, deployment identity and public health before acting.
 
-Read these in order:
+## Recovered interruption
 
-1. Root [AGENTS.md](../AGENTS.md) and generated [project context](../.agents/project-context.md).
-2. This handoff and [launch status](launch-status.md) for current state.
-3. [Implementation plan](portfolio-implementation-plan.md) for the original T01–T36 scope and execution amendment.
-4. [Ticket records](ticket-records.md) for implementation evidence and later follow-ups.
-5. The focused technical document relevant to the next requested task.
+Session **Review handoff doc**, ID `01a1de13-b9a7-7621-bd0c-68c3cc13ae3c`, hit its usage limit on 2026-11-15 at 09:03 UTC, while attempting production activation. Later resume attempts failed authentication. Its saved local history and ignored verification artifacts survived the restart.
 
-Earlier ticket records describe a time when the browser was unavailable and Vercel was not connected. Later follow-ups and launch-status.md supersede those historical deployment/browser limitations. Do not conclude that the site is undeployed from an old ticket entry or an empty GitHub deployments list.
+Before interruption it had completed the implementation fixes, 32-case quality review, 11 critical repeats, real-store tests, protected cloud browser flow and an isolated deployed disable-switch drill. The recovery session verified the existing source, completed production configuration/redeployment and exercised a real answer/source/action on the public site. No new personal facts or application code were added during recovery.
 
-## 2. User decisions to preserve
+Read next: root AGENTS.md, generated .agents/project-context.md, docs/launch-status.md, docs/ticket-records.md, then the focused document for the requested task. Historical records that say AI is offline are superseded by the release entry and current launch status.
 
-- Build from the existing written plan. The user chose to review and change the result after implementation.
-- Ignore FDE and other inferred career positioning in the planning material. Use only personal facts supplied by the user in chat when needed.
-- Do not infer employment, education, certifications, portrait, resume, email, project ownership or personal contributions from repository presence or old planning text.
-- Empty personal sections and the neutral graphic are intentional until the user supplies approved content. They are not reasons to populate sample biography data.
-- The user authorized sequential ticket implementation, verification, a commit and a push to `main` after each ticket. That authorization persists within the approved work. Inspect new instructions and user changes before continuing.
-- Before multi-file or visible UI changes, name affected files, intended changes and behavior to preserve. Follow the root guide's approval rules; routine choices within an already approved plan do not need another gate.
-- Preserve navigation, focus, responsive layouts, reduced motion, link destinations and existing interactions. Inventory affected hover, animation and pointer behavior before changing it.
-- Complete applicable local checks before every push. CI supplies additional platform coverage. Do not substitute CI, mocked service responses or an HTTP 200 for browser/live-service verification.
+## Decisions to preserve
 
-## 3. What is implemented
+- The user authorized sequential implementation, verification, commit and push to main after each ticket. The implementation plan's execution amendment supersedes its older per-ticket stop instruction. Routine work within that approval does not require another gate.
+- For a new multi-file or visible change, name the files, intended changes and preserved behavior; follow current root approval rules.
+- Do not infer employment, education, certifications, contact details, ownership or personal contributions from repository presence or historical planning material. Empty sections and the neutral graphic are intentional.
+- Preserve navigation, focus, keyboard interaction, responsive layouts, reduced motion, working destinations and the sample explorer contract. Inventory affected hover/animation/pointer behavior before changing UI.
+- Never restore or derive a design from the permanently rejected portfolio-mockup.jpg.
+- Keep secrets and raw synthetic review records out of tracked/public files. Do not request credentials in chat.
 
-### Public portfolio
+## Implemented features and source map
 
-- A light studio design with olive accents, responsive typography and locally hosted DM Sans/Manrope fonts.
-- Hero with an original engineering-orbit/monogram graphic and an optional portrait integration point.
-- Responsive header, mobile menu, skip link, footer, contact section and custom 404.
-- Featured Megatron, WeatherScope AI and F1 Regulations RAG cards and substantive shared-template case pages.
-- PingBack as additional work with a source link.
-- About/approach copy that makes no unsupported career claims.
-- Empty experience, education and certification collections; absent personal sections are omitted publicly.
-- Optional validated resume/email support. Neither a resume nor an email has been supplied; GitHub is the working contact path.
-- Original conceptual project artwork. The Megatron illustration and explorer use labeled sample data.
-
-### Megatron sample explorer
-
-This is a small independent illustration, not the desktop app, an embedded third-party preview or a working plugin manager. It accesses no local files and performs no plugin operations.
-
-- Overview, Skills and Usage views.
-- Search, an empty state, clear/reset controls and an expanded native dialog.
-- Canonical fragments: `#demo-overview`, `#demo-skills`, `#demo-usage`.
-- View changes clear the old view's search; reset returns to Overview with empty search.
-- Validated guide action identifiers can link to these local states.
-- No `postMessage` bridge or remote preview-control contract exists.
-
-See [demo integration](demo-integration.md) before modifying this behavior.
-
-### Optional AI guide
-
-The source implementation exists, but a live Gemini/Redis integration has not been evaluated or released.
-
-- Native dialog with launcher, bounded in-memory conversation state, input and stream controls, source links, suggested actions, offline/error/limit states and focus return.
-- Server-only Gemini adapter, evidence selection, grounding/citation checks, missing-fact handling and bounded conversation context.
-- Server/client validation of known navigation and demo actions. Suggestions require a visitor click; the model cannot execute arbitrary code, selectors or external URLs.
-- Durable Redis REST usage reservation through a single atomic Lua operation over daily, monthly and session counters. Storage errors fail closed; there is no process-local quota fallback.
-- Request-body/history limits, same-origin checks, cancellation and provider timeout/error handling.
-- Provider stream parsing uses SSE; the portfolio's browser-facing response is newline-delimited JSON (`application/x-ndjson`). Preserve that transport distinction.
-
-Observed production behavior: `GET /api/chat` returns `{"available":false}`; a valid same-origin POST returns 503 with the offline message. This is the intended current state, not proof of a working live model connection.
-
-## 4. Source map
-
-| Area | Files and responsibility |
+| Area | Main files |
 | --- | --- |
-| Root page and shell | `src/app/page.tsx`, `layout.tsx`, `not-found.tsx` |
-| Shared styling | `src/app/globals.css` |
-| Header/footer/hero | `src/components/header.tsx`, `footer.tsx`, `hero.tsx` |
-| Public facts and projects | `src/content/portfolio.ts`; project validation in `src/content/model.ts` |
-| Public sections | Components `work`, `additional-work`, `about`, `experience`, `credentials`, `contact` |
-| Case routes | `src/app/projects/[slug]/page.tsx` |
-| Artwork/primitives | `src/components/project-art.tsx`, `primitives.tsx` |
-| Explorer and URL state | `src/components/megatron-demo.tsx`, `use-demo-view.ts`; pure data/filter helpers in `src/lib/demo.ts` |
-| Guide UI/state | `src/components/guide.tsx`, `use-guide.ts` |
-| Guide input/context | `src/lib/chat-contract.ts`, `conversation.ts` |
-| Evidence and grounding | `src/lib/knowledge.ts`, `grounding.ts` |
-| Guide display/actions/transport | `src/lib/guide-display.ts`, `guide-actions.ts`, `guide-stream.ts` |
-| API orchestration | `src/app/api/chat/route.ts` |
-| Server adapters and boundaries | `src/lib/server/gemini.ts`, `request.ts`, `sse.ts`, `usage.ts` |
-| Search and social metadata | `src/lib/server/site.ts`, `src/app/robots.ts`, `sitemap.ts`, `share/route.tsx` |
-| Application tests | `tests/portfolio.test.ts` |
-| Real production HTTP smoke | `scripts/Smoke-Portfolio.mjs` |
-| Guidance synchronization | `scripts/Setup-AgentGuidance.ps1`, `Sync-AgentGuidance.ps1`, `Watch-AgentGuidance.ps1`, `Test-AgentGuidance.ps1` |
-| Deployment and CI | `vercel.json`, `.github/workflows/portfolio.yml`, guidance workflow under `.github/workflows/` |
+| Pages/shell/metadata | src/app/page.tsx, layout.tsx, not-found.tsx, projects/[slug]/page.tsx, robots.ts, sitemap.ts, share/route.tsx |
+| Public facts/validation | src/content/portfolio.ts, model.ts |
+| Studio and sections | src/components/header.tsx, hero.tsx, work.tsx, additional-work.tsx, about.tsx, experience.tsx, credentials.tsx, contact.tsx, footer.tsx; src/app/globals.css |
+| Artwork/primitives | src/components/project-art.tsx, primitives.tsx |
+| Sample explorer | src/components/megatron-demo.tsx, use-demo-view.ts; src/lib/demo.ts |
+| Guide UI/conversation | src/components/guide.tsx, use-guide.ts; src/lib/conversation.ts, chat-contract.ts |
+| Evidence and navigation | src/lib/knowledge.ts, grounding.ts, guide-actions.ts, guide-display.ts, guide-stream.ts |
+| Chat API/adapters | src/app/api/chat/route.ts; src/lib/server/gemini.ts, request.ts, sse.ts, usage.ts |
+| Verification/deployment | tests/portfolio.test.ts, scripts/Smoke-Portfolio.mjs, .github/workflows/portfolio.yml, vercel.json |
+| Guidance | scripts/Setup-AgentGuidance.ps1, Sync-AgentGuidance.ps1, Watch-AgentGuidance.ps1, Test-AgentGuidance.ps1 |
 
-Project sections feed the case pages and AI evidence. Keep content and knowledge consistent. Source review is distinguished from runtime reproduction: WeatherScope's saved metrics were read from its report, the pipeline was not rerun, and no live F1 regulatory answer was reproduced. Preserve those limits and attribution.
+The light studio uses locally hosted DM Sans/Manrope fonts, olive accents, a neutral engineering graphic, responsive navigation, three substantive case pages and PingBack as additional work. GitHub is the supplied contact path. No email or resume is published.
 
-## 5. Session startup and local commands
+Megatron's independent fictional sample supports overview, skills and usage, search/empty/reset states and an expanded native dialog. Canonical fragments are #demo-overview, #demo-skills and #demo-usage. It performs no desktop/plugin operations and has no remote postMessage contract. See demo-integration.md.
 
-The app uses Next.js 16.4.6, React 19.3.1, TypeScript 5.9 and npm with `package-lock.json`. Local verification used Node 22.23.2. Do not change the user's global Node selection or execution policy to repair a session.
+Guide suggestions resolve registered destinations and require visitor selection; they do not execute tools. Browser chat is memory-only. Unknown personal facts use an explicit local answer. Gemini uses SSE upstream; the browser receives application/x-ndjson. Preserve final source/action validation, cancellation, bounded input/history and fail-closed usage reservation. Failed/cancelled provider attempts consume reserved allowance. Reset/reload does not reset the quota cookie. See ai-policy.md and usage-controls.md.
+
+WeatherScope numbers are attributed to its saved report; the pipeline was not rerun. F1 architecture is source-reviewed, not proof of a reproduced regulatory answer. Preserve these limits.
+
+## Verification evidence
+
+- Fresh recovery-session Windows Node 22.23.2 lint, typecheck, all 26 tests, build and production HTTP smoke passed. The first sandboxed smoke timed out on loopback despite server readiness; the unchanged smoke passed outside that network sandbox after process/port inspection.
+- Application CI at reviewed source passed Windows/macOS/Linux; guidance CI passed Windows/Linux. Earlier 18 guidance regressions and dev-start guidance-hash preservation remain recorded evidence, not newly repeated tests.
+- Previous session's recorded live quality review: 32/32 after fixes/targeted reruns and 11 independent critical repeats. Conservative quality-runner token estimate was under $0.20, excluding other browser/deployment calls; this is not an invoice.
+- Real isolated Redis checks covered independent-process daily concurrency, session/monthly races, actual TTLs, shortened-key expiry, injected UTC rollover and failure/recovery. Invalid real provider credential failed visibly and consumed its reservation.
+- Protected cloud preview verified a generated answer/source, exact Skills suggestion, project navigation, stop after reservation, retry without duplicate user input, reset without allowance reset and six-request session exhaustion. Disable drill returned available=false/POST=503 with homepage=200 on another isolated deployment.
+- Public release returned available=true; home, three cases, robots, sitemap and sharing image returned 200; cross-origin POST returned 403. Actual public browser question generated fictional Skills content, its source and /projects/megatron#demo-skills suggestion. Selecting it activated Skills and closed the guide. Desktop 880px/mobile 390x844 screenshots were inspected; no horizontal overflow or captured console errors. Escape returned focus to launcher. One request showed five questions remaining. Static/public secret scan matched no configured credentials.
+- Earlier broader browser review covered 320/390/768/1440 widths, navigation/demo/offline states and reduced motion. Axe reported zero violations in reviewed states, with manual contrast items. Mobile Lighthouse measured home 96 performance and Megatron 92, accessibility 100, zero CLS. These earlier results are not new full audits or field metrics.
+
+Still unverified: manual screen-reader review, native 200%/400% browser zoom, physical mobile touch/virtual keyboard, external social-cache preview and disruptive production rollback. Do not claim WCAG certification or physical-device verification from emulation.
+
+## Commands and local lessons
+
+Use PowerShell, Node 22, npm and explicit UTF-8 I/O. Run setup at session start. Do not change global execution policy or NVM selection.
 
 ```powershell
-Set-Location -LiteralPath 'C:\Vijay Sai Chigullapally Portfolio'
-git status --short
-git branch --show-current
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./scripts/Setup-AgentGuidance.ps1
-node.exe --version
-npm.cmd --version
-```
-
-If the shell resolves the wrong installed Node, this checkout was verified with the following session-only PATH adjustment. Check that the directory still exists before using it:
-
-```powershell
-$env:Path = 'C:\Users\vijay\AppData\Local\nvm\v22.23.2;' + $env:Path
-```
-
-Install when needed, then start development:
-
-```powershell
+git status --short --branch
 npm.cmd ci
 npm.cmd run dev
-```
-
-Development URL: http://127.0.0.1:3000. Run verification from another terminal after stopping owned servers when necessary:
-
-```powershell
 npm.cmd run check
 npm.cmd run smoke
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./scripts/Test-AgentGuidance.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./scripts/Sync-AgentGuidance.ps1 -Check
 git diff --check
 ```
 
-Inspect every result. `check` runs lint, typecheck, application tests and production build sequentially. Run guidance behavior tests when changing guidance/synchronization; the final synchronization check is required before finishing.
+Run Test-AgentGuidance.ps1 for synchronization behavior changes. Smoke starts/stops its own server on 3100 and forces AI off to avoid paid calls. Do not run dev/build concurrently against .next or audit an old server after rebuilding. Stop only verified owned processes. Setup maintains the guidance watcher; leave it running. Never stage generated ignored next-env.d.ts. Next agentRules remains disabled to avoid a second guide writer.
 
-`smoke` starts its own production server on port 3100 and stops its own child afterward. It forces both AI release flags off, verifies real pages/API/semantic markup/local fonts/share output, and saves the share PNG under ignored `.agent-guidance/`. Run `npm.cmd start` separately when a browser review needs a persistent production server.
+## Private configuration and recovery
 
-Important local lessons:
+Server-only settings: GEMINI_API_KEY, GEMINI_MODEL, UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN, AI_DAILY_REQUEST_LIMIT, AI_MONTHLY_REQUEST_LIMIT, AI_SESSION_REQUEST_LIMIT, AI_ENABLED and AI_RELEASE_APPROVED. Defaults remain unconfigured/off in .env.example. Production now has both flags true under the approved release.
 
-- A previously running Next server can serve cached HTML after a new build. Stop the verified owned server and restart it before auditing a changed production build. Do not kill unrelated Node processes.
-- Avoid concurrent dev/build processes writing the same `.next` output.
-- Use PowerShell, quoted paths, `-LiteralPath`, and explicit UTF-8 for source/Markdown I/O.
-- `next-env.d.ts` is generated, ignored and excluded from context discovery. Do not stage it.
-- `next.config.ts` has `agentRules: false` to prevent Next from appending a second guide writer's block to this repo's synchronized guides.
-- Keep ESLint 9 until the Next lint plugin peer range supports a verified upgrade. Its deprecation notice is known. A scoped `@typescript-eslint/typescript-estree` override pins `minimatch` 11.0.1 and resolved the development advisories; do not casually remove it or force an ESLint major upgrade.
+Ignored .env.local contains local/preview settings; ignored .agent-guidance/production.env holds the owner's permanent Redis settings. Vercel received private values through authenticated CLI stdin. Never print the files, credential values, cookies or full environment dumps. Preview storage must stay separate. Temporary verification scripts under .agent-guidance are recovery artifacts, not supported app commands or guaranteed fresh-clone dependencies.
 
-## 6. Verification already completed
+To disable generation, set both Production flags false and redeploy; verify available=false, valid POST=503 and working ordinary routes. This behavior passed the isolated cloud drill. Do not conduct a disruptive public rollback merely to complete a checklist. Confirm a known-good revision/deployment before future changes. Follow deployment.md, launch-status.md and maintenance.md.
 
-These results belong to the verified baseline and follow-ups. Recheck changed behavior; do not present old results as fresh tests.
+## Remaining work
 
-| Check | Recorded result |
-| --- | --- |
-| Clean npm lockfile installation | Passed on Windows Node 22.23.2 |
-| Lint/typecheck/build | Passed |
-| Application tests | 22 passed |
-| Guidance behavior tests | 18 passed, isolated temporary repositories |
-| Actual production HTTP smoke | Passed |
-| Full npm audit after dependency override | Zero vulnerabilities |
-| Application CI at `c412ca6` | Passed on Windows, macOS and Linux |
-| Guidance CI at `c412ca6` | Passed on Windows and Linux |
-| Live routes/assets | Home, three cases, share, favicon, robots and sitemap returned 200; missing page returned 404 |
-| External destinations | Public GitHub profile, four project repositories and Megatron product site returned 200 |
-| Live search metadata | Canonical/OG origin correct, index/follow enabled, robots allows crawling, sitemap lists four pages |
-| Responsive browser checks | No horizontal overflow at 320/390/768/1440 CSS-pixel widths; narrow and wide screenshots inspected |
-| Browser interactions | Skip-link focus, mobile menu/Escape/selection, pointer case navigation, hover, demo direct fragments/search/view/reset/dialog, offline guide and guide-link-to-case journey passed |
-| Reduced motion | Emulation reported automatic scrolling and zero transition duration |
-| Axe 4.14.0 | Zero reported violations after label fixes on rebuilt home, three cases, 404 and tested modal states; settled live homepage rerun also passed |
+The interrupted live-AI task is complete. Further personal content needs supplied facts/assets: biography, experience, education, certifications, portrait, email and resume. Do not manufacture them to close original tickets. Complete the manual/device checks when suitable tools/devices are available; do not describe the entire original 36-ticket plan as fully closed while these acceptance items remain deferred.
 
-Mobile Lighthouse 13.6.0 ran in isolated headless Chrome 157.0.8103.78 with default simulated mobile throttling: 412x823, scale 1.75, 150ms RTT, 1638.4Kbps and 4x CPU slowdown.
-
-| Route | Performance | Accessibility | LCP | CLS | Total blocking time |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Home | 96 | 100 | 1.20s | 0 | 217ms |
-| Megatron | 92 | 100 | 1.27s | 0 | 353ms |
-
-An earlier home run measured 94 performance and 2.08s LCP. Lab results vary; neither a Lighthouse score nor total blocking time establishes field INP or universal device performance. See [performance review](performance-review.md).
-
-### Verification limits that still matter
-
-- Manual screen-reader review and native browser 200%/400% zoom remain unverified. Simulated zoom keys did not change viewport/device scale; 320px reflow was checked separately.
-- Physical touch, real mobile virtual-keyboard behavior and live streaming conversation flows remain unverified.
-- Axe leaves incomplete contrast checks around transformed artwork, decorative symbols and some art text. A zero-violation result does not resolve every manual check or certify WCAG conformance.
-- Wait for fonts and arrival animations to finish before a settled-state audit. Partial-opacity arrival can temporarily affect contrast results.
-- No real Gemini answer, live Redis concurrency/expiry/outage test or field Core Web Vitals measurement has been completed.
-- No protected preview AI trial, external social-cache preview or disruptive production rollback was performed.
-
-## 7. Browser tooling and artifacts
-
-Orca's browser CLI worked for actual rendering and interaction checks. In this Windows installation its resolved executable was:
-
-```text
-C:\Users\vijay\AppData\Local\Programs\orca\resources\bin\orca.exe
-```
-
-Follow the available `orca-cli` and `visual-verify` skills and load version-matched CLI documentation. Discover current runtime/tabs and use fresh page IDs/element references; do not copy old automation handles from chat. Mobile emulation resets on page loads and needs reapplying. Browser availability can change between sessions.
-
-Temporary axe/Lighthouse tools and raw reports were installed/saved only under ignored `.agent-guidance/`. They are not application dependencies or guaranteed fresh-clone artifacts. Orca screenshots live in a temporary directory and expire. The durable results and limitations are in the checked-in review documents.
-
-No temporary app/audit server is intended to remain running. The checkout's guidance watcher is intentionally left running; startup setup verifies/restarts it when necessary. Inspect current processes instead of assuming a prior session's PID is still valid.
-
-## 8. Deployment and recovery
-
-Vercel automatically deploys pushes to `main`. The user established the deployment. No Sites migration, new hosting project, paid upgrade or domain purchase is needed to continue this repo.
-
-- Baseline `c412ca686f713ab1e1c539cf37dac03d4e418409` deployed successfully as Vercel deployment `62SNGiG3XGN6abNPqrKCY9CCNsH9`.
-- Browser/performance-reviewed UI revision `32444e14dcd4b89d68849794e6480b82818d03fd` deployed as `8zxu2kWcFGGr5GT7WzhPEk17JZij`.
-- Later commits before this handoff patched a development dependency and updated documentation; their local/CI checks passed.
-- Vercel status is exposed through GitHub commit statuses. GitHub's deployments list was empty despite the live site. Inspect the actual commit status/dashboard and deployed URL.
-- Production defaults to the confirmed Vercel origin in `src/lib/server/site.ts` when `VERCEL_ENV=production`. `SITE_URL` is a validated custom-domain override. Preview and unconfigured local builds stay unindexed; non-Vercel indexing also needs `SITE_INDEXABLE=true`.
-- Metadata/robots/sitemap changes require a rebuild/redeployment. A successful local build does not establish a verified deployment.
-- Record the current known-good commit/deployment before any future release. Rollback controls have not been exercised here; do not perform a disruptive rollback merely to complete a checklist on the user's live site.
-
-Follow [deployment](deployment.md) and [launch status](launch-status.md). If AI needs shutting down, set both AI flags false in the affected environment, redeploy and verify health/offline POST behavior while ordinary pages remain usable.
-
-## 9. Remaining work and required inputs
-
-### A. Live AI, if the user wants it enabled
-
-Configuration is server-only. `.env.example` contains names, not usable credentials. No credentials or approved daily/monthly budget were supplied in this chat. Do not ask the user to paste secrets into chat or put them in public source/NEXT_PUBLIC variables.
-
-| Variable | Role/current decision |
-| --- | --- |
-| `AI_ENABLED` | Keep false in production until live release requirements pass |
-| `AI_RELEASE_APPROVED` | Keep false in production until live release requirements pass |
-| `GEMINI_API_KEY` | Private provider credential required |
-| `GEMINI_MODEL` | Explicit supported model ID required; verify current account availability/pricing |
-| `UPSTASH_REDIS_REST_URL` | Separate preview Redis REST origin required for private testing |
-| `UPSTASH_REDIS_REST_TOKEN` | Private store credential required |
-| `AI_DAILY_REQUEST_LIMIT` | User-approved positive request cap required |
-| `AI_MONTHLY_REQUEST_LIMIT` | User-approved positive request cap required |
-| `AI_SESSION_REQUEST_LIMIT` | Explicit cap required; example currently says 12, not an approved financial budget |
-
-Next steps for this track:
-
-1. Establish the user's intended model, private configuration location and approved caps. Enter secrets in ignored local environment settings or Vercel settings, with preview/production separation.
-2. Read [AI policy](ai-policy.md), [evaluation](ai-evaluation.md) and [usage controls](usage-controls.md).
-3. Run an authorized protected-preview trial. Both flags must be true in that test environment for the current API gate to permit generation. Production stays disabled during evaluation.
-4. Use the versioned 32-case review set and proposed rubric in [AI evaluation](ai-evaluation.md). Approve the rubric before the final run. Exercise citations, corrections/context, stop/retry/reset, user-clicked actions, quota exhaustion, concurrent reservations, expiry and provider/store failures; the prepared set is not a completed live evaluation.
-5. Verify actual streaming UI and keyboard/mobile behavior. Record model, date, failures, fixes and observed usage without exposing credentials or retaining visitor conversations unnecessarily.
-6. Enable production only after live quality, usage and deployment requirements are satisfied. Request caps are not an exact invoice guarantee.
-
-The health endpoint checks configuration presence/validity; `available=true` alone is not a provider/Redis connectivity or quality test. Missing facts still need an explicit unknown response after live AI is enabled.
-
-### B. Personal content, when supplied by the user
-
-Add approved data to `src/content/portfolio.ts` and connect any new presentation to the existing components. Portrait/resume files belong under `public/` only after the user approves them for publication. Preserve attribution and source-review caveats in projects.
-
-The tests and smoke deliberately assert today's empty experience state. When the user authorizes real experience content, update those expectations to the new requirement while retaining empty-state, validation and fixture-exclusion coverage. Keep synthetic fixtures out of public pages, metadata and AI knowledge.
-
-### C. Manual review and optional performance follow-up
-
-Complete the unverified assistive-technology/real-device checks listed above when suitable tools/devices are available. Megatron's 353ms simulated total blocking time is an optimization opportunity; profile before changing behavior. Recheck measured outcomes after meaningful UI, model or content changes.
-
-## 10. Guidance and commit discipline
-
-`AGENTS.md` and `CLAUDE.md` are editable peers, as are their shared skill folders. The watcher propagates reviewed changes in either direction. Generated context is produced by `Sync-AgentGuidance.ps1`; never edit fingerprints or generated context manually.
-
-After a source change, synchronize, inspect diffs and deliberately stage the matching peers/context with the implementation. The pre-commit hook checks both disk and index and never stages files on your behalf. Resolve real peer conflicts by review, not timestamps. Do not bypass hooks to commit stale guidance.
-
-For each completed ticket/follow-up: run appropriate local checks, verify the actual changed flow, record evidence/limitations, synchronize guidance, inspect staged changes, commit and push to main under the existing authorization. Check CI and the relevant Vercel deployment afterward. Preserve unrelated user edits.
-
-## 11. Suggested first message for the next session
-
-```text
-Continue this portfolio from docs/CODEX-HANDOFF.md. First read AGENTS.md,
-the generated project context and docs/launch-status.md, then inspect Git
-status and recent commits. The portfolio is already deployed at
-https://vijayportfolio-eight.vercel.app; preserve the existing Next.js app.
-
-Use the written implementation plan and its execution amendment. Ignore
-FDE/other inferred career positioning. I will supply my personal facts,
-experience and assets in chat when needed; keep absent sections neutral.
-
-Implement the next requested change, verify it locally and in the actual
-running site where relevant, update evidence/guidance, and commit/push to
-main after each completed ticket as already authorized. AI remains off
-until private provider/store settings, usage limits and live evaluation
-are ready. Clearly separate completed checks from unverified items.
-
-My next task is: [describe the change here].
-```
+For the next requested change: inspect relevant source and user edits, apply existing approvals, verify real behavior, update evidence/guidance, commit/push the completed scope, and inspect CI/deployment. Preserve both guidance peers and generate context using Sync-AgentGuidance.ps1; never hand-edit generated fingerprints.

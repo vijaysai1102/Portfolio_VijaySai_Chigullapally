@@ -13,13 +13,13 @@ For a deployed trial, open [the portfolio environment settings](https://vercel.c
 | Setting | Required value |
 | --- | --- |
 | GEMINI_API_KEY | Private Gemini key; never paste it into chat. |
-| GEMINI_MODEL | Planned model: gemini-3.5-flash-lite, still listed as stable in [Google's model documentation](https://ai.google.dev/gemini-api/docs/models/gemini-3.5-flash-lite) checked on 2026-11-15. Account access must be verified with the owner's key. |
+| GEMINI_MODEL | gemini-3.5-flash-lite; owner-key generation and the versioned quality review passed on 2026-11-15. Recheck account availability/pricing before a future model change. |
 | UPSTASH_REDIS_REST_URL | HTTPS REST origin for the isolated preview database. |
 | UPSTASH_REDIS_REST_TOKEN | Private write-capable REST token; store as a Secret. |
 | AI_DAILY_REQUEST_LIMIT | Owner-approved positive daily request cap. |
 | AI_MONTHLY_REQUEST_LIMIT | Owner-approved positive monthly request cap. |
 | AI_SESSION_REQUEST_LIMIT | Owner-approved positive per-session request cap. The example's 12 is not an approved budget. |
-| AI_ENABLED / AI_RELEASE_APPROVED | Keep both false in production. Both must be true only in the isolated live trial environment once its key, limits and access controls are ready. |
+| AI_ENABLED / AI_RELEASE_APPROVED | Production has both true after the approved trial and release checks. Defaults and new Preview deployments remain false. For a future trial, enable only its isolated protected environment. |
 
 Local .env.local includes the private key, planned model, temporary scratch Redis and approved public caps, with both flags false by default. The owned trial server overrides flags/caps only in its process. The scratch database expires on 2026-11-18; it is used only for isolated tests/Preview. The owner created a separate permanent Redis database and saved its REST credentials under ignored .agent-guidance/production.env; these were transferred directly through authenticated CLI stdin to Vercel Production. Preview and Production keys/tokens are stored as Secrets. Production was configured with both flags false until deployed checks complete. The owner approved public caps of 25/day, 250/month and 6/session, a $5 monthly target and up to $1 for testing. Key presence or available=true does not establish connectivity or readiness.
 
@@ -29,7 +29,9 @@ Verify the actual preview: homepage, every case route, 404, icon/share PNG, loca
 
 ## Production gate
 
-Production is deployed with neutral personal content and AI disabled. Final content, browser/accessibility/performance review and live guide/store evaluation remain separate acceptance items; see launch-status.md for current evidence and required inputs.
+Production is deployed with neutral personal content and AI enabled after the approved live guide/store evaluation, protected browser trial and isolated disable drill. Reviewed source 46ac373eaff287586bdddc2dbc4928e9d27a8b2a was redeployed as dpl_FpYVFwXad9a6xzLoFGGDSqkqAxzB with the permanent production Redis, Gemini key/model and caps of 25/day, 250/month and 6/session. Public HTTP and actual browser generation/source/action checks passed. See launch-status.md for the current recovery record and deferred personal/manual inputs.
+
+The preceding setup instructions describe the safe sequence for a new environment; they do not mean the present production release is still disabled. Its earlier configuration stayed off until the trial completed. New Preview configuration is off after evaluation. The scratch store expires on 2026-11-18 and must never replace the separate permanent production store.
 
 Vercel production defaults to the confirmed HTTPS origin above. Set SITE_URL before building when adopting a custom domain; other hosts also require SITE_INDEXABLE=true. Preview builds remain unindexed. Confirm the deployed commit, links, all routes, canonical metadata/robots/sitemap, asset loading and guide state at the intended domain.
 
