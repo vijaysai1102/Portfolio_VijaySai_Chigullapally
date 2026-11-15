@@ -2,7 +2,13 @@
 
 Prepared: 2026-10-18
 
-Status: detailed backlog drafted for review. Application implementation has not started.
+Status: execution authorized in chat on 2026-11-14. See `ticket-records.md` for current evidence and limitations.
+
+## Execution amendment — 2026-11-14
+
+The user has authorized building from this plan, reviewing personal details after implementation, and committing/pushing to main after every verified ticket. Continue across tickets without waiting for another instruction. This amendment supersedes the per-ticket waiting instruction below. Preserve all identifiers and dependencies. Use `portfolio-brief.md` for current content rules: FDE/ML positioning and personal experience/education/certification/contribution claims are deferred to information supplied in chat. Public project descriptions require source review. Missing credentials/assets/deployment access are named dependencies, never fabricated completion.
+
+The original plan below is preserved as design context. Historical model/pricing statements are unverified planning notes and must be rechecked before integration. Ticket evidence lives in `ticket-records.md`; a prepared implementation with missing external inputs is partial, not Done.
 
 This document is the working plan for building the portfolio one ticket at a time. Writing this plan does not authorize implementing all tickets or publishing the website. Existing repository guidance remains authoritative for file changes, approvals, and verification.
 
