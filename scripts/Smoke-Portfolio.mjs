@@ -26,6 +26,11 @@ try {
   const missing = await fetch(`${origin}/no-such-page`);
   assert.equal(missing.status, 404);
   assert.match(await missing.text(), /Back to the studio/);
+  for (const slug of ['megatron']) {
+    const project = await fetch(`${origin}/projects/${slug}`);
+    assert.equal(project.status, 200, `${slug} route`);
+    assert.match(await project.text(), /About the evidence/);
+  }
   console.log('PASS production homepage HTTP journey');
 } finally {
   server.kill();

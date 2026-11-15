@@ -35,3 +35,6 @@ Added responsive editorial hero, reserved portrait integration and original stat
 
 ## T12 — Implementation verified; browser review pending
 Added flagship Megatron and two supporting project cards from validated records. Source destinations remain active until each case study has sections. Original code-native artwork is explicitly illustrative/sample data, with no claimed project metrics. Entire cards are normal links; text and tags remain visible on touch. Existing hero/menu/anchors/focus preserved; new arrow/border hover transitions opt out under reduced motion. Full checks/build/HTTP passed; actual pointer/keyboard/mobile rendering unavailable.
+
+## T13 — Partial: contribution details and rendered review pending
+Added reusable static case-study route, contents navigation, source/evidence note, related destinations and Megatron technical narrative. Reviewed README and scanner docs; costs/cached update limits distinguished. No personal ownership, testimonials or adoption claims published. Full checks and real homepage/404/Megatron HTTP journeys passed. Desktop application not run; browser render/interaction unavailable. Personal contribution and early-feedback wording await chat.
