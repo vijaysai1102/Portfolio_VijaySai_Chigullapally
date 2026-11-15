@@ -23,3 +23,6 @@ Reviewed all 36 identifiers and dependency ordering: dependencies refer only to 
 
 ## T08 — Done
 Added typed profile/project/experience/credential models, boundary validation, public field projection, stable IDs and separate evidence notes. Empty personal collections remain empty. Observed validation and private-note leakage tests fail before implementation, then pass. Full lint/typecheck/tests/build and production HTTP smoke passed. No UI change.
+
+## T09 — Implementation verified; rendered review pending
+Added global tokens, responsive spacing/type, semantic links, tags and labels; visible focus, native touch targets and reduced-motion styles. Initial scaffold has no animation/pointer behavior to preserve. Existing homepage identity and GitHub path preserved. Full lint/types/tests/build/production HTTP passed. Browser host unavailable: narrow/wide visual, focus and contrast-in-browser review pending. Palette normal text contrast verified in T05; external fonts have system fallbacks.
