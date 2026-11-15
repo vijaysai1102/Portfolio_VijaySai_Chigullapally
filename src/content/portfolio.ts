@@ -35,3 +35,7 @@ export const additionalWork = [parseProject({
   summary: 'Local notifications when Claude Code needs attention, with Windows and macOS platform adapters.',
   stack: ['TypeScript', 'CLI', 'Native notifications'], source: 'https://github.com/vijaysai1102/PingBack', sections: [],
 })];
+export const publicSources = [
+  { id: 'profile', title: 'About Vijay', url: '/#about' },
+  ...[...projects, ...additionalWork].map(project => ({ id: project.id, title: project.title, url: project.sections.length ? `/projects/${project.id}` : project.source })),
+];

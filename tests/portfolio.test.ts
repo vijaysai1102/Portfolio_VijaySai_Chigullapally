@@ -17,7 +17,21 @@ import { answerPlan, citedSources } from '../src/lib/grounding';
 import { conversationInput } from '../src/lib/conversation';
 import { readGuideStream } from '../src/lib/guide-stream';
 import { actionsFromAnswer, displayGuideText, guideAction } from '../src/lib/guide-actions';
-import { reserveUsage } from '../src/lib/server/usage';
+import { reserveUsage, usageConfig } from '../src/lib/server/usage';
+test('release configuration requires explicit budgets and malformed quota results fail closed', async () => {
+  assert.throws(() => usageConfig({}), /configured/i);
+  assert.throws(() => usageConfig({ UPSTASH_REDIS_REST_URL: 'https://quota.example', UPSTASH_REDIS_REST_TOKEN: 'test-token', AI_DAILY_REQUEST_LIMIT: '5', AI_SESSION_REQUEST_LIMIT: '3' }), /limits/i);
+  await assert.rejects(() => reserveUsage({ url: 'https://quota.example', token: 'test-token', daily: 5, monthly: 10, session: 3 }, '12345678-1234-4123-8123-123456789012', async () => Response.json({ result: [1, 6, 8, 2] })), /invalid/i);
+});
+test('provider handles fragmented CRLF/Unicode and safety rejection', async () => {
+  const input = { apiKey: 'test-key', model: 'test-model', system: 'Test system', messages: [{ role: 'user' as const, text: 'Hello' }] };
+  const bytes = new TextEncoder().encode('data: {"candidates":[{"content":{"parts":[{"text":"Café"}]}}]}\r\n\r\n');
+  const body = new ReadableStream<Uint8Array>({ start(controller) { for (const byte of bytes) controller.enqueue(new Uint8Array([byte])); controller.close(); } });
+  const events = [];
+  for await (const event of streamGemini(input, async () => new Response(body))) events.push(event);
+  assert.deepEqual(events, [{ type: 'token', text: 'Café' }]);
+  await assert.rejects(async () => { for await (const event of streamGemini(input, async () => new Response('data: {"candidates":[{"finishReason":"SAFETY"}]}\n\n'))) void event; }, /could not answer/i);
+});
 test('durable quota fails closed on rejection/outage and reports remaining session allowance', async () => {
   const config = { url: 'https://quota.example', token: 'test-token', daily: 5, monthly: 10, session: 3 };
   const session = '12345678-1234-4123-8123-123456789012';
@@ -76,6 +90,7 @@ test('provider decodes text stream and reports quota without exposing credential
   const fetcher: typeof fetch = async (url, init) => {
     assert.equal(String(url).includes('test-key'), false);
     assert.equal(new Headers(init?.headers).get('x-goog-api-key'), 'test-key');
+    assert.equal(String(init?.body).includes('test-key'), false);
     return new Response('data: {"candidates":[{"content":{"parts":[{"text":"Hello"}]}}]}\n\ndata: {"usageMetadata":{"totalTokenCount":5}}\n\n');
   };
   const events = [];
@@ -88,6 +103,10 @@ test('knowledge selects project evidence and refuses missing personal facts', ()
   assert.equal(selectEvidence('why that approach?', 'megatron')[0]?.id, 'megatron');
   assert.deepEqual(selectEvidence('Where was Vijay employed?', 'megatron'), []);
   assert.equal(JSON.stringify(selectEvidence('all projects')).includes('privateNotes'), false);
+});
+test('guide quality covers known identity and refuses career paraphrases despite project context', () => {
+  assert.equal(answerPlan({ messages: [{ role: 'user', text: 'What is Vijay’s name?' }] }).evidence[0]?.id, 'profile');
+  assert.ok(answerPlan({ messages: [{ role: 'user', text: 'Where has he worked?' }], currentProject: 'megatron' }).localAnswer);
 });
 test('contact links reject mail-header injection and unsafe resume paths', () => {
   assert.throws(() => emailHref('person@example.com?bcc=other@example.com'), /email/i);

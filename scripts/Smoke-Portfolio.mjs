@@ -32,6 +32,10 @@ try {
   assert.equal(invalid.status, 400, 'invalid role must fail before provider configuration');
   const crossOrigin = await fetch(`${origin}/api/chat`, { method: 'POST', headers: { Origin: 'https://outside.example', 'Content-Type': 'application/json' }, body: '{}' });
   assert.equal(crossOrigin.status, 403);
+  const tooLarge = await fetch(`${origin}/api/chat`, { method: 'POST', headers: { Origin: origin, 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [{ role: 'user', text: 'x'.repeat(24001) }] }) });
+  assert.equal(tooLarge.status, 413);
+  const wrongFormat = await fetch(`${origin}/api/chat`, { method: 'POST', headers: { Origin: origin, 'Content-Type': 'text/plain' }, body: 'hello' });
+  assert.equal(wrongFormat.status, 415);
   for (const anchor of ['main', 'home', 'work', 'about', 'contact']) assert.ok(html.includes(`id="${anchor}"`), `Missing ${anchor} destination`);
   const missing = await fetch(`${origin}/no-such-page`);
   assert.equal(missing.status, 404);

@@ -1,5 +1,5 @@
 import type { SourceReference } from './grounding';
-import { additionalWork, projects } from '@/content/portfolio';
+import { publicSources } from '@/content/portfolio';
 import { guideAction, type GuideAction } from './guide-actions';
 export type GuideEvent = { type: 'token'; text: string } | { type: 'sources'; sources: SourceReference[] } | { type: 'actions'; actions: GuideAction[] } | { type: 'limit'; remainingSession: number } | { type: 'done' };
 function decodeEvent(line: string): GuideEvent | undefined {
@@ -10,8 +10,8 @@ function decodeEvent(line: string): GuideEvent | undefined {
   if (value.type === 'token' && typeof value.text === 'string' && value.text.length <= 6000) return { type: 'token', text: value.text };
   if (value.type === 'sources' && Array.isArray(value.sources)) {
     const sources = value.sources.slice(0, 3).flatMap((source: { id?: unknown }) => {
-      const project = [...projects, ...additionalWork].find(project => project.id === source?.id);
-      return project ? [{ id: project.id, title: project.title, url: project.sections.length ? `/projects/${project.id}` : project.source }] : [];
+      const entry = publicSources.find(entry => entry.id === source?.id);
+      return entry ? [entry] : [];
     });
     return { type: 'sources', sources };
   }
