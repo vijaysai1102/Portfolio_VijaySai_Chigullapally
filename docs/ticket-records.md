@@ -56,3 +56,6 @@ Experience layout connected to the empty production collection. Synthetic popula
 
 ## T19 — Partial: supplied personal facts pending
 Reusable education/certification renderer supports title-only and optional issuer/date/valid HTTPS link without invented badges or metadata. Empty collections omitted. Populated fixture render failed before implementation and passes after; full checks and production routes passed. In accordance with chat, earlier personal facts are not published until supplied here. Real content and narrow/wide browser review pending.
+
+## T20 — Partial: supplied resume/email pending
+Added modular contact area with supplied GitHub profile; email/resume controls appear only when configured. Boundary test failed on mail-header injection before validation and passes after. Production HTTP regression caught UTF-8 punctuation corrupted by legacy PowerShell default reading; rewrote page explicitly in UTF-8 and kept a failing-then-passing HTTP guard. No fake download or invented email; no message sent. Full checks and all production routes passed. Resume asset, preferred contact data and browser/download review remain pending. Existing navigation/card/demo/focus behavior preserved.

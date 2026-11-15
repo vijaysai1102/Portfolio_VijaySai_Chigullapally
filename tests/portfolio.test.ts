@@ -8,6 +8,14 @@ import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { ExperienceSection } from '../src/components/experience';
 import { CredentialSection } from '../src/components/credentials';
+import { emailHref, resumeHref } from '../src/lib/contact';
+test('contact links reject mail-header injection and unsafe resume paths', () => {
+  assert.throws(() => emailHref('person@example.com?bcc=other@example.com'), /email/i);
+  assert.throws(() => resumeHref('//outside.example/resume.pdf'), /resume/i);
+  assert.throws(() => resumeHref('/../private.pdf'), /resume/i);
+  assert.equal(emailHref('person@example.com'), 'mailto:person@example.com');
+  assert.equal(resumeHref('/resume.pdf'), '/resume.pdf');
+});
 test('credentials render titles without inventing optional issuer/date/links', () => {
   assert.equal(renderToStaticMarkup(createElement(CredentialSection, { title: 'Education', entries: [] })), '');
   const html = renderToStaticMarkup(createElement(CredentialSection, { title: 'Certifications', entries: [{ title: 'Synthetic long credential title for development only' }] }));

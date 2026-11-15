@@ -22,7 +22,7 @@ Lockfiles: package-lock.json. Use the matching package manager; investigate mixe
 
 ## Code and configuration inventory
 
-Content fingerprint (SHA-256, text line endings normalized): `552a0423ba1a6fca3b4411d4db1e3299ac9438239edc34a3e1d969a0ffbac5d4`.
+Content fingerprint (SHA-256, text line endings normalized): `e4e6d38a3506ac342cc50b51351714e0d2586496e459b51f6bbf79c34a5cfec9`.
 
 - `docs/homepage-concept.html`
 - `eslint.config.mjs`
@@ -37,6 +37,7 @@ Content fingerprint (SHA-256, text line endings normalized): `552a0423ba1a6fca3b
 - `src/app/projects/[slug]/page.tsx`
 - `src/components/about.tsx`
 - `src/components/additional-work.tsx`
+- `src/components/contact.tsx`
 - `src/components/credentials.tsx`
 - `src/components/experience.tsx`
 - `src/components/footer.tsx`
@@ -48,6 +49,7 @@ Content fingerprint (SHA-256, text line endings normalized): `552a0423ba1a6fca3b
 - `src/components/work.tsx`
 - `src/content/model.ts`
 - `src/content/portfolio.ts`
+- `src/lib/contact.ts`
 - `src/lib/demo.ts`
 - `tests/portfolio.test.ts`
 - `tsconfig.json`

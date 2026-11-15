@@ -22,6 +22,7 @@ try {
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /Vijay Sai Chigullapally/);
+  assert.equal(/Ã¢|â€|Â·/.test(html), false, 'public text must preserve UTF-8 punctuation on Windows');
   assert.equal(html.includes('Synthetic fixture organization'), false, 'development fixture must not be public');
   assert.equal(html.includes('id="experience"'), false, 'empty experience must be omitted');
   for (const anchor of ['main', 'home', 'work', 'about', 'contact']) assert.ok(html.includes(`id="${anchor}"`), `Missing ${anchor} destination`);
