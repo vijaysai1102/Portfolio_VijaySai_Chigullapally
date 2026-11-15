@@ -44,3 +44,6 @@ Inspected existing site headers/HTML and documented reuse limits in demo-integra
 
 ## T15 — Partial: personal contribution and browser review pending
 Authored WeatherScope case study from reviewed forecasting code and saved REPORT.md. Temperature and weak/negative precipitation results retain target, metric, 90-day one-step holdout, aggregate scope and source-report status; no retraining claimed. Added direct artifact link and production HTTP route check. Full app checks passed. Conceptual artwork is labeled, not an exported result plot. Personal contribution and visual QA remain pending.
+
+## T16 — Partial: approved answer example, contribution and browser review pending
+Case study traced to ingestion.py/rag_agent.py and README. Correctly describes local PDF ingestion, MiniLM/Chroma retrieval, citation prompting and separate web enrichment; explicitly avoids regulatory correctness guarantees. Source review is not a live answer test. Full checks and all three case-study HTTP routes passed. No supplied/recorded regulation example or personal contribution claim was invented. Browser review unavailable.
