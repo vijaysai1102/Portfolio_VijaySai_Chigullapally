@@ -3,7 +3,7 @@ export type Project = {
   stack: string[]; source: string; website?: string; sections: { heading: string; body: string }[];
 };
 export type Experience = { organization: string; title: string; period?: string; description: string; url?: string };
-export type Credential = { title: string; issuer?: string; date?: string; url?: string };
+export type Credential = { title: string; issuer?: string; date?: string; gpa?: string; url?: string };
 function record(value: unknown): Record<string, unknown> {
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('Content must be an object');
   return value as Record<string, unknown>;

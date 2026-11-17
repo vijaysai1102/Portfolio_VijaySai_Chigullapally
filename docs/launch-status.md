@@ -5,7 +5,7 @@ Production, including the live AI guide, is available at https://vijayportfolio-
 ## Verified release
 
 - Home and the Megatron, WeatherScope, F1 and Living Campus routes are covered by production HTTP smoke; missing routes return 404. Local fonts, favicon and sharing PNG work. The published project registry now generates five sitemap entries (home plus four cases); verify the deployed revision after release rather than treating a local build as deployment evidence.
-- The studio, neutral monogram, project cards, cases and sample explorer are implemented. Experience, education, credentials, portrait, resume and email remain empty or omitted as authorized; personal facts and contributions await the user's later edits. GitHub is the working contact destination.
+- The studio, neutral monogram, project cards, cases and sample explorer are implemented. The user-approved University of North Texas master's entry (Computer Science and Engineering, August 2024 – May 2026, GPA: 4.0) is implemented in Education and guide evidence. Experience, certifications, portrait, resume and email remain empty or omitted as authorized; other personal facts and contributions await the user's later edits. GitHub is the working contact destination.
 - Orca Chromium checks covered 320/390/768/1440 CSS-pixel widths, inspected screenshots, skip-link focus, mobile menu/Escape/selection, pointer project navigation, hover, demo fragments/search/reset/modal and the offline guide. No horizontal overflow or captured application console errors were found. Axe 4.14.0 reported zero violations on the rebuilt home, three cases and 404 after accessible-name fixes; manual-review items remain documented.
 - Mobile Lighthouse 13.6.0 on the deployed revision scored 96 performance/100 accessibility for home and 92/100 for Megatron. LCP was 1.20s/1.27s and CLS was zero. These are simulated lab runs, not field Core Web Vitals or a standards certification. See performance-review.md.
 - Fresh Windows Node 22.23.2 lint, types, all 26 application tests, build, production HTTP smoke and guidance consistency passed at the release source. HTTP smoke required execution outside the restricted network sandbox after Next reported ready but loopback requests timed out inside it. Application CI passed on Windows/macOS/Linux; guidance CI passed on Windows/Linux. The earlier 18 guidance regressions and actual next dev guidance-hash check remain recorded evidence; synchronization code did not change in this release.
@@ -24,7 +24,7 @@ The Living Campus follow-up adds two more behavioral regressions (31 tests total
 
 | Item | State |
 | --- | --- |
-| Personal content/assets | Intentionally deferred to the user's facts; nothing inferred from FDE or other role positioning |
+| Personal content/assets | The supplied master's education is added; other content/assets remain deferred to the user's facts. No story, GPA scale or role positioning inferred |
 | Public AI | Released with gemini-3.5-flash-lite, permanent production Redis and approved caps of 25/day, 250/month and 6/session; $5 monthly target and up to $1 for testing. Request limits are not an exact invoice guarantee |
 | Assistive technology | Native 200%/400% browser zoom, manual screen-reader review and real mobile virtual-keyboard/live-chat checks remain unverified; 320px reflow and keyboard paths were checked |
 | Automated accessibility | Zero reported violations in tested settled states; transformed artwork/decorative symbols leave axe manual contrast-review items. No WCAG conformance claim |

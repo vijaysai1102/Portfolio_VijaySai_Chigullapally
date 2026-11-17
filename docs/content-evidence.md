@@ -1,5 +1,9 @@
 # Content evidence and update process
 
+## Education — supplied and approved in chat, 2026-11-16
+
+Vijay supplied University of North Texas, a master's in Computer Science and Engineering, August 2024 to May 2026, and GPA 4. The approved public entry uses “Master’s in Computer Science and Engineering,” “August 2024 – May 2026,” and “GPA: 4.0.” No GPA denominator, formal degree abbreviation, coursework, honors or personal journey was supplied or inferred. The shared education record feeds the visible section and profile evidence for the AI guide. Experience, certifications, biography, portrait, email, resume and personal project-contribution details still await supplied content.
+
 ## Living Campus — source review 2026-11-15
 
 Reviewed public repository [Living-Campus at 3e74ec9034a1d6df7b0750c948af5002e42f8222](https://github.com/vijaysai1102/Living-Campus/tree/3e74ec9034a1d6df7b0750c948af5002e42f8222) through agent-reach's GitHub CLI backend. Inspected README, app.py, config/settings.py, ai/gemini_client.py, ai/prompt_builder.py, core/database.py, core/memory_manager.py, core/rag_retriever.py, core/gossip_engine.py and the clock/story modules. No upstream code, tests, or paid character conversation were executed for this review.
@@ -10,7 +14,7 @@ Repository metadata still mentions Llama 3.1. The reviewed settings instead defa
 
 Additional work: PingBack README and repository metadata reviewed via GitHub CLI on 2026-11-14. Listed as non-fork; no sole-authorship inference is made. Scope states Claude Code notifications on Windows/macOS and separates agent adapters from core routing. Real notification delivery was not exercised. Only this reviewed additional item is included; no automatic repository dump or unsupported nanoGPT authorship claim.
 
-Public data lives in src/content/portfolio.ts; parseProject validates IDs, required fields, arrays, sections and HTTPS destinations and projects only known public fields. Private provenance lives here, outside public content imports. Run test/check/smoke after edits and inspect the resulting page before publishing personal facts. Personal experience, education and credentials remain empty per chat; no resume/email/portrait is supplied.
+Public data lives in src/content/portfolio.ts; parseProject validates IDs, required fields, arrays, sections and HTTPS destinations and projects only known public fields. Private provenance lives here, outside public content imports. Run test/check/smoke after edits and inspect the resulting page before publishing personal facts. The supplied master's education is published; experience and certifications remain empty, and no resume/email/portrait is supplied.
 
 Reviewed on 2026-11-14 through agent-reach's GitHub CLI route: Megatron README and docs/skill-scanner.md; WeatherScope README, outputs/reports/REPORT.md and src/forecasting.py on master; F1 README, src/ingestion.py and src/rag_agent.py. These were source inspections, not application runtime verification. Case studies must retain that distinction. Source descriptions are allowed; personal contribution/role claims are deferred.
 

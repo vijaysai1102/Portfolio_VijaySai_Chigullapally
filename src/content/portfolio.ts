@@ -3,7 +3,14 @@ import { parseProject, publicUrl, type Credential, type Experience } from './mod
 export const profile = {
   name: 'Vijay Sai Chigullapally', shortName: 'Vijay Sai',
   github: publicUrl('https://github.com/vijaysai1102'),
-  experience: [] as Experience[], education: [] as Credential[], certifications: [] as Credential[],
+  experience: [] as Experience[],
+  education: [{
+    title: 'Master’s in Computer Science and Engineering',
+    issuer: 'University of North Texas',
+    date: 'August 2024 – May 2026',
+    gpa: '4.0',
+  }] as Credential[],
+  certifications: [] as Credential[],
   resume: undefined as string | undefined,
   email: undefined as string | undefined,
   portrait: undefined as { src: string; alt: string } | undefined,

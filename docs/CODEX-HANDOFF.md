@@ -1,10 +1,10 @@
 # Codex session handoff
 
-Updated 2026-11-15 after recovering the live-AI release and adding Living Campus under the user's approved implementation plan.
+Updated 2026-11-16 after adding the user's approved master's education and GPA; earlier release and Living Campus evidence is retained below.
 
 ## Current state
 
-The existing Next.js portfolio and its real AI guide are deployed at https://vijayportfolio-eight.vercel.app. Do not scaffold a replacement or repeat completed tickets. Personal content remains intentionally deferred.
+The existing Next.js portfolio and its real AI guide are deployed at https://vijayportfolio-eight.vercel.app. Do not scaffold a replacement or repeat completed tickets. The supplied master's education is now implemented; other personal content remains intentionally deferred.
 
 | Item | Reference |
 | --- | --- |
@@ -67,6 +67,8 @@ WeatherScope numbers are attributed to its saved report; the pipeline was not re
 
 ## Verification evidence
 
+- Education follow-up: final Windows lint/types/33 tests/build/production HTTP smoke, guidance and whitespace checks passed. Inspected desktop/mobile education screenshots and 320px reflow with no overflow or captured console errors. Education/GPA profile routing and Living Campus separation have failing-then-passing coverage; “case study” retains project context. Orca refused a new Tab check because its keyboard-focus guard was unavailable; no new visible keyboard-focus result is claimed. Inspect this commit's CI/deployment and live answer after push; earlier broad audits remain historical evidence.
+
 - Latest Living Campus context/citation follow-up: all 31 tests plus lint/types/build/HTTP smoke and secret scan passed. Generic retrieval/RAG questions now retain current/prior project context; explicit new project names still win, and context-free RAG keeps its F1 default. Citation spacing is canonicalized only to source IDs in the supplied evidence registry. Both issues had failing-then-passing regressions; eight targeted real-model cases passed after fixes. The earlier UI screenshots/audit cover unchanged presentation. Check the latest follow-up commit's CI/deployment after push.
 
 - Living Campus follow-up: local lint/types/29 tests/build/all-case HTTP smoke and static-secret scan passed; three added behavioral tests were observed failing before implementation and passing after, alongside the updated project-catalog expectation. The build required leaving the filesystem sandbox after a generated-output EPERM; no application change repaired that environmental failure. Inspected 1440px home, 390px case/chat and 320px card screenshots; keyboard card/highlight navigation, hover, page-context answers and existing Megatron Skills/product destinations passed. Six real targeted guide cases passed against isolated preview storage. Focused axe reported zero violations with manual contrast items; reduced-motion emulation passed. See the current commit's CI/deployment status after push; earlier full evaluation results below remain historical evidence.
@@ -108,6 +110,6 @@ To disable generation, set both Production flags false and redeploy; verify avai
 
 ## Remaining work
 
-The interrupted live-AI task is complete. Further personal content needs supplied facts/assets: biography, experience, education, certifications, portrait, email and resume. Do not manufacture them to close original tickets. Complete the manual/device checks when suitable tools/devices are available; do not describe the entire original 36-ticket plan as fully closed while these acceptance items remain deferred.
+The interrupted live-AI task is complete. The user approved University of North Texas, Master’s in Computer Science and Engineering, August 2024 – May 2026, GPA: 4.0. It is stored in profile.education, rendered through the existing credential section and included in guide profile evidence; no GPA scale or personal story was inferred. Further personal content needs supplied facts/assets: biography, experience, any additional education, certifications, portrait, email and resume. Do not manufacture them to close original tickets. Complete the manual/device checks when suitable tools/devices are available; do not describe the entire original 36-ticket plan as fully closed while these acceptance items remain deferred.
 
 For the next requested change: inspect relevant source and user edits, apply existing approvals, verify real behavior, update evidence/guidance, commit/push the completed scope, and inspect CI/deployment. Preserve both guidance peers and generate context using Sync-AgentGuidance.ps1; never hand-edit generated fingerprints.

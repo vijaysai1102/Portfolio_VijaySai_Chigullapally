@@ -102,11 +102,11 @@ test('Living Campus keeps its topic, source and explicit navigation through a fo
   assert.deepEqual(actionsFromAnswer('', 'Highlight Living Campus').map(action => action.href), ['/#project-living-campus']);
   assert.equal(guideAction('living-campus')?.href, '/projects/living-campus');
 });
-test('Living Campus university questions retain fictional context without inventing education', () => {
+test('Living Campus university questions stay distinct from approved personal education', () => {
   assert.equal(selectEvidence('Which university is Living Campus set in?')[0]?.id, 'living-campus');
   assert.equal(selectEvidence('Which university is this set in?', 'living-campus')[0]?.id, 'living-campus');
-  assert.deepEqual(selectEvidence('Which university did Vijay attend?', 'living-campus'), []);
-  assert.deepEqual(selectEvidence('What degree does Vijay have in Living Campus?', 'living-campus'), []);
+  assert.equal(selectEvidence('Which university did Vijay attend?', 'living-campus')[0]?.id, 'profile');
+  assert.equal(selectEvidence('What degree does Vijay have in Living Campus?', 'living-campus')[0]?.id, 'profile');
   assert.equal(selectEvidence('How do the NPCs remember promises?')[0]?.id, 'living-campus');
 });
 test('shared retrieval language stays on the current project until an explicit topic switch', () => {
@@ -202,6 +202,30 @@ test('credentials render titles without inventing optional issuer/date/links', (
   const html = renderToStaticMarkup(createElement(CredentialSection, { title: 'Certifications', entries: [{ title: 'Synthetic long credential title for development only' }] }));
   assert.match(html, /Synthetic long credential title/);
   assert.equal(html.includes('href='), false);
+  assert.equal(html.includes('GPA'), false);
+});
+
+test('supplied education renders its degree, university, dates and GPA', () => {
+  const html = renderToStaticMarkup(createElement(CredentialSection, { title: 'Education', entries: profile.education }));
+  assert.match(html, /University of North Texas/);
+  assert.match(html, /Master’s in Computer Science and Engineering/);
+  assert.match(html, /August 2024 – May 2026/);
+  assert.match(html, /GPA: 4\.0/);
+  assert.equal(html.includes('4.0/4.0'), false, 'an unsupplied GPA scale must not be inferred');
+});
+
+test('education and GPA questions use approved profile evidence even on a project page', () => {
+  for (const question of ['What is his GPA?', 'Where did Vijay study?', 'Which university did Vijay attend?', 'When did he graduate?', 'Tell me about his master’s degree.']) {
+    const plan = answerPlan({ messages: [{ role: 'user', text: question }], currentProject: 'living-campus' });
+    assert.equal(plan.localAnswer, undefined, question);
+    assert.equal(plan.evidence[0]?.id, 'profile', question);
+    assert.match(plan.evidence[0].text, /University of North Texas/);
+    assert.match(plan.evidence[0].text, /GPA: 4\.0/);
+    assert.deepEqual(citedSources('His GPA was 4.0 [profile].', plan.evidence).map(source => source.id), ['profile']);
+    assert.deepEqual(citedSources('His GPA was 3.9 [profile].', plan.evidence), []);
+  }
+  assert.equal(selectEvidence('Explain the Megatron case study.')[0]?.id, 'megatron');
+  assert.equal(selectEvidence('What does Living Campus study?')[0]?.id, 'living-campus');
 });
 test('experience omits empty data and renders a future supplied entry', () => {
   assert.equal(renderToStaticMarkup(createElement(ExperienceSection, { entries: [] })), '');

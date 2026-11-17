@@ -3,6 +3,8 @@ import { demoItems } from './demo';
 export type Evidence = { id: string; title: string; url: string; text: string; reviewedAt: string };
 const REVIEWED_AT = '2026-11-14';
 const LIVING_CAMPUS_REVIEWED_AT = '2026-11-15';
+const PROFILE_REVIEWED_AT = '2026-11-16';
+const EDUCATION_QUERY = /\b(education|degrees?|university|college|gpa|master[’']?s?|graduat\w*)\b|\b(where|what|which)\b.*\b(vijay|he|his)\b.*\b(study|studied|attend\w*)\b/i;
 const aliases: Record<string, string[]> = {
   megatron: ['megatron', 'skill', 'skills', 'plugin', 'plugins', 'usage', 'desktop'],
   weatherscope: ['weatherscope', 'weather', 'forecast', 'forecasting', 'temperature', 'precipitation'],
@@ -18,11 +20,11 @@ export const knowledge: Evidence[] = [...projects, ...additionalWork].map(projec
   ].join('\n'),
   reviewedAt: project.id === 'living-campus' ? LIVING_CAMPUS_REVIEWED_AT : REVIEWED_AT,
 })).concat([{
-  id: 'profile', title: 'About Vijay', url: '/#about', reviewedAt: REVIEWED_AT,
+  id: 'profile', title: 'About Vijay', url: '/#about', reviewedAt: PROFILE_REVIEWED_AT,
   text: [
     `Name: ${profile.name}. Public GitHub: ${profile.github}.`,
     ...profile.experience.map(entry => `${entry.title} at ${entry.organization}${entry.period ? ` (${entry.period})` : ''}: ${entry.description}`),
-    ...profile.education.map(entry => `Education: ${entry.title}${entry.issuer ? `, ${entry.issuer}` : ''}${entry.date ? `, ${entry.date}` : ''}.`),
+    ...profile.education.map(entry => `Education: ${entry.title}${entry.issuer ? `, ${entry.issuer}` : ''}${entry.date ? `, ${entry.date}` : ''}${entry.gpa ? `, GPA: ${entry.gpa}` : ''}.`),
     ...profile.certifications.map(entry => `Certification: ${entry.title}${entry.issuer ? `, ${entry.issuer}` : ''}${entry.date ? `, ${entry.date}` : ''}.`),
     ...(profile.email ? [`Public email: ${profile.email}.`] : []),
     ...(profile.resume ? [`Public resume: ${profile.resume}.`] : []),
@@ -34,13 +36,14 @@ export function selectEvidence(query: string, currentProject?: string): Evidence
   const missingTopics: [RegExp, boolean][] = [
     [/\b(contributions?|authorship|ownership)\b|\b(vijay|he)\b.*\b(alone|himself|sole|every part)\b|\bwho\b.*\b(owns?|built|wrote|created)\b/i, true],
     [/\b(experience|employ\w*|salary|hired|work history|career|companies|employers?|job titles?)\b|\bwhere\b.*\b(worked|working)\b/i, profile.experience.length === 0],
-    [/\b(education|degree|university)\b/i, profile.education.length === 0 && !fictionalCampusContext],
+    [EDUCATION_QUERY, profile.education.length === 0 && !fictionalCampusContext],
     [/\b(certification|credential)\b/i, profile.certifications.length === 0],
     [/\bemail\b/i, !profile.email],
     [/\bresume\b/i, !profile.resume],
     [/\bportrait\b/i, !profile.portrait],
   ];
   if (missingTopics.some(([pattern, missing]) => missing && pattern.test(query))) return [];
+  if (EDUCATION_QUERY.test(query) && !fictionalCampusContext) return knowledge.filter(entry => entry.id === 'profile');
   const words = new Set(query.toLowerCase().split(/[^a-z0-9-]+/));
   const namedProjects = knowledge.filter(entry => entry.id !== 'profile'
     && (words.has(entry.id) || words.has(entry.id.split('-')[0]) || query.toLowerCase().includes(entry.title.toLowerCase())));
