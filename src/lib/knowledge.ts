@@ -24,7 +24,7 @@ export const knowledge: Evidence[] = [...projects, ...additionalWork].map(projec
   text: [
     `Name: ${profile.name}. Public GitHub: ${profile.github}.`,
     ...profile.experience.map(entry => `${entry.title} at ${entry.organization}${entry.period ? ` (${entry.period})` : ''}: ${entry.description}`),
-    ...profile.education.map(entry => `Education: ${entry.title}${entry.issuer ? `, ${entry.issuer}` : ''}${entry.date ? `, ${entry.date}` : ''}${entry.gpa ? `, GPA: ${entry.gpa}` : ''}.`),
+    ...profile.education.map(entry => `Education: ${entry.title}${entry.issuer ? `, ${entry.issuer}` : ''}${entry.date ? `; recorded study dates: ${entry.date}` : ''}${entry.gpa ? `; GPA: ${entry.gpa}` : ''}. Current enrollment status is not supplied by this dated record.`),
     ...profile.certifications.map(entry => `Certification: ${entry.title}${entry.issuer ? `, ${entry.issuer}` : ''}${entry.date ? `, ${entry.date}` : ''}.`),
     ...(profile.email ? [`Public email: ${profile.email}.`] : []),
     ...(profile.resume ? [`Public resume: ${profile.resume}.`] : []),

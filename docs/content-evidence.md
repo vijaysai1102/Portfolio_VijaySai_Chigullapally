@@ -2,7 +2,7 @@
 
 ## Education — supplied and approved in chat, 2026-11-16
 
-Vijay supplied University of North Texas, a master's in Computer Science and Engineering, August 2024 to May 2026, and GPA 4. The approved public entry uses “Master’s in Computer Science and Engineering,” “August 2024 – May 2026,” and “GPA: 4.0.” No GPA denominator, formal degree abbreviation, coursework, honors or personal journey was supplied or inferred. The shared education record feeds the visible section and profile evidence for the AI guide. Experience, certifications, biography, portrait, email, resume and personal project-contribution details still await supplied content.
+Vijay supplied University of North Texas, a master's in Computer Science and Engineering, August 2024 to May 2026, and GPA 4. The approved public entry uses “Master’s in Computer Science and Engineering,” “August 2024 – May 2026,” and “GPA: 4.0.” No GPA denominator, formal degree abbreviation, coursework, honors or personal journey was supplied or inferred. The shared education record feeds the visible section and profile evidence for the AI guide. The guide's evidence labels these as recorded study dates; current enrollment status is not supplied, so “is pursuing” must not be inferred. Experience, certifications, biography, portrait, email, resume and personal project-contribution details still await supplied content.
 
 ## Living Campus — source review 2026-11-15
 
